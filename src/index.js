@@ -10,10 +10,8 @@ app.use(express.static('public'));
 
 var io = socket(server);
 io.on('connection', function(socket){
-  console.log('made socket connection', socket.id);
 
   socket.on('page', function(data){
-    console.log(parseInt(data)+1);
-    io.sockets.emit('page', parseInt(data)+1);
+    io.sockets.emit('page', parseInt(data));
   })
 })
