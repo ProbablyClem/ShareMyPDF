@@ -3,12 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEst App</title>
+    <title>PDF Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 </head>
 <body>
-    <h1>Salon</h1>
-    <div>Page = <div id=pageNumber>1</div></div>
-    <script src="/salonEleve.js"></script>
+    <button onclick="prevPage()">Previous</button>
+    <button onclick="nextPage()">Next</button>
+
+    <input id="pageInput" type="number">
+    <button onclick="goTo()">Go</button>
+    <button onclick="rejoindre()">Rejoindre</button>
+    <button onclick="suivre()" id="boutonSuivre">Suivre</button>
+    <br>
+
+    <canvas id="viewer"></canvas>
+
+    <script src="salonEleve.js"></script>
 </body>
 </html>
