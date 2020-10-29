@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Création de salon</title>
-    <link rel="stylesheet" href="Creation.css">
+    <link rel="stylesheet" href="creation.css">
   </head>
   <body>
-    <form>
+    <form action="/getPDF" method="POST">
       <p>
-        <input type="file">
+        <input type="file" name="pdf" id="pdf" accept=".pdf" required>
       </p>
     </form>
     <input type="submit" value="Valider">

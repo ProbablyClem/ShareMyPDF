@@ -6,16 +6,14 @@
     <link rel="stylesheet" href="accueil.css">
   </head>
   <body>
-    <form >
+    <form action="/setPseudo" method="POST"> 
       <p>
-        <label for="pseudo">Pseudo</label>
+        <label for="pseudo">Pseudo :</label>
         <input type="text" name="pseudo" id="pseudo" required>
         <span id="aidePseudo"></span>
       </p>
-      <input type="submit" value ="Creer un salon">
-      <input type="submit" value="Rejoindre un salon">
+      <input type="submit" name="create" value ="Creer un salon">
+      <input type="submit" name="join" value="Rejoindre un salon">
     </form>
-
-    <script src="accueil.js"></script>
   </body>
 </html>
