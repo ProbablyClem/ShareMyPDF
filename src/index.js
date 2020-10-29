@@ -31,6 +31,7 @@ app.get('/join',(req,res)=>{
   res.sendFile(__dirname +'/public/IHM/rejoindre.html');
 });
 
+//redirection
 app.get('/create',(req,res)=>{
   res.sendFile(__dirname +'/public/IHM/creation.html');
 });
@@ -44,10 +45,8 @@ app.post('/setPseudo',(req,res)=>{
   }else{
     res.redirect('/join');
   }
-  
   res.end()
 });
-
 
 
 //getCode
@@ -57,6 +56,20 @@ app.post('/getCode',(req,res)=>{
   res.redirect('/getCode');
   res.end()
 });
+
+//getParametre
+app.get('/IHM/:room',(req,res)=>{
+  const code = req.params.room;
+  console.log("Code :"+code);
+  res.sendFile(__dirname + '/public/IHM/param.html');
+});
+
+app.post('/param',(req,res)=>{
+  console.log("Pseudo :"+req.body.pseudo);
+  const pseudo = req.body.pseudo;
+  res.send(pseudo);
+  res.end()
+})
 
 
 
