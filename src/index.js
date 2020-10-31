@@ -10,6 +10,8 @@ var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
 
+
+
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 app.use(express.static('public'));
@@ -17,15 +19,23 @@ app.use(express.static('public'));
 var io = socket(server);
 io.on('connection', function(socket){
   console.log('made socket connection', socket.id);
-
-  socket.emit('page', pageProf);
   console.log(pageProf);
   
   socket.on('page', function(data){
     io.sockets.emit('page', parseInt(data));
     pageProf = parseInt(data);
   })
+
+  socket.on('getPage', function(){
+    console.log("getPage!");
+    console.log(pageProf);
+    socket.emit('page', pageProf);
+  })
+
 })
+
+//evite l'erreur 404 no favicon
+app.get('/favicon.ico', (req, res) => res.status(204));
 
 //redirection
 app.get('/join',(req,res)=>{

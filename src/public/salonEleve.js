@@ -43,7 +43,6 @@ function draw() {
 function drawPage(x) {
     if (x >= 1 && x <= max) {
         pageNumber = x;
-        socket.emit("page", pageNumber);
         draw();
     }
 }
@@ -94,7 +93,7 @@ socket.on('page', function(data){
     }
 })
 
-drawPage(pageProf);
-
-
+draw();
+suivre();
+socket.emit('getPage');
 
