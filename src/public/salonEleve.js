@@ -84,10 +84,6 @@ function suivre(){
     }
 }
 
-draw();
-
-
-
 socket.on('page', function(data){
     if(data != pageNumber && etatSuivi == true){
         drawPage(data);
@@ -97,3 +93,8 @@ socket.on('page', function(data){
         pageProf = data;
     }
 })
+
+drawPage(pageProf);
+
+
+

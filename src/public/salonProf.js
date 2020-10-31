@@ -67,11 +67,3 @@ function goTo() {
 }
 
 draw();
-
-
-
-socket.on('page', function(data){
-    if(data != pageNumber){
-        drawPage(data);
-    }
-})
