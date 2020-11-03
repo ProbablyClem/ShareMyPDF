@@ -14,7 +14,10 @@ var server = app.listen(3000, function(){
 
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
-app.use(express.static('public'));
+
+//Set view engine to ejs
+app.set("view engine", "ejs"); 
+app.set("views", __dirname + "/vues"); 
 
 var io = socket(server);
 io.on('connection', function(socket){
@@ -34,17 +37,17 @@ io.on('connection', function(socket){
 
 })
 
-//evite l'erreur 404 no favicon
-app.get('/favicon.ico', (req, res) => res.status(204));
+//page accueil
+app.get('/', (req, res) => res.sendFile(__dirname + "/vues/accueil.html"));
 
 //redirection
 app.get('/join',(req,res)=>{
-  res.sendFile(__dirname +'/public/IHM/rejoindre.html');
+  res.sendFile(__dirname +'/vues/Rejoindre.html');
 });
 
 //redirection
 app.get('/create',(req,res)=>{
-  res.sendFile(__dirname +'/public/IHM/creation.html');
+  res.sendFile(__dirname +'/vues/Creation.html');
 });
 
 //setPseudo
@@ -69,10 +72,10 @@ app.post('/getCode',(req,res)=>{
 });
 
 //getParametre
-app.get('/IHM/:room',(req,res)=>{
+app.get('/vues/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
-  res.sendFile(__dirname + '/public/IHM/param.html');
+  res.sendFile(__dirname + '/vues/param.html');
 });
 
 app.post('/param',(req,res)=>{
