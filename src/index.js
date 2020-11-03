@@ -15,9 +15,11 @@ var server = app.listen(3000, function(){
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
+app.use(express.static('public'));
+
 //Set view engine to ejs
 app.set("view engine", "ejs"); 
-app.set("views", __dirname + "/vues"); 
+app.set("views", __dirname + "/public"); 
 
 var io = socket(server);
 io.on('connection', function(socket){
@@ -38,16 +40,16 @@ io.on('connection', function(socket){
 })
 
 //page accueil
-app.get('/', (req, res) => res.sendFile(__dirname + "/vues/accueil.html"));
+app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html"));
 
 //redirection
 app.get('/join',(req,res)=>{
-  res.sendFile(__dirname +'/vues/Rejoindre.html');
+  res.sendFile(__dirname +'/public/vues/Rejoindre.html');
 });
 
 //redirection
 app.get('/create',(req,res)=>{
-  res.sendFile(__dirname +'/vues/Creation.html');
+  res.sendFile(__dirname +'/public/vues/Creation.html');
 });
 
 //setPseudo
@@ -67,7 +69,7 @@ app.post('/setPseudo',(req,res)=>{
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
-  res.redirect('/getCode');
+  res.render("eleve", {salon: code});
   res.end()
 });
 
@@ -75,7 +77,7 @@ app.post('/getCode',(req,res)=>{
 app.get('/vues/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
-  res.sendFile(__dirname + '/vues/param.html');
+  res.sendFile(__dirname + '/public//vues/param.html');
 });
 
 app.post('/param',(req,res)=>{
