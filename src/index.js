@@ -56,10 +56,6 @@ app.get('/join',(req,res)=>{
   res.sendFile(__dirname +'/public/vues/Rejoindre.html');
 });
 
-app.get('/poeme',(req,res)=>{
-  res.send("Jsuis frais t'es fraiche,<br>La distance entre nous s'affaisse,<br>Accepterais tu que je te mange les fesses?<br><button type =\"button\">Non</button>   <button type =\"button\">Oui</button>");
-});
-
 //redirection
 app.get('/create',(req,res)=>{
   res.sendFile(__dirname +'/public/vues/Creation.html');
@@ -106,7 +102,6 @@ app.post('/getPDF', upload.single('profile'), (req, res) => {
   if(!req.files.f){
     res.send(400);
   }
-  res.redirect('/poeme');
   console.log(req.files.f);
   let avatar = req.files.f;
   avatar.mv('uploads/' + avatar.name);
