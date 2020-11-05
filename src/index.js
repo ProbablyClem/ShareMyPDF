@@ -95,3 +95,6 @@ app.get("/eleve", (req,res) =>{
 app.get("/prof", (req,res) =>{
   res.render("presentateur", {salon: 1234, username: "clement"});
 })
+
+module.exports = app;
+module.exports = server;
