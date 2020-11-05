@@ -9,11 +9,6 @@ const bodyparser = require('body-parser');
 const fileUpload = require('express-fileupload');
 ////////////////////////////////////////
 
-
-////////////////////////////////////////
-const fileUpload = require('express-fileupload');
-////////////////////////////////////////
-
 var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
@@ -28,9 +23,6 @@ app.use(express.static('public'));
 app.use(fileUpload());
 ////////////////////////////////////////
 
-////////////////////////////////////////
-app.use(fileUpload());
-////////////////////////////////////////
 
 //Set view engine to ejs
 app.set("view engine", "ejs"); 
@@ -104,46 +96,17 @@ app.post('/param',(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
-<<<<<<< Updated upstream
 
 app.post('/getPDF', (req,res)=>{
   console.log(req.files.foo);
 })
 
 /*
-app.post('/getPDF', (req, res)=> {
+  app.post('/getPDF', (req, res)=> {
   console.log("OK");
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('Erreur : Aucun fichier n'as été reçu');
   }
-=======
-
-app.post('/getPDF', (req,res)=>{
-  console.log(req.files.foo);
-})
-
-/*
-app.post('/getPDF', (req, res)=> {
-  console.log("OK");
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let file = req.files.pdf;
-
-  // Use the mv() method to place the file somewhere on your server
-  file.mv('/public/upload/file.pdf', function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send('File uploaded!');
-  });
-});
-*/
-////////////////////////////////////////////////////////////////////////////////
-
-
   let file = req.files.pdf;
 
   file.mv('/public/upload/file.pdf', function(err) {
@@ -153,6 +116,8 @@ app.post('/getPDF', (req, res)=> {
     res.send('Fichier reçu');
   });
 });
+
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 
