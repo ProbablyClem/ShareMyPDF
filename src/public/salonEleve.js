@@ -14,6 +14,7 @@ var ctx = canvas.getContext('2d');
 
 var socket = io.connect("http://localhost:3000");
 
+console.log(document.getElementById("username").innerText);
 
 function draw() {
     pageIpt.value = pageNumber;

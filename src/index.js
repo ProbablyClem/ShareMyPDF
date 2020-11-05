@@ -69,7 +69,7 @@ app.post('/setPseudo',(req,res)=>{
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
-  res.render("eleve", {salon: code});
+  res.render("eleve", {salon: code, username: "clement"});
   res.end()
 });
 
@@ -77,7 +77,7 @@ app.post('/getCode',(req,res)=>{
 app.get('/vues/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
-  res.sendFile(__dirname + '/public//vues/param.html');
+  res.sendFile(__dirname + '/public/vues/param.html');
 });
 
 app.post('/param',(req,res)=>{
@@ -87,8 +87,11 @@ app.post('/param',(req,res)=>{
   res.end()
 })
 
+//tests
+app.get("/eleve", (req,res) =>{
+  res.render("eleve", {salon: 1234, username: "clement"});
+})
 
-
-
-
-
+app.get("/prof", (req,res) =>{
+  res.render("presentateur", {salon: 1234, username: "clement"});
+})
