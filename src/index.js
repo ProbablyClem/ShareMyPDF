@@ -1,6 +1,7 @@
 var express = require('express');
 var socket = require('socket.io');
-var multer = require('multer')
+var multer = require('multer');
+var upload = multer({dest:'uploads/'});
 var pageProf = 1;
 
 app = express();
@@ -55,6 +56,10 @@ app.get('/join',(req,res)=>{
   res.sendFile(__dirname +'/public/vues/Rejoindre.html');
 });
 
+app.get('/poeme',(req,res)=>{
+  res.send("Jsuis frais t'es fraiche,<br>La distance entre nous s'affaisse,<br>Accepterais tu que je te mange les fesses?<br><button type =\"button\">Non</button>   <button type =\"button\">Oui</button>");
+});
+
 //redirection
 app.get('/create',(req,res)=>{
   res.sendFile(__dirname +'/public/vues/Creation.html');
@@ -98,32 +103,10 @@ app.post('/param',(req,res)=>{
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
 
-//Stockage
-app.post('/getPDF', (req,res)=>{
-  console.log(req.files);
-})
-
-/*
-var storage = multer.diskStorage({
-  destination: function(req, file, cb){
-    cb(null, 'upload')
-  },
-  filename: function(req,file,cb){
-    cb(null,file.fieldname+'-'+Date.now())
-  }
-})
-
-var upload = multer({storage: storage})
-
-app.post('/getPDF',upload.single('file'),(req,res,next)=> {
-  const file = req.file
-  if (!file){
-    res.send("ERROR");
-  }
-  res.send(file);
-})
-*/
-
+app.post('/getPDF', upload.single('profile'), (req, res) => {
+  res.redirect('/poeme');
+  res.send(req.file);
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 
