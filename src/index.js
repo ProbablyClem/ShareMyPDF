@@ -1,5 +1,6 @@
 var express = require('express');
 var socket = require('socket.io');
+var multer = require('multer')
 var pageProf = 1;
 
 app = express();
@@ -97,27 +98,32 @@ app.post('/param',(req,res)=>{
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
 
+//Stockage
 app.post('/getPDF', (req,res)=>{
-  console.log(req.files.foo);
+  console.log(req.files);
 })
 
 /*
-  app.post('/getPDF', (req, res)=> {
-  console.log("OK");
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('Erreur : Aucun fichier n'as été reçu');
+var storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, 'upload')
+  },
+  filename: function(req,file,cb){
+    cb(null,file.fieldname+'-'+Date.now())
   }
-  let file = req.files.pdf;
+})
 
-  file.mv('/public/upload/file.pdf', function(err) {
-    if (err)
-      return res.status(500).send(err);
+var upload = multer({storage: storage})
 
-    res.send('Fichier reçu');
-  });
-});
-
+app.post('/getPDF',upload.single('file'),(req,res,next)=> {
+  const file = req.file
+  if (!file){
+    res.send("ERROR");
+  }
+  res.send(file);
+})
 */
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
