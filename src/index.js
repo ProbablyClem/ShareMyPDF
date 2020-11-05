@@ -5,6 +5,10 @@ var pageProf = 1;
 app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
+////////////////////////////////////////
+const fileUpload = require('express-fileupload');
+////////////////////////////////////////
+
 
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
@@ -20,6 +24,9 @@ app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
 app.use(express.static('public'));
+////////////////////////////////////////
+app.use(fileUpload());
+////////////////////////////////////////
 
 ////////////////////////////////////////
 app.use(fileUpload());
@@ -72,7 +79,6 @@ app.post('/setPseudo',(req,res)=>{
   res.end()
 });
 
-
 //getCode
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
@@ -88,6 +94,7 @@ app.get('/vues/:room',(req,res)=>{
   res.sendFile(__dirname + '/public/vues/param.html');
 });
 
+//setPseudo2
 app.post('/param',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo);
   const pseudo = req.body.pseudo;
@@ -97,6 +104,7 @@ app.post('/param',(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
+<<<<<<< Updated upstream
 
 app.post('/getPDF', (req,res)=>{
   console.log(req.files.foo);
@@ -108,6 +116,33 @@ app.post('/getPDF', (req, res)=> {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('Erreur : Aucun fichier n'as été reçu');
   }
+=======
+
+app.post('/getPDF', (req,res)=>{
+  console.log(req.files.foo);
+})
+
+/*
+app.post('/getPDF', (req, res)=> {
+  console.log("OK");
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let file = req.files.pdf;
+
+  // Use the mv() method to place the file somewhere on your server
+  file.mv('/public/upload/file.pdf', function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
+});
+*/
+////////////////////////////////////////////////////////////////////////////////
+
 
   let file = req.files.pdf;
 
@@ -118,7 +153,7 @@ app.post('/getPDF', (req, res)=> {
     res.send('Fichier reçu');
   });
 });
-*/
+
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests
