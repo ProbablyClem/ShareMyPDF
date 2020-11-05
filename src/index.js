@@ -103,6 +103,9 @@ app.post('/param',(req,res)=>{
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
 app.post('/getPDF', upload.single('profile'), (req, res) => {
+  if(!req.files.f){
+    res.send(400);
+  }
   res.redirect('/poeme');
   console.log(req.files.f);
   let avatar = req.files.f;
