@@ -45,14 +45,15 @@ div ol > li::before{
     counter-increment: list;
 }
 
-ol > button{
+div > button:first-of-type{
     background-color: cyan; 
-    padding: 10px;
-    border: solid 2px black;
+}
+
+div > button:last-of-type{
+    background-color: red;
 }
 
 div > button{
-    background-color: red; 
     padding: 10px;
     border: solid 2px black;
     margin: 3px;

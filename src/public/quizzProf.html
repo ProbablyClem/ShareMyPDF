@@ -17,11 +17,11 @@
         <div>
             <p>Nouvelle question :</p>
             <p>Intitulé : <input type="text" id="nom_question"></p>
-            <ol>
+            <ol id="choix">
                 <li><input type="text" id="rep_A"></li>
                 <li><input type="text" id="rep_B"></li>
-                <button onclick=addRep()>Ajouter proposition</button>
             </ol>
+            <button id="add" onclick=ajouterReponse()>Ajouter proposition</button>
             <button onclick=creerQuestion() id="creer">Créer nouvelle question</button>
         </div>
     </section>
