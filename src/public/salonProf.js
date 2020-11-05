@@ -57,6 +57,7 @@ function drawPage(x) {
             toRender = x;
         } else {
             pageNumber = x;
+            socket.emit("page", pageNumber);
             draw();
         }
     }
