@@ -1,10 +1,14 @@
 var express = require('express');
 var socket = require('socket.io');
+var multer = require('multer')
 var pageProf = 1;
 
 app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
+////////////////////////////////////////
+const fileUpload = require('express-fileupload');
+////////////////////////////////////////
 
 var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
@@ -16,6 +20,10 @@ app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
 app.use(express.static('public'));
+////////////////////////////////////////
+app.use(fileUpload());
+////////////////////////////////////////
+
 
 //Set view engine to ejs
 app.set("view engine", "ejs"); 
@@ -64,7 +72,6 @@ app.post('/setPseudo',(req,res)=>{
   res.end()
 });
 
-
 //getCode
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
@@ -80,12 +87,45 @@ app.get('/vues/:room',(req,res)=>{
   res.sendFile(__dirname + '/public/vues/param.html');
 });
 
+//setPseudo2
 app.post('/param',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo);
   const pseudo = req.body.pseudo;
   res.send(pseudo);
   res.end()
 })
+
+////////////////////////////////////////////////////////////////////////////////
+//Upload
+
+//Stockage
+app.post('/getPDF', (req,res)=>{
+  console.log(req.files);
+})
+
+/*
+var storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, 'upload')
+  },
+  filename: function(req,file,cb){
+    cb(null,file.fieldname+'-'+Date.now())
+  }
+})
+
+var upload = multer({storage: storage})
+
+app.post('/getPDF',upload.single('file'),(req,res,next)=> {
+  const file = req.file
+  if (!file){
+    res.send("ERROR");
+  }
+  res.send(file);
+})
+*/
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 //tests
 app.get("/eleve", (req,res) =>{

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="quizzProf.css">
+    <title>Quizz - Enseignant</title>
+</head>
+<body>
+    <section>
+        <div>
+            <p>Questions prêtes : </p>
+            <ul id="questions">
+                
+            </ul>
+        </div>
+        <div>
+            <p>Nouvelle question :</p>
+            <p>Intitulé : <input type="text" id="nom_question"></p>
+            <ol>
+                <li><input type="text" id="rep_A"></li>
+                <li><input type="text" id="rep_B"></li>
+                <button onclick=addRep()>Ajouter proposition</button>
+            </ol>
+            <button onclick=creerQuestion() id="creer">Créer nouvelle question</button>
+        </div>
+    </section>
+    <script src="quizzProf.js"></script>
+</body>
+</html>

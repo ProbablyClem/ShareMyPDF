@@ -1,0 +1,59 @@
+section{
+    display: flex;
+    flex-direction: row;
+}
+
+section div{
+    border: solid 2px black;
+}
+
+ul{
+    list-style: disc;
+    margin-right: 10px;
+}
+
+ul button{
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    padding: 0;
+}
+
+section div:last-child{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+div > p:last-of-type{
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
+ol{
+    counter-reset: list;
+    padding-left: 10px;
+}
+
+div ol > li{
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+div ol > li::before{
+    content: counter(list, upper-alpha) ") ";
+    counter-increment: list;
+}
+
+ol > button{
+    background-color: cyan; 
+    padding: 10px;
+    border: solid 2px black;
+}
+
+div > button{
+    background-color: red; 
+    padding: 10px;
+    border: solid 2px black;
+    margin: 3px;
+}

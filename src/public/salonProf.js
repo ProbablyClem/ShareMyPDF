@@ -1,4 +1,6 @@
 var pageNumber = 1;
+var rendering = false;
+var toRender = 0;
 var max = 1;
 
 var pageIpt = document.getElementById("pageInput");
@@ -13,8 +15,8 @@ var ctx = canvas.getContext('2d');
 
 var socket = io.connect("http://localhost:3000");
 
-
 function draw() {
+    rendering = true;
     pageIpt.value = pageNumber;
     loading.promise.then(function(pdf) {
         pdf.getPage(pageNumber).then(function(page) {
@@ -32,6 +34,15 @@ function draw() {
             }
 
             var render = page.render(renderCtx);
+            render.promise.then(function() {
+                rendering = false;
+                
+                if (toRender != 0) {
+                    var temp = toRender;
+                    toRender = 0;
+                    drawPage(temp);
+                }
+            })
         });
     }, function (reason) {
         // PDF loading error
@@ -41,9 +52,14 @@ function draw() {
 
 function drawPage(x) {
     if (x >= 1 && x <= max) {
-        pageNumber = x;
-        socket.emit("page", pageNumber);
-        draw();
+        if (rendering) {
+            console.log("Add " + x + " to render");
+            toRender = x;
+        } else {
+            pageNumber = x;
+            socket.emit("page", pageNumber);
+            draw();
+        }
     }
 }
 
@@ -66,4 +82,4 @@ function goTo() {
     drawPage(x);
 }
 
-draw();
+drawPage(pageNumber);
