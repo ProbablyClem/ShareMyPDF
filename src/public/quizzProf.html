@@ -10,10 +10,8 @@
     <section>
         <div>
             <p>Questions prêtes : </p>
-            <ul>
-                <li>Question 1</li>
-                <li>Question 2</li>
-                <li>Question 3</li>
+            <ul id="questions">
+                
             </ul>
         </div>
         <div>
@@ -22,10 +20,11 @@
             <ol>
                 <li><input type="text" id="rep_A"></li>
                 <li><input type="text" id="rep_B"></li>
-                <button onclick="addRep()">Ajouter proposition</button>
+                <button onclick=addRep()>Ajouter proposition</button>
             </ol>
-            <button onclick="create()">Créer nouvelle question</button>
+            <button onclick=creerQuestion() id="creer">Créer nouvelle question</button>
         </div>
     </section>
+    <script src="quizzProf.js"></script>
 </body>
 </html>
