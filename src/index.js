@@ -6,6 +6,10 @@ app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 
+////////////////////////////////////////
+const fileUpload = require('express-fileupload');
+////////////////////////////////////////
+
 var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
@@ -16,6 +20,10 @@ app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
 app.use(express.static('public'));
+
+////////////////////////////////////////
+app.use(fileUpload());
+////////////////////////////////////////
 
 //Set view engine to ejs
 app.set("view engine", "ejs"); 
@@ -86,6 +94,32 @@ app.post('/param',(req,res)=>{
   res.send(pseudo);
   res.end()
 })
+
+////////////////////////////////////////////////////////////////////////////////
+//Upload
+
+app.post('/getPDF', (req,res)=>{
+  console.log(req.files.foo);
+})
+
+/*
+app.post('/getPDF', (req, res)=> {
+  console.log("OK");
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('Erreur : Aucun fichier n'as été reçu');
+  }
+
+  let file = req.files.pdf;
+
+  file.mv('/public/upload/file.pdf', function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('Fichier reçu');
+  });
+});
+*/
+////////////////////////////////////////////////////////////////////////////////
 
 //tests
 app.get("/eleve", (req,res) =>{
