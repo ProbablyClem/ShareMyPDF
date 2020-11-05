@@ -1,4 +1,6 @@
 var pageNumber = 1;
+var rendering = false;
+var toRender = 0;
 var max = 1;
 var etatSuivi = false;
 var pageProf = 1;
@@ -16,6 +18,7 @@ var socket = io.connect("http://localhost:3000");
 
 
 function draw() {
+    rendering = true;
     pageIpt.value = pageNumber;
     loading.promise.then(function(pdf) {
         pdf.getPage(pageNumber).then(function(page) {
@@ -33,6 +36,15 @@ function draw() {
             }
 
             var render = page.render(renderCtx);
+            render.promise.then(function() {
+                rendering = false;
+                
+                if (toRender != 0) {
+                    var temp = toRender;
+                    toRender = 0;
+                    drawPage(temp);
+                }
+            })
         });
     }, function (reason) {
         // PDF loading error
@@ -42,8 +54,13 @@ function draw() {
 
 function drawPage(x) {
     if (x >= 1 && x <= max) {
-        pageNumber = x;
-        draw();
+        if (rendering) {
+            console.log("Add " + x + " to render");
+            toRender = x;
+        } else {
+            pageNumber = x;
+            draw();
+        }
     }
 }
 
@@ -71,7 +88,6 @@ function rejoindre(){
 }
 
 function suivre(){
-    console.log(etatSuivi);
     if(!etatSuivi){
         etatSuivi = true;
         document.getElementById("boutonSuivre").innerHTML = "Arreter de suivre";
@@ -93,7 +109,7 @@ socket.on('page', function(data){
     }
 })
 
-draw();
+drawPage(pageNumber);
 suivre();
 socket.emit('getPage');
 
