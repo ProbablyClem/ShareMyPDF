@@ -105,6 +105,7 @@ app.post('/getPDF', upload.single('profile'), (req, res) => {
   console.log(req.files.f);
   let avatar = req.files.f;
   avatar.mv('uploads/' + avatar.name);
+  res.send(req.files.f.name);
 });
 ////////////////////////////////////////////////////////////////////////////////
 
