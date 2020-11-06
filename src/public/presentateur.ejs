@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Viewer</title>
+    <title>Salon Presentateur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 </head>
 <body>
-    <button onclick="prevPage()">Previous</button>
-    <button onclick="nextPage()">Next</button>
+    <button id="prev">Previous</button>
+    <button id="next">Next</button>
 
     <input id="pageInput" type="number">
-    <button onclick="goTo()">Go</button>
+    <button id="go">Go</button>
 
     <br>
 
     <canvas id="viewer"></canvas>
 
-    <script src="salonProf.js"></script>
+    <script type="module" src="salonProf.js"></script>
 </body>
 </html>
