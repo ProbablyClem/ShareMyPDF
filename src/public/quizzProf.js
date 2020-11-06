@@ -1,132 +1,138 @@
-var nb_questions = 0;
 var balise_questions = document.getElementById('questions');
 var balise_choix = document.getElementById('choix');
+const MAX_PROP = 4;
+const MIN_PROP = 2;
 
 class Question {
-    constructor(nom = null, a = null, b = null, c = null, d = null, nbchoix = 2){
+    constructor(nom = "", props = ["", ""]){
         this.nom = nom;
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        this.d = d;
-        this.nbChoix = nbchoix;
-        nb_questions++;
+        this.props = props;
     }
 
     addRep(){
-        this.a = document.getElementById('rep_A').value;
-        this.b = document.getElementById('rep_B').value;
-
-        if(this.nbChoix == 2){
-            this.nbChoix++;
-            balise_choix.innerHTML += "<li id=\"C\"><input type=\"text\" id=\"rep_C\"> <button onclick=q_temp.delRep() id=\"del_C\">X</button> </li>"
-            document.getElementById('rep_A').value = this.a;
-            document.getElementById('rep_B').value = this.b;
+        if(this.props.length < MAX_PROP){
+            this.props.push("");
+            this.display();
         }
-        else if(this.nbChoix == 3){
-            this.c = document.getElementById('rep_C').value;
-            this.nbChoix++;
-            document.getElementById('del_C').style.display = "none";
-            balise_choix.innerHTML += "<li id=\"D\"><input type=\"text\" id=\"rep_D\"> <button onclick=q_temp.delRep() id=\"del_D\">X</button> </li>";
-            document.getElementById('rep_A').value = this.a;
-            document.getElementById('rep_B').value = this.b;
-            document.getElementById('rep_C').value = this.c;
-            document.getElementById('add').style.display = "none";
-        }
-        else{
-            throw "Seulement 4 propositions de réponses possibles";
+        if(this.props.length >= MAX_PROP){
+            document.getElementById("add").style.display = "none";
         }
     }
 
     delRep(){
-        console.log(this.nbChoix);
-        if(this.nbChoix == 3){
-            balise_choix.removeChild(document.getElementById('C'));
+        if(this.props.length > MIN_PROP){
+            this.props.pop();
+            this.display();
         }
-        else if (this.nbChoix == 4){
-            balise_choix.removeChild(document.getElementById('D'));
-            document.getElementById('add').style.display = "block";
-            document.getElementById('del_C').style.display = "inline";
+        if(this.props.length < MAX_PROP){
+            document.getElementById("add").style.display = "block";
         }
-        this.nbChoix--;
+    }
+
+    display(){
+        var intitule = document.getElementById('nom_question');
+        intitule.value = this.nom;
+        intitule.addEventListener("change", () => {this.nom = intitule.value});
+        
+        balise_choix.innerHTML = "";
+        this.props.forEach((choix, index) => {
+            var proposition = document.createElement("li");
+            var input = document.createElement("input");
+            input.id = "rep_"+(index+1);
+            input.type = "text";
+            input.value = choix;
+            input.addEventListener("change", () => {this.props[index] = input.value});
+            proposition.appendChild(input);
+            balise_choix.appendChild(proposition);
+            if(index === this.props.length-1 && this.props.length > MIN_PROP){
+                var annuler = document.createElement("button");
+                annuler.innerHTML = "X";
+                annuler.onclick = () => {q_temp.delRep()};
+                proposition.appendChild(annuler);
+            }
+            console.log(this);
+        });
+    }
+
+    isValid(){
+        var possible = true;
+        if(this.nom == ""){
+            possible = false;
+        }
+
+        this.props.forEach(choix => {
+            if(choix == ""){
+                possible = false;
+            }
+        });
+
+        return possible;
+    }
+
+    copy(){
+        var q = new Question(this.nom, [...this.props]);
+        return q;
     }
 }
 
-var allQuestions = [new Question("Pourquoi la vie est-elle à chier ?", "oui", "non")];
+var allQuestions = [new Question("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
 var q_temp = new Question();
+q_temp.display();
 
 function ajouterReponse(){
     q_temp.addRep();
 }
 
 function afficherQuestion(q, index){
-    balise_questions.innerHTML += "<li id=\"Q"+index+"\"> Question " + index + " : " + q.nom 
-            + " <button onclick=questLaunch() title=\"Lancer question\">"
-            +   "→"
-            + "</button>"
-            + "<button onclick=checkResults() title=\"Voir résultats\">"
-            +   "&#128269"
-            + "</button>"
-            + "<button onclick=delQuest("+index+") title=\"Supprimer question\">"
-            +   "X"
-            +"</button>"
-            + "</li>";
+    var liste = document.createElement("li");
+    liste.id = "Q"+index;
+    var texte = document.createElement("span");
+    texte.innerHTML = "Question " + index + " : " + q.nom;
+    var bouton1 = document.createElement("button");
+    
+    bouton1.title = "Lancer question";
+    bouton1.onclick = () => console.log("lancer marche");
+    bouton1.innerHTML = "→";
+    liste.appendChild(texte);
+    liste.appendChild(bouton1);
+    
+    var bouton2 = document.createElement("button");
+    bouton2.title = "Voir résultats";
+    bouton2.onclick = () => console.log("voir marche");
+    bouton2.innerHTML = "&#128269";
+    liste.appendChild(bouton2);
+
+    var bouton3 = document.createElement("button");
+    bouton3.title = "Supprimer question";
+    bouton3.onclick = () => delQuest(index);
+    bouton3.innerHTML = "X";
+    liste.appendChild(bouton3);
+
+    balise_questions.appendChild(liste);
 }
 
 function delQuest(i){
-    document.getElementById("questions").removeChild(document.getElementById("Q"+i));
     allQuestions.splice(i-1, 1);
-    nb_questions--;
     console.log(allQuestions);
+    displayQuestions();
+}
+
+function test(){
+    console.log("ça marche");
 }
 
 function creerQuestion(){
-    var question_possible = true;
-    q_temp.nom = document.getElementById('nom_question').value;
-    if(!q_temp.nom){
-        alert("Veuillez remplir le champs nom !");
-        return; // Pour stopper le code
-    }
-
-    q_temp.a = document.getElementById('rep_A').value;
-    q_temp.b = document.getElementById('rep_B').value;
-
-    switch(q_temp.nbChoix){
-        case 2: 
-            if(q_temp.a == "" || q_temp.b == ""){
-                question_possible = false;
-            }
-            break;
-
-        case 3:
-            q_temp.c = document.getElementById('rep_C').value;
-            if(q_temp.c == ""){
-                question_possible = false;
-            }
-            break;
-
-        case 4:
-            q_temp.c = document.getElementById('rep_C').value;
-            q_temp.d = document.getElementById('rep_D').value;
-            if(q_temp.c == "" || q_temp.d == ""){
-                question_possible = false;
-            }
-            break;
-    }
-
-    console.log(q_temp);
-
-    if(question_possible){
-        allQuestions.push(q_temp);
+    if(q_temp.isValid()){
+        allQuestions.push(q_temp.copy());
+        displayQuestions();
     }
     else{
-        alert("Un champ n'a pas été rempli !");
-        return;
+        alert("Veuillez remplir tous les champs");
     }
     console.log(allQuestions);
 }
 
-function demarrage(){
+function displayQuestions(){
     balise_questions.innerHTML = "";
     var index = 0;
     allQuestions.forEach(quest => {
@@ -135,5 +141,4 @@ function demarrage(){
     });
 }
 
-window.addEventListener("load",demarrage);
-document.getElementById('creer').addEventListener("click", demarrage);
+window.addEventListener("load",displayQuestions);
