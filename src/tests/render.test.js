@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer');
 
 test('lance un lecteur prof et un lecteur eleve et change de page', async () => {
     const nav = await puppeteer.launch({
-        headless: false
+        headless: false,
+        slowMo : 80,
+        args : ['--window-size=1920,1080']
     });
 
     const pageProf = await nav.newPage();

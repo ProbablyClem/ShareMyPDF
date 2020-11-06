@@ -15,8 +15,6 @@ var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
 
-
-
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
@@ -24,7 +22,6 @@ app.use(express.static('public'));
 ////////////////////////////////////////
 app.use(fileUpload());
 ////////////////////////////////////////
-
 
 //Set view engine to ejs
 app.set("view engine", "ejs"); 
@@ -52,13 +49,13 @@ io.on('connection', function(socket){
 app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html"));
 
 //redirection
-app.get('/join',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/Rejoindre.html');
+app.get('/joinRoom',(req,res)=>{
+  res.sendFile(__dirname +'/public/vues/joinRoom.html');
 });
 
 //redirection
-app.get('/create',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/Creation.html');
+app.get('/createRoom',(req,res)=>{
+  res.sendFile(__dirname +'/public/vues/createRoom.html');
 });
 
 //setPseudo
@@ -66,9 +63,9 @@ app.post('/setPseudo',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo)
   const pseudo = req.body.pseudo;
   if(req.body.join==null){
-    res.redirect('/create');
+    res.redirect('/createRoom');
   }else{
-    res.redirect('/join');
+    res.redirect('/joinRoom');
   }
   res.end()
 });
@@ -82,7 +79,7 @@ app.post('/getCode',(req,res)=>{
 });
 
 //getParametre
-app.get('/vues/:room',(req,res)=>{
+app.get('/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
   res.sendFile(__dirname + '/public/vues/param.html');
@@ -98,7 +95,7 @@ app.post('/param',(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
-app.post('/getPDF', upload.single('profile'), (req, res) => {
+app.post('/setPDF', upload.single('profile'), (req, res) => {
   if(!req.files.f){
     res.send(400);
   }
