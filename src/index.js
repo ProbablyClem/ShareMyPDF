@@ -50,12 +50,12 @@ app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html")
 
 //redirection
 app.get('/joinRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/Rejoindre.html');
+  res.sendFile(__dirname +'/public/vues/joinRoom.html');
 });
 
 //redirection
 app.get('/createRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/Creation.html');
+  res.sendFile(__dirname +'/public/vues/createRoom.html');
 });
 
 //setPseudo
