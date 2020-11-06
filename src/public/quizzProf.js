@@ -86,10 +86,11 @@ function ajouterReponse(){
 function afficherQuestion(q, index){
     var liste = document.createElement("li");
     liste.id = "Q"+index;
+    
     var texte = document.createElement("span");
     texte.innerHTML = "Question " + index + " : " + q.nom;
-    var bouton1 = document.createElement("button");
     
+    var bouton1 = document.createElement("button");
     bouton1.title = "Lancer question";
     bouton1.onclick = () => console.log("lancer marche");
     bouton1.innerHTML = "→";
