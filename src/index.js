@@ -1,6 +1,7 @@
 var express = require('express');
 var socket = require('socket.io');
-var multer = require('multer')
+var multer = require('multer');
+var upload = multer({dest:'uploads/'});
 var pageProf = 1;
 
 app = express();
@@ -97,34 +98,15 @@ app.post('/param',(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
-
-//Stockage
-app.post('/getPDF', (req,res)=>{
-  console.log(req.files);
-})
-
-/*
-var storage = multer.diskStorage({
-  destination: function(req, file, cb){
-    cb(null, 'upload')
-  },
-  filename: function(req,file,cb){
-    cb(null,file.fieldname+'-'+Date.now())
+app.post('/getPDF', upload.single('profile'), (req, res) => {
+  if(!req.files.f){
+    res.send(400);
   }
-})
-
-var upload = multer({storage: storage})
-
-app.post('/getPDF',upload.single('file'),(req,res,next)=> {
-  const file = req.file
-  if (!file){
-    res.send("ERROR");
-  }
-  res.send(file);
-})
-*/
-
-
+  console.log(req.files.f);
+  let avatar = req.files.f;
+  avatar.mv('uploads/' + avatar.name);
+  res.send(req.files.f.name);
+});
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests
