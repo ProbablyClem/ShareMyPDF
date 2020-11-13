@@ -46,7 +46,7 @@ class Question {
             balise_choix.appendChild(proposition);
             if(index === this.props.length-1 && this.props.length > MIN_PROP){
                 var annuler = document.createElement("button");
-                annuler.innerHTML = "X";
+                annuler.innerText = "X";
                 annuler.onclick = () => {q_temp.delRep()};
                 proposition.appendChild(annuler);
             }
@@ -86,26 +86,27 @@ function ajouterReponse(){
 function afficherQuestion(q, index){
     var liste = document.createElement("li");
     liste.id = "Q"+index;
+
     var texte = document.createElement("span");
-    texte.innerHTML = "Question " + index + " : " + q.nom;
-    var bouton1 = document.createElement("button");
+    texte.innerText = "Question " + index + " : " + q.nom;
     
+    var bouton1 = document.createElement("button");
     bouton1.title = "Lancer question";
     bouton1.onclick = () => console.log("lancer marche");
-    bouton1.innerHTML = "→";
+    bouton1.innerText = "→";
     liste.appendChild(texte);
     liste.appendChild(bouton1);
     
     var bouton2 = document.createElement("button");
     bouton2.title = "Voir résultats";
     bouton2.onclick = () => console.log("voir marche");
-    bouton2.innerHTML = "&#128269";
+    bouton2.innerText = "&#128269";
     liste.appendChild(bouton2);
 
     var bouton3 = document.createElement("button");
     bouton3.title = "Supprimer question";
     bouton3.onclick = () => delQuest(index);
-    bouton3.innerHTML = "X";
+    bouton3.innerText = "X";
     liste.appendChild(bouton3);
 
     balise_questions.appendChild(liste);
