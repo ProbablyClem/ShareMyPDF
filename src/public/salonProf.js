@@ -8,17 +8,26 @@ import {
 
 var socket = io.connect("http://localhost:3000");
 
-var oldPageNumber = 1;
+function changePage(fn) {
+    switch (fn) {
+        case 'prev' :
+            prevPage()
+            break;
+        case 'next' :
+            nextPage()
+            break;
+        case 'go' :
+            goTo()
+            break;
+        default:
+            console.error("La fonction n'est pas reconnue");
+    }
+    socket.emit("page", pageNumber);
+}
 
-document.getElementById("prev").addEventListener("click", prevPage);
-document.getElementById("next").addEventListener("click", nextPage);
-document.getElementById("go").addEventListener("click", goTo);
+document.getElementById("prev").addEventListener("click", () => changePage('prev'));
+document.getElementById("next").addEventListener("click", () => changePage('next'));
+document.getElementById("go").addEventListener("click", () => changePage('go'));
 
 drawPage(pageNumber);
-
-setInterval(() => {
-    if (pageNumber != oldPageNumber) {
-        oldPageNumber = pageNumber;
-        socket.emit("page", pageNumber);
-    }
-}, 50);
+socket.emit("page", pageNumber);
