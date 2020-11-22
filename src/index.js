@@ -79,7 +79,7 @@ app.post('/getCode',(req,res)=>{
 });
 
 //getParametre
-app.get('/:room',(req,res)=>{
+app.get('room/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
   res.sendFile(__dirname + '/public/vues/param.html');
@@ -107,11 +107,11 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests
-app.get("/eleve", (req,res) =>{
+app.get("/lecteur", (req,res) =>{
   res.render("eleve", {salon: 1234, username: "clement"});
 })
 
-app.get("/prof", (req,res) =>{
+app.get("/presentateur", (req,res) =>{
   res.render("presentateur", {salon: 1234, username: "clement"});
 })
 
