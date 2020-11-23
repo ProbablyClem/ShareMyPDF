@@ -9,7 +9,7 @@ import {
 var etatSuivi = false;
 var pageProf = 1;
 
-var socket = io.connect("http://localhost:3000");
+var socket = io.connect("http://yamazouki.freeboxos.fr");
 
 console.log(document.getElementById("username").innerText);
 

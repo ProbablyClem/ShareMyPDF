@@ -6,7 +6,7 @@ import {
     goTo
 } from './render.js'
 
-var socket = io.connect("http://localhost:3000");
+var socket = io.connect("http://yamazouki.freeboxos.fr");
 
 function changePage(fn) {
     switch (fn) {
