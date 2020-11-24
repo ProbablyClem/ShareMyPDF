@@ -3,10 +3,11 @@ var balise_choix = document.getElementById('choix');
 const MAX_PROP = 4;
 const MIN_PROP = 2;
 
-class Question {
-    constructor(nom = "", props = ["", ""]){
+class Quest_Quizz {
+    constructor(nom = "", props = ["", ""], rep_vraie = 0){
         this.nom = nom;
         this.props = props;
+        this.rep_vraie = rep_vraie;
     }
 
     addRep(){
@@ -70,13 +71,13 @@ class Question {
     }
 
     copy(){
-        var q = new Question(this.nom, [...this.props]);
+        var q = new Quest_Quizz(this.nom, [...this.props]);
         return q;
     }
 }
 
-var allQuestions = [new Question("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
-var q_temp = new Question();
+var allQuestions = [new Quest_Quizz("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
+var q_temp = new Quest_Quizz();
 q_temp.display();
 
 function ajouterReponse(){
