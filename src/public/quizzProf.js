@@ -76,7 +76,7 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [new Quest_Quizz("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
+var allQuestions = [new Quest_Quizz("Qu'est-ce qu'une question ?", ["oui", "non"])];
 var q_temp = new Quest_Quizz();
 q_temp.display();
 
