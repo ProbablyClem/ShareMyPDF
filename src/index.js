@@ -10,6 +10,10 @@ const bodyparser = require('body-parser');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
 ////////////////////////////////////////
+var pseudo;
+var code;
+var fName;
+////////////////////////////////////////
 
 var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
@@ -61,7 +65,7 @@ app.get('/createRoom',(req,res)=>{
 //setPseudo
 app.post('/setPseudo',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo)
-  const pseudo = req.body.pseudo;
+  pseudo = req.body.pseudo;
   if(req.body.join==null){
     res.redirect('/createRoom');
   }else{
@@ -73,14 +77,14 @@ app.post('/setPseudo',(req,res)=>{
 //getCode
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
-  const code = req.body.code;
+  code = req.body.code;
   res.render("eleve", {salon: code, username: "clement"});
   res.end()
 });
 
 //getParametre
-app.get('room/:room',(req,res)=>{
-  const code = req.params.room;
+app.get('/room/:room',(req,res)=>{
+  code = req.params.room;
   console.log("Code :"+code);
   res.sendFile(__dirname + '/public/vues/param.html');
 });
@@ -88,8 +92,10 @@ app.get('room/:room',(req,res)=>{
 //setPseudo2
 app.post('/param',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo);
-  const pseudo = req.body.pseudo;
-  res.send(pseudo);
+  pseudo = req.body.pseudo;
+  res.write("Pseudo : "+pseudo);
+  res.write("\n");
+  res.write("Code : "+code);
   res.end()
 })
 
@@ -100,9 +106,10 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
     res.send(400);
   }
   console.log(req.files.f);
+  fName = req.files.f.name;
   let avatar = req.files.f;
   avatar.mv('uploads/' + avatar.name);
-  res.send(req.files.f.name);
+  res.send("Fichier : "+req.files.f.name + "<br> Pseudo : "+pseudo);
 });
 ////////////////////////////////////////////////////////////////////////////////
 
