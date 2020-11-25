@@ -76,7 +76,7 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [new Quest_Quizz("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
+var allQuestions = [new Quest_Quizz("Qu'est-ce qu'une question ?", ["oui", "non"])];
 var q_temp = new Quest_Quizz();
 q_temp.display();
 
@@ -101,7 +101,7 @@ function afficherQuestion(q, index){
     var bouton2 = document.createElement("button");
     bouton2.title = "Voir résultats";
     bouton2.onclick = () => console.log("voir marche");
-    bouton2.innerText = "&#128269";
+    bouton2.innerText = String.fromCodePoint(0x1F50D);
     liste.appendChild(bouton2);
 
     var bouton3 = document.createElement("button");
