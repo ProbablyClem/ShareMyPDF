@@ -74,7 +74,7 @@ app.post('/setPseudo',(req,res)=>{
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
-  res.render("eleve", {salon: code, username: "clement"});
+  res.render("eleve", {salon: code, username: pseudo});
   res.end()
 });
 
