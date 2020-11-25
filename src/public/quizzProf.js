@@ -101,7 +101,7 @@ function afficherQuestion(q, index){
     var bouton2 = document.createElement("button");
     bouton2.title = "Voir résultats";
     bouton2.onclick = () => console.log("voir marche");
-    bouton2.innerText = "&#128269";
+    bouton2.innerText = String.fromCodePoint(0x1F50D);
     liste.appendChild(bouton2);
 
     var bouton3 = document.createElement("button");
