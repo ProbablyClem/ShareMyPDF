@@ -17,7 +17,6 @@ app.get('/joinRoom',(req,res)=>{
 
 //redirection
 app.get('/createRoom',(req,res)=>{
-  cap
   res.sendFile(__dirname +'/public/vues/createRoom.html');
 });
 
