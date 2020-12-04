@@ -33,24 +33,24 @@ app.post('/setPseudo',(req,res)=>{
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
-  res.render("lecteur", {salon: code, username: "clement"});
+  const pseudo = req.body.pseudo;
+  res.render("lecteur", {salon: code, username: pseudo});
   res.end()
 });
 
 //getParametre
 app.get('/room/:room',(req,res)=>{
-  code = req.params.room;
+  const code = req.params.room;
   console.log("Code :"+code);
-  res.sendFile(__dirname + '/public/vues/param.html');
+  res.render("vues/param", {code : code});
 });
 
 //setPseudo2
 app.post('/param',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo);
-  pseudo = req.body.pseudo;
-  res.write("Pseudo : "+pseudo);
-  res.write("\n");
-  res.write("Code : "+code);
+  const pseudo = req.body.pseudo;
+  const code = req.body.code;
+  res.render("lecteur", {salon: code, username: pseudo });
   res.end()
 })
 
