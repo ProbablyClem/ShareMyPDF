@@ -45,7 +45,13 @@ app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
   const pseudo = req.body.pseudo;
-  res.render("lecteur", {salon: code, username: pseudo});
+  if(salons[code] != undefined){
+    res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf});
+  }
+  else{
+    res.send("Le salon "+code+" n'existe pas!");
+  }
+  
   res.end()
 });
 
@@ -78,11 +84,8 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
   const pdf = req.files.f.name;
   avatar.mv('uploads/' + avatar.name);
   let code = genCode();
-  let salon = new Salon(pdf, code);
-  console.log(salon);
-  console.log(salons);
+  let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
-  console.log(salons);
   res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
   res.end();
 });
@@ -98,4 +101,4 @@ app.get("/presentateur", (req,res) =>{
 })
 }
 
-module.exports = routesSetup
+module.exports = routesSetup;
