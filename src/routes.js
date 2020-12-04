@@ -24,7 +24,7 @@ app.post('/setPseudo',(req,res)=>{
   if(req.body.join==null){
     res.render("vues/createRoom", {username : pseudo});
   }else{
-    res.redirect('/joinRoom');
+    res.render('vues/joinRoom', {username : pseudo});
   }
   res.end()
 });
@@ -33,7 +33,7 @@ app.post('/setPseudo',(req,res)=>{
 app.post('/getCode',(req,res)=>{
   console.log("Code :"+req.body.code)
   const code = req.body.code;
-  res.render("eleve", {salon: code, username: pseudo});
+  res.render("lecteur", {salon: code, username: "clement"});
   res.end()
 });
 
