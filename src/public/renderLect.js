@@ -6,15 +6,18 @@ import {
     goTo
 } from './render.js'
 
-var etatSuivi = false;
-var pageProf = 1;
+import { socket } from './socket.js';
 
-var socket = io.connect("http://yamazouki.freeboxos.fr");
+import { restoreAnnot } from './annot.js';
+
+var etatSuivi = false;
+export var pageProf = 1;
 
 console.log(document.getElementById("username").innerText);
 
 function rejoindre(){
     drawPage(pageProf);
+    restoreAnnot();
 }
 
 function suivre(){
@@ -22,6 +25,7 @@ function suivre(){
         etatSuivi = true;
         document.getElementById("follow").innerHTML = "Arreter de suivre";
         drawPage(pageProf);
+        restoreAnnot();
     }
     else{
         etatSuivi = false;
@@ -32,11 +36,9 @@ function suivre(){
 socket.on('page', function(data){
     if(data != pageNumber && etatSuivi == true){
         drawPage(data);
-        pageProf = data;
+        restoreAnnot();
     }
-    else {
-        pageProf = data;
-    }
+    pageProf = data;
 })
 
 document.getElementById("prev").addEventListener("click", prevPage);

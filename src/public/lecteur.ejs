@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salon Eleve</title>
+    <title>Salon Lecteur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 </head>
 <body>
     <div id="username" hidden="true"> <%= username %></div>
-    <button id="prev">Previous</button>
-    <button id="next">Next</button>
+    <button id="prev" class="moveBtn">Previous</button>
+    <button id="next" class="moveBtn">Next</button>
 
     <input id="pageInput" type="number">
-    <button id="go">Go</button>
-    <button id="join">Rejoindre</button>
+    <button id="go" class="moveBtn">Go</button>
+    <button id="join" class="moveBtn">Rejoindre</button>
     <button id="follow">Suivre</button>
     <p id="room">code = <%= salon%></p>
     <p id="username">username = <%= username%></p>
     <br>
+    <canvas id="viewer" style='border : 1px solid #000'></canvas>
 
-    <canvas id="viewer"></canvas>
-
-    <script type="module" src="salonEleve.js"></script>
+    <script type="module" src="renderLect.js"></script>
+    <script type="module" src="annotLect.js"></script>
 </body>
 </html>

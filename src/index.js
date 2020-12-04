@@ -2,7 +2,10 @@ var express = require('express');
 var socket = require('socket.io');
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
+var sizeof = require('object-sizeof');
 var pageProf = 1;
+let annotations = [];
+
 
 app = express();
 const morgan = require('morgan');
@@ -31,20 +34,43 @@ app.use(fileUpload());
 app.set("view engine", "ejs"); 
 app.set("views", __dirname + "/public"); 
 
-var io = socket(server);
+var io = socket(server, {cookie: false});
 io.on('connection', function(socket){
   console.log('made socket connection', socket.id);
-  console.log(pageProf);
   
   socket.on('page', function(data){
     io.sockets.emit('page', parseInt(data));
     pageProf = parseInt(data);
+    if (annotations[parseInt(data)-1] === undefined) {
+      annotations[parseInt(data)-1] = [];
+    }
   })
 
   socket.on('getPage', function(){
-    console.log("getPage!");
-    console.log(pageProf);
     socket.emit('page', pageProf);
+    console.log("getPage, " + sizeof(pageProf) + "o envoyés");
+  })
+  
+  socket.on('annotPoint', (data) => {
+    io.sockets.emit('annotPoint', data);
+    annotations[pageProf-1][annotations[pageProf-1].length] = [];
+    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data);
+  })
+
+  socket.on('annotLine', (data) => {
+    io.sockets.emit('annotLine', data);
+    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data)
+  })
+
+  socket.on('getAllAnnot', () => {
+    socket.emit('allAnnot', annotations);
+    console.log('getAllAnnot, ' + sizeof(annotations) + 'o envoyés');
+  })
+
+  socket.on('clear', () => {
+    console.log('clear' + pageProf);
+    annotations[pageProf - 1] = [];
+    io.sockets.emit('clear');
   })
 
 })
@@ -115,7 +141,7 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
 
 //tests
 app.get("/lecteur", (req,res) =>{
-  res.render("eleve", {salon: 1234, username: "clement"});
+  res.render("lecteur", {salon: 1234, username: "clement"});
 })
 
 app.get("/presentateur", (req,res) =>{

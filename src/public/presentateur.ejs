@@ -8,17 +8,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 </head>
 <body>
-    <button id="prev">Previous</button>
-    <button id="next">Next</button>
+    <button id="prev" class="moveBtn">Previous</button>
+    <button id="next" class="moveBtn">Next</button>
 
     <input id="pageInput" type="number">
-    <button id="go">Go</button>
+    <button id="go" class="moveBtn">Go</button>
+    <button id="clear">clear</button>
     <p id="room">code = <%= salon%></p>
     <p id="username">username = <%= username%></p>
     <br>
 
-    <canvas id="viewer"></canvas>
+    <canvas id="viewer" style='border : 1px solid #000'></canvas>
 
-    <script type="module" src="salonProf.js"></script>
+    <script type="module" src="renderPres.js"></script>
+    <script type="module" src="annotPres.js"></script>
 </body>
 </html>
