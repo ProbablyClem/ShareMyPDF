@@ -3,6 +3,8 @@ var socket = require('socket.io');
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
 var sizeof = require('object-sizeof');
+const Salon = require('./Salon');
+const routes = require('./routes');
 var pageProf = 1;
 let annotations = [];
 
@@ -13,9 +15,8 @@ const bodyparser = require('body-parser');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
 ////////////////////////////////////////
-var pseudo;
-var code;
-var fName;
+
+var salons = Array();
 ////////////////////////////////////////
 
 var server = app.listen(3000, function(){
@@ -75,78 +76,8 @@ io.on('connection', function(socket){
 
 })
 
-//page accueil
-app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html"));
-
-//redirection
-app.get('/joinRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/joinRoom.html');
-});
-
-//redirection
-app.get('/createRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/createRoom.html');
-});
-
-//setPseudo
-app.post('/setPseudo',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo)
-  pseudo = req.body.pseudo;
-  if(req.body.join==null){
-    res.redirect('/createRoom');
-  }else{
-    res.redirect('/joinRoom');
-  }
-  res.end()
-});
-
-//getCode
-app.post('/getCode',(req,res)=>{
-  console.log("Code :"+req.body.code)
-  const code = req.body.code;
-  res.render("eleve", {salon: code, username: pseudo});
-  res.end()
-});
-
-//getParametre
-app.get('/room/:room',(req,res)=>{
-  code = req.params.room;
-  console.log("Code :"+code);
-  res.sendFile(__dirname + '/public/vues/param.html');
-});
-
-//setPseudo2
-app.post('/param',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo);
-  pseudo = req.body.pseudo;
-  res.write("Pseudo : "+pseudo);
-  res.write("\n");
-  res.write("Code : "+code);
-  res.end()
-})
-
-////////////////////////////////////////////////////////////////////////////////
-//Upload
-app.post('/setPDF', upload.single('profile'), (req, res) => {
-  if(!req.files.f){
-    res.send(400);
-  }
-  console.log(req.files.f);
-  fName = req.files.f.name;
-  let avatar = req.files.f;
-  avatar.mv('uploads/' + avatar.name);
-  res.send("Fichier : "+req.files.f.name + "<br> Pseudo : "+pseudo);
-});
-////////////////////////////////////////////////////////////////////////////////
-
-//tests
-app.get("/lecteur", (req,res) =>{
-  res.render("lecteur", {salon: 1234, username: "clement"});
-})
-
-app.get("/presentateur", (req,res) =>{
-  res.render("presentateur", {salon: 1234, username: "clement"});
-})
+routes(app);
 
 module.exports = app;
 module.exports = server;
+module.exports = salons;
