@@ -22,7 +22,7 @@ app.post('/setPseudo',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo)
   const pseudo = req.body.pseudo;
   if(req.body.join==null){
-    res.render("createRoom", {})
+    res.render("vues/createRoom", {username : pseudo});
   }else{
     res.redirect('/joinRoom');
   }
