@@ -2,13 +2,21 @@ var express = require('express');
 var socket = require('socket.io');
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
+var sizeof = require('object-sizeof');
+const Salon = require('./Salon');
+const routes = require('./routes');
 var pageProf = 1;
+let annotations = [];
+
 
 app = express();
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
+////////////////////////////////////////
+
+var salons = {};
 ////////////////////////////////////////
 
 var server = app.listen(3000, function(){
@@ -27,93 +35,49 @@ app.use(fileUpload());
 app.set("view engine", "ejs"); 
 app.set("views", __dirname + "/public"); 
 
-var io = socket(server);
+var io = socket(server, {cookie: false});
 io.on('connection', function(socket){
   console.log('made socket connection', socket.id);
-  console.log(pageProf);
   
   socket.on('page', function(data){
     io.sockets.emit('page', parseInt(data));
     pageProf = parseInt(data);
+    if (annotations[parseInt(data)-1] === undefined) {
+      annotations[parseInt(data)-1] = [];
+    }
   })
 
   socket.on('getPage', function(){
-    console.log("getPage!");
-    console.log(pageProf);
     socket.emit('page', pageProf);
+    console.log("getPage, " + sizeof(pageProf) + "o envoyés");
+  })
+  
+  socket.on('annotPoint', (data) => {
+    io.sockets.emit('annotPoint', data);
+    annotations[pageProf-1][annotations[pageProf-1].length] = [];
+    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data);
+  })
+
+  socket.on('annotLine', (data) => {
+    io.sockets.emit('annotLine', data);
+    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data)
+  })
+
+  socket.on('getAllAnnot', () => {
+    socket.emit('allAnnot', annotations);
+    console.log('getAllAnnot, ' + sizeof(annotations) + 'o envoyés');
+  })
+
+  socket.on('clear', () => {
+    console.log('clear' + pageProf);
+    annotations[pageProf - 1] = [];
+    io.sockets.emit('clear');
   })
 
 })
 
-//page accueil
-app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html"));
-
-//redirection
-app.get('/joinRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/joinRoom.html');
-});
-
-//redirection
-app.get('/createRoom',(req,res)=>{
-  res.sendFile(__dirname +'/public/vues/createRoom.html');
-});
-
-//setPseudo
-app.post('/setPseudo',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo)
-  const pseudo = req.body.pseudo;
-  if(req.body.join==null){
-    res.redirect('/createRoom');
-  }else{
-    res.redirect('/joinRoom');
-  }
-  res.end()
-});
-
-//getCode
-app.post('/getCode',(req,res)=>{
-  console.log("Code :"+req.body.code)
-  const code = req.body.code;
-  res.render("eleve", {salon: code, username: "clement"});
-  res.end()
-});
-
-//getParametre
-app.get('/:room',(req,res)=>{
-  const code = req.params.room;
-  console.log("Code :"+code);
-  res.sendFile(__dirname + '/public/vues/param.html');
-});
-
-//setPseudo2
-app.post('/param',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo);
-  const pseudo = req.body.pseudo;
-  res.send(pseudo);
-  res.end()
-})
-
-////////////////////////////////////////////////////////////////////////////////
-//Upload
-app.post('/setPDF', upload.single('profile'), (req, res) => {
-  if(!req.files.f){
-    res.send(400);
-  }
-  console.log(req.files.f);
-  let avatar = req.files.f;
-  avatar.mv('uploads/' + avatar.name);
-  res.send(req.files.f.name);
-});
-////////////////////////////////////////////////////////////////////////////////
-
-//tests
-app.get("/eleve", (req,res) =>{
-  res.render("eleve", {salon: 1234, username: "clement"});
-})
-
-app.get("/prof", (req,res) =>{
-  res.render("presentateur", {salon: 1234, username: "clement"});
-})
+routes(app);
 
 module.exports = app;
 module.exports = server;
+module.exports.salons = salons;

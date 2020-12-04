@@ -1,16 +1,17 @@
 export var pageNumber = 1;
-var rendering = false;
+export var rendering = false;
 var toRender = 0;
 var max = 1;
 var pageIpt = document.getElementById("pageInput");
 
-var doc = 'example.pdf';
+var doc = 'uploads/'+document.getElementById("pdf").getAttribute('value');
+console.log(doc);
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
 var loading = pdfjsLib.getDocument(doc);
 
-var canvas = document.getElementById('viewer');
-var ctx = canvas.getContext('2d');
+export var canvas = document.getElementById('viewer');
+export var ctx = canvas.getContext('2d');
 
 function draw() {
     rendering = true;
@@ -50,7 +51,6 @@ function draw() {
 export function drawPage(x) {
     if (x >= 1 && x <= max) {
         if (rendering) {
-            console.log("Add " + x + " to render");
             toRender = x;
         } else {
             pageNumber = x;

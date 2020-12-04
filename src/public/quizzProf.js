@@ -3,10 +3,11 @@ var balise_choix = document.getElementById('choix');
 const MAX_PROP = 4;
 const MIN_PROP = 2;
 
-class Question {
-    constructor(nom = "", props = ["", ""]){
+class Quest_Quizz {
+    constructor(nom = "", props = ["", ""], rep_vraie = 0){
         this.nom = nom;
         this.props = props;
+        this.rep_vraie = rep_vraie;
     }
 
     addRep(){
@@ -46,7 +47,7 @@ class Question {
             balise_choix.appendChild(proposition);
             if(index === this.props.length-1 && this.props.length > MIN_PROP){
                 var annuler = document.createElement("button");
-                annuler.innerHTML = "X";
+                annuler.innerText = "X";
                 annuler.onclick = () => {q_temp.delRep()};
                 proposition.appendChild(annuler);
             }
@@ -70,13 +71,13 @@ class Question {
     }
 
     copy(){
-        var q = new Question(this.nom, [...this.props]);
+        var q = new Quest_Quizz(this.nom, [...this.props]);
         return q;
     }
 }
 
-var allQuestions = [new Question("Pourquoi la vie est-elle à chier ?", ["oui", "non"])];
-var q_temp = new Question();
+var allQuestions = [new Quest_Quizz("Qu'est-ce qu'une question ?", ["oui", "non"])];
+var q_temp = new Quest_Quizz();
 q_temp.display();
 
 function ajouterReponse(){
@@ -86,26 +87,27 @@ function ajouterReponse(){
 function afficherQuestion(q, index){
     var liste = document.createElement("li");
     liste.id = "Q"+index;
+
     var texte = document.createElement("span");
-    texte.innerHTML = "Question " + index + " : " + q.nom;
-    var bouton1 = document.createElement("button");
+    texte.innerText = "Question " + index + " : " + q.nom;
     
+    var bouton1 = document.createElement("button");
     bouton1.title = "Lancer question";
     bouton1.onclick = () => console.log("lancer marche");
-    bouton1.innerHTML = "→";
+    bouton1.innerText = "→";
     liste.appendChild(texte);
     liste.appendChild(bouton1);
     
     var bouton2 = document.createElement("button");
     bouton2.title = "Voir résultats";
     bouton2.onclick = () => console.log("voir marche");
-    bouton2.innerHTML = "&#128269";
+    bouton2.innerText = String.fromCodePoint(0x1F50D);
     liste.appendChild(bouton2);
 
     var bouton3 = document.createElement("button");
     bouton3.title = "Supprimer question";
     bouton3.onclick = () => delQuest(index);
-    bouton3.innerHTML = "X";
+    bouton3.innerText = "X";
     liste.appendChild(bouton3);
 
     balise_questions.appendChild(liste);

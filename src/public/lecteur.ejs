@@ -3,28 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salon Presentateur</title>
+    <title>Salon Lecteur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 </head>
 <body>
+    <div id="username" hidden="true"> <%= username %></div>
     <button id="prev" class="moveBtn">Previous</button>
     <button id="next" class="moveBtn">Next</button>
 
     <input id="pageInput" type="number">
     <button id="go" class="moveBtn">Go</button>
-    <button id="clear">clear</button>
+    <button id="join" class="moveBtn">Rejoindre</button>
+    <button id="follow">Suivre</button>
     <p id="room">code = <%= salon%></p>
     <p id="username">username = <%= username%></p>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
-
     <canvas id="viewer" style='border : 1px solid #000'></canvas>
+        <!-----Partie poser questions----->
+        <div id="zoneQuestion">
+            </br>
+            <input type="text" id="sujet" placeholder="Sujet..." required>
+            <textarea id="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
+            <button id="envoyer">Envoyer</button>
+        </div>
     <!------Partie affichage des questions-->
-    <ul id="listeQuestions">
-    
-    </ul>
-    <script type="module" src="renderPres.js"></script>
-    <script type="module" src="annotPres.js"></script>
+        <ul id="listeQuestions">
+            
+        </ul>
+    <script type="module" src="./boutonQuestion.js"></script>
+    <script type="module" src="renderLect.js"></script>
+    <script type="module" src="annotLect.js"></script>
 </body>
 </html>

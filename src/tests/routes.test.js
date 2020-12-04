@@ -4,9 +4,9 @@ const server = require('../index.js')
 const { parse } =  require('../node_modules/node-html-parser');
 
 describe('test accueil', () => {
-  afterAll(done => {
-    server.close();
-  });
+  // afterAll(done => {
+  //   server.close();
+  // });
 
   it('should return the accueil.html page', async () => {
     const res = await request(app).get('/');

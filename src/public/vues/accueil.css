@@ -14,8 +14,6 @@ body{
     padding: 2.3em;
     border: 2px ridge #817373;
     border-radius: 20px;
-    
-    
 }
 
 input{
@@ -27,13 +25,14 @@ input{
   border-color: #817373;
   color: #a7a1a1;
 }
+
 #boutaille{
   font-size: 0.80em;
   font-family: Arial, Helvetica, sans-serif;
   margin: 10px;
   margin-left: 35px;
   padding: 7px;
-  background-color: :#272626 ;
+  background-color: #272626 ;
   border-radius: 10px;
   border-color: #817373;
   color: #a7a1a1;
@@ -42,7 +41,7 @@ input{
 #pseudo1{
   margin: 10px;
   margin-left : 25px;
-  background-color: :#272626e;
+  background-color: #272626;
   min-width: 150px;
 }
 #Bout{
