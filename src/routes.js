@@ -2,9 +2,6 @@ var multer = require('multer');
 var upload = multer({dest:'uploads/'});
 var salons = require('./index').salons;
 
-var pseudo;
-var code;
-var fName;
 
 function routesSetup(app){
     //page accueil
@@ -23,9 +20,9 @@ app.get('/createRoom',(req,res)=>{
 //setPseudo
 app.post('/setPseudo',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo)
-  pseudo = req.body.pseudo;
+  const pseudo = req.body.pseudo;
   if(req.body.join==null){
-    res.redirect('/createRoom');
+    res.render("createRoom", {})
   }else{
     res.redirect('/joinRoom');
   }
