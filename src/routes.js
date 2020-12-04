@@ -83,11 +83,11 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
 
 //tests
 app.get("/lecteur", (req,res) =>{
-  res.render("lecteur", {salon: 1234, username: "clement", pdf: "authorisation_catherine.pdf"});
+  res.render("lecteur", {salon: 1234, username: "clement", pdf: "example.pdf"});
 })
 
 app.get("/presentateur", (req,res) =>{
-  res.render("presentateur", {salon: 1234, username: "clement", pdf: "authorisation_catherine.pdf"});
+  res.render("presentateur", {salon: 1234, username: "clement", pdf: "example.pdf"});
 })
 }
 
