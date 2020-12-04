@@ -21,7 +21,18 @@
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
     <canvas id="viewer" style='border : 1px solid #000'></canvas>
-
+        <!-----Partie poser questions----->
+        <div id="zoneQuestion">
+            </br>
+            <input type="text" id="sujet" placeholder="Sujet..." required>
+            <textarea id="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
+            <button id="envoyer">Envoyer</button>
+        </div>
+    <!------Partie affichage des questions-->
+        <ul id="listeQuestions">
+            
+        </ul>
+    <script type="module" src="./boutonQuestion.js"></script>
     <script type="module" src="renderLect.js"></script>
     <script type="module" src="annotLect.js"></script>
 </body>
