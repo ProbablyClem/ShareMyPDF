@@ -72,7 +72,7 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
   const pseudo = req.body.pseudo;
   let avatar = req.files.f;
   const pdf = req.files.f.name;
-  avatar.mv('uploads/' + avatar.name);
+  avatar.mv('public/uploads/' + avatar.name);
   let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;

@@ -4,7 +4,8 @@ var toRender = 0;
 var max = 1;
 var pageIpt = document.getElementById("pageInput");
 
-var doc = 'example.pdf';
+var doc = 'uploads/'+document.getElementById("pdf").getAttribute('value');
+console.log(doc);
 var pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
 var loading = pdfjsLib.getDocument(doc);
