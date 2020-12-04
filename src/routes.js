@@ -49,6 +49,12 @@ app.post('/getCode',(req,res)=>{
 app.get('/room/:room',(req,res)=>{
   const code = req.params.room;
   console.log("Code :"+code);
+  if(salons[code] != undefined){
+    res.render("vues/param", {code : code});
+  }
+  else{
+    res.send("Le salon "+code+" n'existe pas!");
+  }
   res.render("vues/param", {code : code});
 });
 
@@ -57,7 +63,7 @@ app.post('/param',(req,res)=>{
   console.log("Pseudo :"+req.body.pseudo);
   const pseudo = req.body.pseudo;
   const code = req.body.code;
-  res.render("lecteur", {salon: code, username: pseudo });
+  res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf });
   res.end()
 })
 
