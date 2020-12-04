@@ -2,10 +2,55 @@ body{
   display: flex;
   position: relative;
   flex-direction: column;
-  font-size: 2em;
+  font-size: 1.7em;
+  color: #a7a1a1;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #272626;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    width: 17em;
+    height: 5.6em;
+    padding: 2.3em;
+    border: 2px ridge #817373;
+    border-radius: 20px;
+    
+    
 }
 
 input{
-  font-size: 0.90em;
+  font-size: 0.80em;
+  font-family:Arial, Helvetica, sans-serif ;
+  margin: 10px;
+  background-color:#272626 ;
+  border-radius: 6px;
+  border-color: #817373;
+  color: #a7a1a1;
+}
+#boutaille{
+  font-size: 0.80em;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 10px;
+  margin-left: 35px;
+  padding: 7px;
+  background-color: :#272626 ;
+  border-radius: 10px;
+  border-color: #817373;
+  color: #a7a1a1;
 }
 
+#pseudo1{
+  margin: 10px;
+  margin-left : 25px;
+  background-color: :#272626e;
+  min-width: 150px;
+}
+#Bout{
+  margin: 1px;
+  margin-bottom: 20px;
+  display: flex;
+ 
+}
+#Bouton{
+  display: flex;
+}
