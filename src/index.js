@@ -16,7 +16,7 @@ const bodyparser = require('body-parser');
 const fileUpload = require('express-fileupload');
 ////////////////////////////////////////
 
-var salons = Array();
+var salons = {};
 ////////////////////////////////////////
 
 var server = app.listen(3000, function(){
@@ -80,4 +80,4 @@ routes(app);
 
 module.exports = app;
 module.exports = server;
-module.exports = salons;
+module.exports.salons = salons;

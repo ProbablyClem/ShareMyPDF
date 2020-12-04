@@ -1,7 +1,18 @@
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
-var salons = require('./index').salons;
+var salons = require('./index');
+const Salon = require('./Salon');
 
+function genCode(){
+  let length = 6;
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 function routesSetup(app){
     //page accueil
@@ -62,9 +73,18 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
   }
   console.log(req.files.f);
   fName = req.files.f.name;
+  const pseudo = req.body.pseudo;
   let avatar = req.files.f;
+  const pdf = req.files.f.name;
   avatar.mv('uploads/' + avatar.name);
-  res.send("Fichier : "+req.files.f.name + "<br> Pseudo : "+pseudo);
+  let code = genCode();
+  let salon = new Salon(pdf, code);
+  console.log(salon);
+  console.log(salons);
+  salons[code] = salon;
+  console.log(salons);
+  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+  res.end();
 });
 ////////////////////////////////////////////////////////////////////////////////
 
