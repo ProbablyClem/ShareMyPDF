@@ -1,5 +1,5 @@
 var multer = require('multer');
-var upload = multer({dest:'public/uploads/'});
+var upload = multer({dest:'uploads/'});
 var salons = require('./index');
 const Salon = require('./Salon');
 
