@@ -27,7 +27,7 @@ var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
 
-app.use(morgan('short'));
+//app.use(morgan('short'));
 
 app.use(express.static('public'));
 ////////////////////////////////////////
@@ -41,6 +41,7 @@ app.set("views", __dirname + "/public");
 global.io = socket(server, {cookie: false});
 io.on('connection', function(socket){  
   socket.on('login', (data)=>{
+    console.log(salons);
     salons[data.room].addMembre(data.pseudo, socket.id);
     socket.join(data.room);
   });
@@ -70,7 +71,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('getAllAnnot', (data) => {
-    io.to(data).emit('allAnnot', salons[parseInt(data)].annotations);
+    io.to(data).emit('allAnnot', salons[data].annotations);
   })
 
   socket.on('clear', (data) => {

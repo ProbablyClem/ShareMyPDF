@@ -1,7 +1,5 @@
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
-
-var salons = require('./index');
 const Salon = require('./Salon');
 
 function genCode(){
@@ -33,7 +31,7 @@ app.post('/setPseudo',(req,res)=>{
 
 //getCode
 app.post('/getCode',(req,res)=>{
-  console.log("Code :"+req.body.code)
+  //console.log("Code :"+req.body.code)
   const code = req.body.code;
   const pseudo = req.body.pseudo;
   if(salons[code] != undefined){
@@ -49,7 +47,7 @@ app.post('/getCode',(req,res)=>{
 //getParametre
 app.get('/room/:room',(req,res)=>{
   const code = req.params.room;
-  console.log("Code :"+code);
+  //console.log("Code :"+code);
   if(salons[code] != undefined){
     res.render("vues/param", {code : code});
   }
@@ -106,6 +104,7 @@ app.post('/setPdf', function (req, res) {
   let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
+  console.log(salons);
   res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
   res.end(); 
 });
@@ -124,6 +123,7 @@ app.get("/presentateur", (req,res) =>{
   let ip = "127.0.0.1"
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
+  console.log(salons);
   res.render("presentateur", {salon: code, username: pseudo, pdf: pdf});
 })
 }

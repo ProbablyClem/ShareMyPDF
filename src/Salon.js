@@ -21,11 +21,10 @@ class Salon{
 
     setPage(page){
         this.pageProf = page;
-        console.log(io.to(this.code));
         io.to(this.code).emit('page', parseInt(page));
     }
 
-    
+
 }
 
 module.exports = Salon;
