@@ -5,13 +5,14 @@
     <title>Création de salon</title>
     <link rel="stylesheet" href="vues/createRoom.css">
   </head>
-  <body>
-    <form action="/setPDF" method="POST" enctype="multipart/form-data">
+  <body class="p-3 mb-2 bg-dark">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <form action="/setPDF" method="POST" enctype="multipart/form-data" class="position-absolute top-50 start-50 translate-middle border btn btn-dark rounded-3 border-light p-3 mb-2 bg-dark">
       <p>
-        <input type="file" name="f" accept=".pdf" required>
-        <input type="hidden" name="pseudo" value= <%= username %> >
+        <input class="btn btn-dark rounded-3 border-light" type="file" name="f" accept=".pdf" required>
+        <input class="btn btn-dark rounded-3 border-light" type="hidden" name="pseudo" value= <%= username %>
       </p>
-      <input id="valide" type="submit" value="Valider">
+      <input class="btn btn-dark rounded-3 border-light" id="valide" type="submit" value="Valider">
     </form>
   </body>
 </html>
