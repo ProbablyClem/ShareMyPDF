@@ -1,6 +1,5 @@
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
-var salons = require('./index');
 const Salon = require('./Salon');
 
 function genCode(){
@@ -20,7 +19,7 @@ app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html")
 
 //setPseudo
 app.post('/setPseudo',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo)
+  //console.log("Pseudo :"+req.body.pseudo)
   const pseudo = req.body.pseudo;
   if(req.body.join==null){
     res.render("vues/createRoom", {username : pseudo});
@@ -60,7 +59,7 @@ app.get('/room/:room',(req,res)=>{
 
 //setPseudo2
 app.post('/param',(req,res)=>{
-  console.log("Pseudo :"+req.body.pseudo);
+  //console.log("Pseudo :"+req.body.pseudo);
   const pseudo = req.body.pseudo;
   const code = req.body.code;
   res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf });
@@ -82,6 +81,7 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
   let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
+  console.log(salons);
   res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
   res.end();
 });
@@ -89,11 +89,17 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
 
 //tests
 app.get("/lecteur", (req,res) =>{
-  res.render("lecteur", {salon: 1234, username: "clement", pdf: "example.pdf"});
+  res.render("lecteur", {salon: 1234, username: "lecteur", pdf: "example.pdf"});
 })
 
 app.get("/presentateur", (req,res) =>{
-  res.render("presentateur", {salon: 1234, username: "clement", pdf: "example.pdf"});
+  let pdf = "example.pdf";
+  let code = 1234;
+  let pseudo = "clement";
+  let ip = "127.0.0.1"
+  let salon = new Salon(pdf, code, req.ip, pseudo);
+  salons[code] = salon;
+  res.render("presentateur", {salon: code, username: pseudo, pdf: pdf});
 })
 }
 

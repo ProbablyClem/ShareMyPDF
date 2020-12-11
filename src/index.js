@@ -5,7 +5,6 @@ var upload = multer({dest:'uploads/'});
 var sizeof = require('object-sizeof');
 const Salon = require('./Salon');
 const routes = require('./routes');
-var pageProf = 1;
 let annotations = [];
 
 
@@ -17,7 +16,7 @@ const fileUpload = require('express-fileupload');
 //const formData = require("express-form-data");
 ////////////////////////////////////////
 
-var salons = {};
+global.salons = {};
 ////////////////////////////////////////
 
 var server = app.listen(3000, function(){
@@ -43,43 +42,44 @@ app.use(fileUpload());
 app.set("view engine", "ejs"); 
 app.set("views", __dirname + "/public"); 
 
-var io = socket(server, {cookie: false});
-io.on('connection', function(socket){
-  console.log('made socket connection', socket.id);
-  
+global.io = socket(server, {cookie: false});
+io.on('connection', function(socket){  
+  socket.on('login', (data)=>{
+    salons[data.room].addMembre(data.pseudo, socket.id);
+    socket.join(data.room);
+  });
+
   socket.on('page', function(data){
-    io.sockets.emit('page', parseInt(data));
-    pageProf = parseInt(data);
-    if (annotations[parseInt(data)-1] === undefined) {
-      annotations[parseInt(data)-1] = [];
+    salons[data.room].setPage(parseInt(data.page));
+    if (salons[data.room].annotations[parseInt(data.page)-1] === undefined) {
+      salons[data.room].annotations[parseInt(data.page)-1] = [];
     }
   })
 
-  socket.on('getPage', function(){
-    socket.emit('page', pageProf);
-    console.log("getPage, " + sizeof(pageProf) + "o envoyés");
+  socket.on('getPage', function(data){
+    io.to(data).emit('page', salons[data].pageProf);
   })
   
   socket.on('annotPoint', (data) => {
-    io.sockets.emit('annotPoint', data);
-    annotations[pageProf-1][annotations[pageProf-1].length] = [];
-    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data);
+    let salon = salons[data.room];
+    io.to(data.room).emit('annotPoint', data.data);
+    salon.annotations[salon.pageProf-1][salon.annotations[salon.pageProf-1].length] = [];
+    salon.annotations[salon.pageProf-1][salon.annotations[salon.pageProf-1].length - 1].push(data.data);
   })
 
   socket.on('annotLine', (data) => {
-    io.sockets.emit('annotLine', data);
-    annotations[pageProf-1][annotations[pageProf-1].length - 1].push(data)
+    io.to(data.room).emit('annotLine', data.data);
+    let salon = salons[data.room];
+    salon.annotations[salon.pageProf-1][salon.annotations[salon.pageProf-1].length - 1].push(data.data)
   })
 
-  socket.on('getAllAnnot', () => {
-    socket.emit('allAnnot', annotations);
-    console.log('getAllAnnot, ' + sizeof(annotations) + 'o envoyés');
+  socket.on('getAllAnnot', (data) => {
+    io.to(data).emit('allAnnot', salons[parseInt(data)].annotations);
   })
 
-  socket.on('clear', () => {
-    console.log('clear' + pageProf);
-    annotations[pageProf - 1] = [];
-    io.sockets.emit('clear');
+  socket.on('clear', (data) => {
+    salons[data].annotations[salons[data].pageProf - 1] = [];
+    io.to(data).emit('clear');
   })
 
 })
@@ -89,3 +89,4 @@ routes(app);
 module.exports = app;
 module.exports = server;
 module.exports.salons = salons;
+module.exports = io;
