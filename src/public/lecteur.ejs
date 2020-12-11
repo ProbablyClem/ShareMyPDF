@@ -24,11 +24,13 @@
         <!-----Partie poser questions----->
         <div id="zoneQuestion">
             </br>
-            <input type="text" id="sujet" placeholder="Sujet..." required>
-            <textarea id="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
+        <form action="#" id="myForm">
+            <input type="text" id="sujet" name="sujet" placeholder="Sujet..." required>
+            <textarea id="contenuQuestion" name="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
             <button id="envoyer">Envoyer</button>
+        </form>
         </div>
-    <!------Partie affichage des questions-->
+    <!------Partie affichage des questions------>
         <ul id="listeQuestions">
             
         </ul>

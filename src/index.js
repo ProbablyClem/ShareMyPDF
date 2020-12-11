@@ -82,7 +82,16 @@ io.on('connection', function(socket){
     io.sockets.emit('clear');
   })
 
+  socket.on('QuestionsAEnvoyer', (data) => {
+    console.log("Test Recevoir question");
+    io.sockets.emit('QuestionsAEnvoyer',data);
+    console.log("Recibido el sujeto: "+data.leSujet+" Recibido el contenido: "+data.leContenu);
+  })
+
 })
+
+
+
 
 routes(app);
 
