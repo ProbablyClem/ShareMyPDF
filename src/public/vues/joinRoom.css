@@ -1,11 +1,10 @@
 body{
   display: flex;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 
 input{
   justify-content: center;
-  font-size: 0.80em;
-  margin-left: 10px;
+  font-size: 1.5em;
 }

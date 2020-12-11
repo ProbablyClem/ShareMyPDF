@@ -1,5 +1,7 @@
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
+
+var salons = require('./index');
 const Salon = require('./Salon');
 
 function genCode(){
@@ -68,7 +70,10 @@ app.post('/param',(req,res)=>{
 
 ////////////////////////////////////////////////////////////////////////////////
 //Upload
-app.post('/setPDF', upload.single('profile'), (req, res) => {
+/*
+app.post('/setPDF', (req, res) => {
+  console.log(req.files);
+  console.log(req.file);
   if(!req.files.f){
     res.send(400);
   }
@@ -84,7 +89,27 @@ app.post('/setPDF', upload.single('profile'), (req, res) => {
   console.log(salons);
   res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
   res.end();
+});*/
+
+app.post('/setPdf', function (req, res) {
+  var busboy = new Busboy({ headers: req.headers });
+  busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+
+    var saveTo = path.join(__dirname, 'uploads/' + filename);
+    file.pipe(fs.createWriteStream(saveTo));
+    
+  });
+  const pdf = req.files.f.name;
+  const pseudo = req.body.pseudo;
+  let avatar = req.files.f;
+  avatar.mv('public/uploads/' + avatar.name);
+  let code = genCode();
+  let salon = new Salon(pdf, code, req.ip, pseudo);
+  salons[code] = salon;
+  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+  res.end(); 
 });
+
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests

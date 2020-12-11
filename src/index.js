@@ -1,19 +1,23 @@
 var express = require('express');
+Busboy = require('busboy');
 var socket = require('socket.io');
-var multer = require('multer');
-var upload = multer({dest:'uploads/'});
 var sizeof = require('object-sizeof');
+
+var path = require('path');
+var fs = require('fs');
+
 const Salon = require('./Salon');
 const routes = require('./routes');
 let annotations = [];
 
 
 app = express();
+
 const morgan = require('morgan');
-const bodyparser = require('body-parser');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
-//const formData = require("express-form-data");
+
+
 ////////////////////////////////////////
 
 global.salons = {};
@@ -23,19 +27,11 @@ var server = app.listen(3000, function(){
   console.log("Listen to request on port 3000");
 });
 
-app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('short'));
 
 app.use(express.static('public'));
 ////////////////////////////////////////
 app.use(fileUpload());
-
-
-//app.use(formData.parse(options));
-//app.use(formData.format());
-//app.use(formData.stream());
-//app.use(formData.union());
-
 ////////////////////////////////////////
 
 //Set view engine to ejs
@@ -82,7 +78,21 @@ io.on('connection', function(socket){
     io.to(data).emit('clear');
   })
 
+  socket.on('QuestionItems', (data) =>{
+    console.log("Question bien envoyée !");
+    io.sockets.emit('QuestionItems',data);
+    console.log("Nom de la question : "+data.leNom+"\nIntitulés : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
+  })
+  socket.on('QuestionsAEnvoyer', (data) => {
+    console.log("Test Recevoir question");
+    io.sockets.emit('questionsEmmits',data);
+    console.log("Sujet: "+data.leSujet+" Contenu: "+data.leContenu);
+  })
+
 })
+
+
+
 
 routes(app);
 
