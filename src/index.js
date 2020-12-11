@@ -82,6 +82,11 @@ io.on('connection', function(socket){
     io.sockets.emit('clear');
   })
 
+  socket.on('QuestionItems', (data) =>{
+    console.log("Question bien envoyée !");
+    io.sockets.emit('QuestionItems',data);
+    console.log("Nom de la question : "+data.leNom+"\nIntitulés : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
+  })
 })
 
 routes(app);
