@@ -89,8 +89,8 @@ io.on('connection', function(socket){
   })
   socket.on('QuestionsAEnvoyer', (data) => {
     console.log("Test Recevoir question");
-    io.sockets.emit('QuestionsAEnvoyer',data);
-    console.log("Recibido el sujeto: "+data.leSujet+" Recibido el contenido: "+data.leContenu);
+    io.sockets.emit('questionsEmmits',data);
+    console.log("Sujet: "+data.leSujet+" Contenu: "+data.leContenu);
   })
 
 })

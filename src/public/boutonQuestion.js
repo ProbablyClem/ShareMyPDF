@@ -5,7 +5,7 @@ var submit = document.getElementById("envoyer");
 
 submit.addEventListener("click", (event)=>{
     event.preventDefault();
-
+    
     let myForm = document.getElementById('myForm');
     let fd = new FormData(myForm);
 
