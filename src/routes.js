@@ -95,6 +95,12 @@ app.get("/lecteur", (req,res) =>{
 app.get("/presentateur", (req,res) =>{
   res.render("presentateur", {salon: 1234, username: "clement", pdf: "example.pdf"});
 })
+
+//quizzProf
+app.get("/quizzProf", (requ,res) =>{
+  res.render("quizzProf.ejs");
+})
+
 }
 
 module.exports = routesSetup;
