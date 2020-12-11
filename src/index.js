@@ -14,6 +14,7 @@ const morgan = require('morgan');
 const bodyparser = require('body-parser');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
+//const formData = require("express-form-data");
 ////////////////////////////////////////
 
 var salons = {};
@@ -29,6 +30,13 @@ app.use(morgan('short'));
 app.use(express.static('public'));
 ////////////////////////////////////////
 app.use(fileUpload());
+
+
+//app.use(formData.parse(options));
+//app.use(formData.format());
+//app.use(formData.stream());
+//app.use(formData.union());
+
 ////////////////////////////////////////
 
 //Set view engine to ejs
