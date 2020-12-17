@@ -104,7 +104,6 @@ app.post('/setPdf', function (req, res) {
   let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
-  console.log(salons);
   res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
   res.end(); 
 });
@@ -123,7 +122,6 @@ app.get("/presentateur", (req,res) =>{
   let ip = "127.0.0.1"
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
-  console.log(salons);
   res.render("presentateur", {salon: code, username: pseudo, pdf: pdf});
 })
 }

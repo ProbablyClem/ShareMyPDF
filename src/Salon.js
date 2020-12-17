@@ -24,7 +24,20 @@ class Salon{
         io.to(this.code).emit('page', parseInt(page));
     }
 
+    rmMembre(id){
+        console.log(this.membres);
+        if(id == this.presentateurId){
+            this.presentateurId = ""
+        }
+        else{
+            this.membres.delete(this.getKeyByValue(id));
+        }
+        
+    }
 
+    getKeyByValue(value) {
+        return Object.keys(this.membres).find(key => object[key] === value);
+      }
 }
 
 module.exports = Salon;

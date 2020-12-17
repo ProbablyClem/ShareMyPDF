@@ -39,9 +39,9 @@ app.set("view engine", "ejs");
 app.set("views", __dirname + "/public"); 
 
 global.io = socket(server, {cookie: false});
-io.on('connection', function(socket){  
+io.on('connection', function(socket){
+
   socket.on('login', (data)=>{
-    console.log(salons);
     salons[data.room].addMembre(data.pseudo, socket.id);
     socket.join(data.room);
   });
@@ -84,15 +84,35 @@ io.on('connection', function(socket){
     io.sockets.emit('QuestionItems',data);
     console.log("Nom de la question : "+data.leNom+"\nIntitulés : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
   })
+
   socket.on('QuestionsAEnvoyer', (data) => {
     console.log("Test Recevoir question");
     io.sockets.emit('questionsEmmits',data);
     console.log("Sujet: "+data.leSujet+" Contenu: "+data.leContenu);
   })
 
+  socket.on('disconnect', () =>{
+    let salon =getSalon(socket.id);
+    if (salon != 0){
+      console.log("salon :"+salon);
+      salons[salon].rmMembre(socket.id);
+    }
+  })
+
 })
 
-
+//renvoi le salon associé a ce socket
+function getSalon(id){
+  for (const [key, value] of Object.entries(salons)) {
+    console.log("key :" +key);
+    console.log(salons[key].membres)
+    console.log(id);
+    if(value.hasOwnProperty(id) || value.presentateurId == id){
+      return key;
+    }
+  }
+  return "0";
+}
 
 
 routes(app);
