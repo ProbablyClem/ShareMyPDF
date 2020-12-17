@@ -94,8 +94,17 @@ io.on('connection', function(socket){
   socket.on('disconnect', () =>{
     let salon =getSalon(socket.id);
     if (salon != 0){
-      console.log("salon :"+salon);
       salons[salon].rmMembre(socket.id);
+      if (salons[salon].estVide() && salon != "1234"){
+        console.log("Supprime salon");
+        //suprime pdf
+        try {
+          fs.unlinkSync("public/uploads/"+salons[salon].pdf);
+        } catch(err) {
+          console.error(err)
+        }
+        salons[salon].delete; //suprime salon
+      }
     }
   })
 
@@ -104,9 +113,6 @@ io.on('connection', function(socket){
 //renvoi le salon associé a ce socket
 function getSalon(id){
   for (const [key, value] of Object.entries(salons)) {
-    console.log("key :" +key);
-    console.log(salons[key].membres)
-    console.log(id);
     if(value.hasOwnProperty(id) || value.presentateurId == id){
       return key;
     }
