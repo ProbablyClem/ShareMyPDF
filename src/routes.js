@@ -57,6 +57,13 @@ app.get('/room/:room',(req,res)=>{
   res.render("vues/param", {code : code});
 });
 
+//getQuizzProf
+app.get('/quizzProf',(req,res)=>{
+  const questions = req.leNom;
+  console.log("Questions :"+questions);
+  res.render("quizzProf.ejs");
+});
+
 //setPseudo2
 app.post('/param',(req,res)=>{
   //console.log("Pseudo :"+req.body.pseudo);

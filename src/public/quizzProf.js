@@ -157,7 +157,7 @@ function launchQuestion(i){
     var items = toutes_ques[id].props;
     var bon_item = toutes_ques[id].rep_vraie;
     socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item});
-    console.log("Question "+id+1+" lancée");
+    console.log("Question "+i+" lancée");
 }
 
 window.addEventListener("load",displayQuestions);
