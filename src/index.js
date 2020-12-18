@@ -92,6 +92,7 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', () =>{
     let salon =getSalon(socket.id);
+    console.log("Decconexion du salon: "+ salon);
     if (salon != 0){
       salons[salon].rmMembre(socket.id);
       if (salons[salon].estVide() && salon != "1234"){
@@ -112,7 +113,7 @@ io.on('connection', function(socket){
 //renvoi le salon associé a ce socket
 function getSalon(id){
   for (const [key, value] of Object.entries(salons)) {
-    if(value.hasOwnProperty(id) || value.presentateurId == id){
+    if(Object.values(value.membres).indexOf(id) > -1 || value.presentateurId == id){
       return key;
     }
   }

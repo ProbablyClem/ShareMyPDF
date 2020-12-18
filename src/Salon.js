@@ -30,16 +30,16 @@ class Salon{
             this.presentateurId = ""
         }
         else{
-            this.membres.delete(this.getKeyByValue(id));
+            delete this.membres[this.getKeyByValue(id)];
             console.log(this.membres);
         }
         console.log(this.estVide());
     }
 
     estVide(){
-        console.log("presentateur= " + this.presentateurId +" membres size: " + Object.entries(this.membres).length);
+        console.log("presentateur= " + this.presentateurId +" membres size: " + Object.keys(this.membres).length);
         
-        if(Object.entries(this.membres).length == 0 && this.presentateurId == ""){
+        if(Object.keys(this.membres).length == 0 && this.presentateurId == ""){
             return true;
         }
         else{
@@ -47,7 +47,7 @@ class Salon{
         }
     }
     getKeyByValue(value) {
-        return Object.keys(this.membres).find(key => object[key] === value);
+        return Object.keys(this.membres).find(key => this.membres[key] === value);
       }
 }
 
