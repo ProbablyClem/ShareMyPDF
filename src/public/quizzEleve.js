@@ -51,6 +51,22 @@ function afficheQuestion(nomQuestion, items){
 
 }
 
+function envoyerReponse(){
+    i = 0;
+    while(!input[i].checked && i < input.length){
+        i++;
+    }
+    if(i == input.length){
+        alert("Veuillez cocher une réponse !");
+    }
+    else{
+        socket.emit('ReponseChoisie', {leNom: question.innerText, repChoisie: input[i].value});
+        console.log("Réponse "+input[i].value+" envoyée !");
+    }
+}
+
+envoyer.addEventListener("click", envoyerReponse);
+
 
 socket.on('QuestionItems', (data) =>{
     console.log(data);
