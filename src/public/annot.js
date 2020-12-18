@@ -12,6 +12,8 @@ export {
     pageNumber
 }
 
+let room = document.getElementById("room").innerHTML;
+
 let lastX, lastY;
 export const pos = canvas.getBoundingClientRect();
 const DEF_WIDTH = 10;
