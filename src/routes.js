@@ -59,7 +59,8 @@ app.get('/room/:room',(req,res)=>{
 
 //getQuizzProf
 app.get('/quizzProf',(req,res)=>{
-  res.render("quizzProf.ejs");
+  let room = req.query.room;  // true
+  res.render("quizzProf.ejs", {salon : room});
 });
 
 //setPseudo2

@@ -169,3 +169,5 @@ bouton_add.addEventListener("click",ajouterReponse);
 bouton_creer.addEventListener("click", creerQuestion);
 
 window.addEventListener("load",displayQuestions);
+
+let room = document.getElementById("room").innerHTML;
