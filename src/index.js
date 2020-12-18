@@ -80,9 +80,10 @@ io.on('connection', function(socket){
   })
 
   socket.on('QuestionItems', (data) =>{
-    console.log("Question bien envoyée !");
-    io.sockets.emit('QuestionItems',data);
-    console.log("Nom de la question : "+data.leNom+"\nIntitulés : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
+    //let salon = getSalon(socket.id);
+    //console.log("Question bien envoyée à "+salon+" !");
+    io.to("1234").emit('QuestionItems',data);
+    console.log("Nom de la question : "+data.leNom+"\nItems : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
   })
   socket.on('QuestionsAEnvoyer', (data) => {
     console.log("Test Recevoir question");
@@ -113,6 +114,7 @@ io.on('connection', function(socket){
 //renvoi le salon associé a ce socket
 function getSalon(id){
   for (const [key, value] of Object.entries(salons)) {
+    console.log("Value.presentateurId = "+value.presentateurId+"\nId = "+id);
     if(Object.values(value.membres).indexOf(id) > -1 || value.presentateurId == id){
       return key;
     }

@@ -1,7 +1,14 @@
-function popitup(url) {
-    newwindow=window.open(url,'name','height=300,width=650,top=75,left=860');
-    if (window.focus) {
-        newwindow.focus();
+let affiche = false;
+
+function createIFrame(room){
+    if(!affiche){
+        document.getElementById("iframe").style.display = "block";
+        affiche = true;
     }
-    return false;
+    else{
+        document.getElementById("iframe").style.display = "none";
+        affiche = false;
+    }
+
+    console.log(room);
 }

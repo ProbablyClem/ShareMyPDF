@@ -35,3 +35,4 @@ document.getElementById("go").addEventListener("click", () => changePage('go'));
 drawPage(pageNumber);
 console.log(room);
 socket.emit("page", {room: room, page: pageNumber});
+console.log(socket);
