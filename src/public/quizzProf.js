@@ -1,5 +1,3 @@
-import { socket } from "./socket.js"
-
 var balise_questions = document.getElementById('questions');
 var balise_choix = document.getElementById('choix');
 const MAX_PROP = 4;
@@ -78,12 +76,7 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [new Quest_Quizz("La question s'affiche-t-elle ?", ["oui", "non"]), new Quest_Quizz("Et celle-ci ?", ["oui", "non"])];
-
-function getAllQuestions(){
-    return allQuestions;
-}
-
+var allQuestions = [new Quest_Quizz("Qu'est-ce qu'une question ?", ["oui", "non"])];
 var q_temp = new Quest_Quizz();
 q_temp.display();
 
@@ -100,7 +93,7 @@ function afficherQuestion(q, index){
     
     var bouton1 = document.createElement("button");
     bouton1.title = "Lancer question";
-    bouton1.onclick = () => launchQuestion(index);
+    bouton1.onclick = () => console.log("lancer marche");
     bouton1.innerText = "→";
     liste.appendChild(texte);
     liste.appendChild(bouton1);
@@ -148,16 +141,6 @@ function displayQuestions(){
         index++;
         afficherQuestion(quest, index)
     });
-}
-
-function launchQuestion(i){
-    var id = i-1;
-    var toutes_ques = getAllQuestions();
-    var nom_question = toutes_ques[id].nom;
-    var items = toutes_ques[id].props;
-    var bon_item = toutes_ques[id].rep_vraie;
-    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item});
-    console.log("Question "+i+" lancée");
 }
 
 window.addEventListener("load",displayQuestions);

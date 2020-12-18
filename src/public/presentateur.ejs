@@ -14,9 +14,9 @@
     <input id="pageInput" type="number">
     <button id="go" class="moveBtn">Go</button>
     <button id="clear">clear</button>
-    <button id="quizz" onclick="return popitup('/quizzProf')">Voir Questions</button>
-    <p id="room"><%= salon%></p>
-    <p id="username"><%= username%></p>
+    <button id="quizz" onclick="return popitup('http:localhost:3000/quizzProf')">Voir Questions</button>
+    <p id="room">code = <%= salon%></p>
+    <p id="username">username = <%= username%></p>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
 

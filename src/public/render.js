@@ -1,5 +1,3 @@
-import { socket } from './socket.js';
-
 export var pageNumber = 1;
 export var rendering = false;
 var toRender = 0;
@@ -79,7 +77,3 @@ export function goTo() {
     var x = Number(pageIpt.value);
     drawPage(x);
 }
-
-let pseudo = document.getElementById("username").innerHTML;
-let room = document.getElementById("room").innerHTML;
-socket.emit("login", { room: room, pseudo: pseudo});
