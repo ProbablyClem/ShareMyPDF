@@ -12,6 +12,7 @@ import { restoreAnnot } from './annot.js';
 
 var etatSuivi = false;
 export var pageProf = 1;
+let room = document.getElementById("room").innerHTML;
 
 console.log(document.getElementById("username").innerText);
 
@@ -34,6 +35,7 @@ function suivre(){
 }
 
 socket.on('page', function(data){
+    //console.log("Page: "+data);
     if(data != pageNumber && etatSuivi == true){
         drawPage(data);
         restoreAnnot();
@@ -49,5 +51,5 @@ document.getElementById("follow").addEventListener("click", suivre);
 
 drawPage(pageNumber);
 suivre();
-socket.emit('getPage');
+socket.emit('getPage', room);
 

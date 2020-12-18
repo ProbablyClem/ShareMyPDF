@@ -9,6 +9,8 @@ import {
     clearPage
 } from './annot.js';
 
+let room = document.getElementById("room").innerHTML;
+
 import { socket } from './socket.js';
 
 import { pageProf } from './renderLect.js';
@@ -28,14 +30,16 @@ socket.on('annotLine', (data) => {
 })
 
 socket.on('clear', () => {
+    console.log("cleared");
     clearPage(pageProf);
 })
 
 socket.on('allAnnot', (data) => {
     //console.log("Taille du paquet : " + sizeof(data));
+    console.log("Annot : " +data);
     setAnnot(data);
     restoreAnnot();
 })
 
-socket.emit('getPage');
-socket.emit('getAllAnnot');
+socket.emit('getPage', room);
+socket.emit('getAllAnnot', room);
