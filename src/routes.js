@@ -59,8 +59,6 @@ app.get('/room/:room',(req,res)=>{
 
 //getQuizzProf
 app.get('/quizzProf',(req,res)=>{
-  const questions = req.leNom;
-  console.log("Questions :"+questions);
   res.render("quizzProf.ejs");
 });
 

@@ -14,7 +14,7 @@
     <input id="pageInput" type="number">
     <button id="go" class="moveBtn">Go</button>
     <button id="clear">clear</button>
-    <button id="quizz" onclick="return popitup('/quizzProf')">Voir Questions</button>
+    <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Questions</button>
     <p id="room"><%= salon%></p>
     <p id="username"><%= username%></p>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
@@ -28,5 +28,6 @@
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
     <script src="openPopup.js"></script>
+    <iframe id="iframe" src="/quizzProf" style="display: none;"></iframe>
 </body>
 </html>

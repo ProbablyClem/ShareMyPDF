@@ -2,6 +2,10 @@ import { socket } from "./socket.js"
 
 var balise_questions = document.getElementById('questions');
 var balise_choix = document.getElementById('choix');
+
+var bouton_add = document.getElementById("add");
+var bouton_creer = document.getElementById("creer");
+
 const MAX_PROP = 4;
 const MIN_PROP = 2;
 
@@ -151,6 +155,7 @@ function displayQuestions(){
 }
 
 function launchQuestion(i){
+    console.log(socket.id);
     var id = i-1;
     var toutes_ques = getAllQuestions();
     var nom_question = toutes_ques[id].nom;
@@ -159,5 +164,8 @@ function launchQuestion(i){
     socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item});
     console.log("Question "+i+" lancée");
 }
+
+bouton_add.addEventListener("click",ajouterReponse);
+bouton_creer.addEventListener("click", creerQuestion);
 
 window.addEventListener("load",displayQuestions);
