@@ -1,5 +1,7 @@
 import { socket } from "./socket.js"
 
+let room = document.getElementById("room").innerHTML;
+
 var balise_questions = document.getElementById('questions');
 var balise_choix = document.getElementById('choix');
 
@@ -161,7 +163,7 @@ function launchQuestion(i){
     var nom_question = toutes_ques[id].nom;
     var items = toutes_ques[id].props;
     var bon_item = toutes_ques[id].rep_vraie;
-    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item});
+    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item, Salon: room});
     console.log("Question "+i+" lancée");
 }
 
@@ -169,5 +171,3 @@ bouton_add.addEventListener("click",ajouterReponse);
 bouton_creer.addEventListener("click", creerQuestion);
 
 window.addEventListener("load",displayQuestions);
-
-let room = document.getElementById("room").innerHTML;

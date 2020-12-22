@@ -1,6 +1,6 @@
 import { socket } from "./socket.js";
 
-let bouton = document.getElementById("test");
+let room = document.getElementById("room").innerHTML;
 
 let titre_question = document.getElementById("IntituleQuestion");
 
@@ -60,8 +60,8 @@ function envoyerReponse(){
         alert("Veuillez cocher une réponse !");
     }
     else{
-        socket.emit('ReponseChoisie', {leNom: question.innerText, repChoisie: input[i].value});
-        console.log("Réponse "+input[i].value+" envoyée !");
+        socket.emit('ReponseChoisie', {leNom: question.innerText, repChoisie: input[i].value, Salon: room});
+        console.log("Réponse "+input[i].value+" envoyée au salon : "+room);
     }
 }
 

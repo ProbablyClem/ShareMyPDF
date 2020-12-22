@@ -82,13 +82,19 @@ io.on('connection', function(socket){
   socket.on('QuestionItems', (data) =>{
     //let salon = getSalon(socket.id);
     //console.log("Question bien envoyée à "+salon+" !");
-    io.to("1234").emit('QuestionItems',data);
+    io.to(data.Salon).emit('QuestionItems',data);
     console.log("Nom de la question : "+data.leNom+"\nItems : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
   })
+
   socket.on('QuestionsAEnvoyer', (data) => {
     console.log("Test Recevoir question");
     io.sockets.emit('messages',data);
     console.log("Sujet: "+data.leSujet+" Contenu: "+data.leContenu);
+  })
+
+  socket.on('ReponseChoisie', (data) => {
+    io.to(data.Salon).emit('ReponseChoisie',data);
+    console.log("Réponse "+data.repChoisie+" envoyée !");
   })
 
   socket.on('disconnect', () =>{
