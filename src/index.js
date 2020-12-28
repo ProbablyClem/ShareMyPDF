@@ -83,7 +83,11 @@ io.on('connection', function(socket){
     //let salon = getSalon(socket.id);
     //console.log("Question bien envoyée à "+salon+" !");
     io.to(data.Salon).emit('QuestionItems',data);
-    console.log("Nom de la question : "+data.leNom+"\nItems : "+data.lesItems+"\nBonne réponse : "+data.lesItems[data.bonneRep]);
+    console.log("Nom de la question : "+data.leNom+"\nItems : ");
+    data.lesItems.forEach(props => {
+        console.log(props.intitule);
+    });
+    console.log("Bonne réponse : "+data.lesItems[data.bonneRep].intitule);
   })
 
   socket.on('QuestionsAEnvoyer', (data) => {
@@ -93,8 +97,10 @@ io.on('connection', function(socket){
   })
 
   socket.on('ReponseChoisie', (data) => {
+    // Récupération de l'objet de la question -> Récupération du props choisi (par id) -> Incrémentation de ce props
     io.to(data.Salon).emit('ReponseChoisie',data);
-    console.log("Réponse "+data.repChoisie+" envoyée !");
+    console.log("Réponse "+data.idRepChoisie+" envoyée !");
+    console.log(data);
   })
 
   socket.on('disconnect', () =>{

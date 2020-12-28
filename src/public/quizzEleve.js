@@ -15,6 +15,8 @@ let label = [];
 
 let envoyer = document.createElement("button");
 
+let idQuestionEnCours;
+
 for(var i = 0; i < 4; i++){
     input.push(document.createElement("input"));
     input[i].type = "radio";
@@ -35,9 +37,9 @@ function afficheQuestion(nomQuestion, items){
     titre_question.appendChild(question);
     let i = 0;
     items.forEach(item => {
-        input[i].value = item;
+        input[i].value = item.intitule;
 
-        label[i].innerText = item;
+        label[i].innerText = item.intitule;
 
         reponses.appendChild(ensemble_label_input[i]);
 
@@ -60,7 +62,7 @@ function envoyerReponse(){
         alert("Veuillez cocher une réponse !");
     }
     else{
-        socket.emit('ReponseChoisie', {leNom: question.innerText, repChoisie: input[i].value, Salon: room});
+        socket.emit('ReponseChoisie', {leNom: question.innerText, idRepChoisie: i, Salon: room, idQuestion: idQuestionEnCours});
         console.log("Réponse "+input[i].value+" envoyée au salon : "+room);
     }
 }
@@ -70,5 +72,14 @@ envoyer.addEventListener("click", envoyerReponse);
 
 socket.on('QuestionItems', (data) =>{
     console.log(data);
+    idQuestionEnCours = data.idQuestion;
     afficheQuestion(data.leNom, data.lesItems);
+});
+
+
+// A suppr après, il s'agit d'un test montrant qu'on peut rien renvoyer au présentateur
+socket.on('ReponseChoisie', (data) =>{
+    //allQuestions[data.idQuestion].props[data.idRepChoisie].addCompteur();
+    console.log("RepChoisie : ");
+    console.log(data);
 });
