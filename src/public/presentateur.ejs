@@ -6,6 +6,13 @@
     <title>Salon Presentateur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="lecteur.css">
 </head>
 <body>
     <button id="prev" class="moveBtn">Previous</button>
@@ -20,11 +27,62 @@
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
 
-    <canvas id="viewer" style='border : 1px solid #000'></canvas>
-    <!------Partie affichage des questions-->
-    <ul id="listeQuestions">
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Liste des participants</h3>
+            </div>
+        <ul class="list-unstyled components">
+            <p>Présentateur</p>
+            <li>
+                <script>
+                    var presentateur = "Le boss";
+                    document.write('<p>', presentateur, '</p>');
+                </script>
+            </li>
+        </ul>
+        <ul class="list-unstyled components">
+            <p>Lecteur</p>
+            <li>
+                <script>
+                    var eleve = ['eleve 1', 'eleve 2', 'eleve 3', 'eleve 4', 'eleve 5'];
+                    eleve.forEach(function (item, index, array) {
+                        document.write('<p>', item, '</p>' );
+                    });
+
+            </script>
+            </li>
+
+        </nav>
+        <div id="content">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <canvas id="viewer" style='border : 1px solid #000'></canvas>
+        <div id="content">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <nav id="sidebar">
+             <!-----Partie poser questions----->
+             <div id="questions" >
+                <ul id="listeQuestions">
+                </ul>
+             </div>           
+            </div>
+        </div>
+        </nav>
+    </div>
     
-    </ul>
+
+
+    <!------Partie affichage des questions-->
     <script type="module" src="renderHtml.js"></script>
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
