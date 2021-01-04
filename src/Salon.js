@@ -8,7 +8,6 @@ class Salon{
         this.pdf = pdf;
         this.pageProf = 1;
         this.annotations = [];
-        this.part = [];
     }
 
     addMembre(pseudo, id){
@@ -17,13 +16,8 @@ class Salon{
         }
         else{
             this.membres[pseudo] = id;
-            this.part.push(pseudo);
         }
         
-    }
-
-    getMembres(){
-        return this.part;
     }
 
     setPage(page){
