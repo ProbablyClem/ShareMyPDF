@@ -12,6 +12,7 @@ socket.on("membres", (data) =>{
     try{
 
         let presDiv = document.getElementById("presentateur");
+        presDiv.innerHTML = "";
         let presBalise = document.createElement("p");
         presBalise.innerHTML = presentateur;
         presDiv.appendChild(presBalise);
@@ -21,7 +22,7 @@ socket.on("membres", (data) =>{
     }
     
     let lectDiv = document.getElementById("lecteur");
-    
+    lectDiv.innerHTML = "";
     
     eleve.forEach(function (item, index, array) {
         let lectBalise = document.createElement("p");
