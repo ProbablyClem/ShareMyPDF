@@ -44,7 +44,6 @@ io.on('connection', function(socket){
   socket.on('login', (data)=>{
     salons[data.room].addMembre(data.pseudo, socket.id);
     socket.join(data.room);
-    io.to(data.room).emit("pseudos",salons[data.room].getMembres());
   });
 
   socket.on('page', function(data){
@@ -75,6 +74,10 @@ io.on('connection', function(socket){
     io.to(data).emit('allAnnot', salons[data].annotations);
   })
 
+  socket.on('getMembres', (data) =>{
+    io.to(data).emit('membres', {pres: salons[data].presentateurPseudo, membres: salons[data].membres});
+  })
+  
   socket.on('clear', (data) => {
     salons[data].annotations[salons[data].pageProf - 1] = [];
     io.to(data).emit('clear');
