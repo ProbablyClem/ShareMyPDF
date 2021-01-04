@@ -36,23 +36,12 @@
             </div>
         <ul class="list-unstyled components">
             <p>Présentateur</p>
-            <li>
-                <script>
-                    var presentateur = "Le boss";
-                    document.write('<p>', presentateur, '</p>');
-                </script>
+            <li id="presentateur">
             </li>
         </ul>
         <ul class="list-unstyled components">
             <p>Lecteur</p>
-            <li>
-                <script>
-                        var eleve = ['eleve 1', 'eleve 2', 'eleve 3', 'eleve 4', 'eleve 5'];
-                        eleve.forEach(function (item, index, array) {
-                            document.write('<p>', item, '</p>' );
-                        });
-
-                </script>
+            <li id='lecteur'>
             </li>
 
         </nav>
@@ -101,5 +90,6 @@
     <script type="module" src="renderLect.js"></script>
     <script type="module" src="annotLect.js"></script>
     <script type="module" src="./quizzEleve.js"></script>
+    <script type="module" src="affichageMembres.js"></script>
 </body>
 </html>

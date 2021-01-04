@@ -75,6 +75,7 @@ io.on('connection', function(socket){
   })
 
   socket.on('getMembres', (data) =>{
+    console.log(data);
     io.to(data).emit('membres', {pres: salons[data].presentateurPseudo, membres: salons[data].membres});
   })
   
