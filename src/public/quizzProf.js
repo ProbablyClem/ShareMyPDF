@@ -1,5 +1,7 @@
 import { socket } from "./socket.js"
 
+let room = document.getElementById("room").innerHTML;
+
 var balise_questions = document.getElementById('questions');
 var balise_choix = document.getElementById('choix');
 
@@ -9,16 +11,31 @@ var bouton_creer = document.getElementById("creer");
 const MAX_PROP = 4;
 const MIN_PROP = 2;
 
+class ItemsDeReponse{
+    constructor(intitule = "", compteur = 0){
+        this.intitule = intitule;
+        this.compteur = compteur;
+    }
+
+    addCompteur(){
+        this.compteur++;
+    }
+}
+
 class Quest_Quizz {
-    constructor(nom = "", props = ["", ""], rep_vraie = 0){
+    constructor(nom = "", props = [new ItemsDeReponse(), new ItemsDeReponse()], rep_vraie = 0){
         this.nom = nom;
         this.props = props;
         this.rep_vraie = rep_vraie;
     }
 
+    getProps(){
+        return this.props;
+    }
+
     addRep(){
         if(this.props.length < MAX_PROP){
-            this.props.push("");
+            this.props.push(new ItemsDeReponse());
             this.display();
         }
         if(this.props.length >= MAX_PROP){
@@ -47,8 +64,8 @@ class Quest_Quizz {
             var input = document.createElement("input");
             input.id = "rep_"+(index+1);
             input.type = "text";
-            input.value = choix;
-            input.addEventListener("change", () => {this.props[index] = input.value});
+            input.value = choix.intitule;
+            input.addEventListener("change", () => {this.props[index].intitule = input.value});
             proposition.appendChild(input);
             balise_choix.appendChild(proposition);
             if(index === this.props.length-1 && this.props.length > MIN_PROP){
@@ -82,7 +99,8 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [new Quest_Quizz("La question s'affiche-t-elle ?", ["oui", "non"]), new Quest_Quizz("Et celle-ci ?", ["oui", "non"])];
+var allQuestions = [new Quest_Quizz("La question s'affiche-t-elle ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")]), 
+                                            new Quest_Quizz("Et celle-ci ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")])];
 
 function getAllQuestions(){
     return allQuestions;
@@ -130,10 +148,6 @@ function delQuest(i){
     displayQuestions();
 }
 
-function test(){
-    console.log("ça marche");
-}
-
 function creerQuestion(){
     if(q_temp.isValid()){
         allQuestions.push(q_temp.copy());
@@ -159,15 +173,26 @@ function launchQuestion(i){
     var id = i-1;
     var toutes_ques = getAllQuestions();
     var nom_question = toutes_ques[id].nom;
-    var items = toutes_ques[id].props;
+    var items = toutes_ques[id].getProps();
     var bon_item = toutes_ques[id].rep_vraie;
-    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item});
+    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item, Salon: room, idQuestion: id});
     console.log("Question "+i+" lancée");
 }
+
+function voirResultat(i){
+    var id = i-1;
+    var toutes_ques = getAllQuestions();
+    var nom_question = toutes_ques[id].nom;
+    var items = toutes_ques[id].props;
+
+}
+
+socket.on('ReponseChoisie', (data) =>{
+    allQuestions[data.idQuestion].props[data.idRepChoisie].addCompteur();
+    console.log(allQuestions[data.idQuestion]);
+});
 
 bouton_add.addEventListener("click",ajouterReponse);
 bouton_creer.addEventListener("click", creerQuestion);
 
 window.addEventListener("load",displayQuestions);
-
-let room = document.getElementById("room").innerHTML;
