@@ -92,3 +92,12 @@ a, a:hover, a:focus {
     position: absolute;
     bottom: 0;
 }
+
+#questions {
+    height: 40%;
+}
+
+#listeLecteurs {
+    height: 800px;
+    /* la taille marche pas en pourcentage à reprendre*/
+}
