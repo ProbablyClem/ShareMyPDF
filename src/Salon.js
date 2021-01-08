@@ -8,6 +8,7 @@ class Salon{
         this.pdf = pdf;
         this.pageProf = 1;
         this.annotations = [];
+        this.questionsEleve = [];
     }
 
     addMembre(pseudo, id){
@@ -50,6 +51,10 @@ class Salon{
     getKeyByValue(value) {
         return Object.keys(this.membres).find(key => this.membres[key] === value);
       }
+    
+    addQuestionEleve(value){
+        this.questionsEleve.push({leSujet: value.leSujet, leContenu: value.leContenu, pseudo : value.pseudo})
+    }
 }
 
 module.exports = Salon;
