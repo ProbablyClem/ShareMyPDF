@@ -626,3 +626,4 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 src/package-lock.json
+graph.svg
