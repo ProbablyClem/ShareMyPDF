@@ -8,8 +8,7 @@ import {
     addPoint,
     addLine,
     setAnnot,
-    clearPage,
-    pos
+    clearPage
 } from './annot.js'
 
 import { socket } from './socket.js';
@@ -25,6 +24,7 @@ window.onmousedown = (e) => {
 }
 
 canvas.addEventListener('mousedown', (e) => {
+    const pos = canvas.getBoundingClientRect();
     const x = e.pageX - pos.left;
     const y = e.pageY - pos.top;
     annotPoint(x, y);
@@ -38,6 +38,7 @@ canvas.addEventListener('mouseup', (e) => {
 
 canvas.addEventListener('mousemove', (e) => {
     if (pressed) {
+        const pos = canvas.getBoundingClientRect();
         const x = e.pageX - pos.left;
         const y = e.pageY - pos.top;
         annotLine(x, y);
@@ -48,6 +49,7 @@ canvas.addEventListener('mousemove', (e) => {
 
 canvas.addEventListener('mouseenter', (e) => {
     if (pressed) {
+        const pos = canvas.getBoundingClientRect();
         const x = e.pageX - pos.left;
         const y = e.pageY - pos.top;
         annotPoint(x, y);
