@@ -11,12 +11,17 @@ function renderHtml(data){
     var li = document.createElement("li");
     var span1 = document.createElement("span");
     var span2 = document.createElement("span");
+    var boutonQuitter = document.createElement("button");
 
-    span1.innerHTML = data.leSujet+'</br>';
-    span2.innerHTML = data.leContenu;
-
+    span1.innerHTML = data.leSujet;
+    span2.innerHTML = '</br>' + data.leContenu;
+    boutonQuitter.innerHTML = "x";
     li.appendChild(span1);
+    li.appendChild(boutonQuitter);
     li.appendChild(span2);
+    boutonQuitter.addEventListener("click", ()=>{
+        li.remove();
+    })
     listeQuestions.insertBefore(li, listeQuestions.firstChild);
 
     console.log(listeQuestions.childElementCount);
