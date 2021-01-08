@@ -6,6 +6,7 @@
     <title>Salon Presentateur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </head>
 <body>
     <button id="prev" class="moveBtn">Previous</button>
@@ -29,6 +30,11 @@
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
     <script src="openPopup.js"></script>
-    <iframe id="iframe" src="/quizzProf?room=<%= salon%>" style="display: none;"></iframe>
+    <div id="iframe" style = "display: none;">
+        <%- include('./quizzProf.ejs'); %>
+    </div>
+    <div id="resultats">
+        
+    </div>
 </body>
 </html>

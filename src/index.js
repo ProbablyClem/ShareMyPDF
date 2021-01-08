@@ -74,20 +74,27 @@ io.on('connection', function(socket){
     io.to(data).emit('allAnnot', salons[data].annotations);
   })
 
+  socket.on('getMembres', (data) =>{
+    io.to(data).emit('membres', {pres: salons[data].presentateurPseudo, membres: salons[data].membres});
+  })
+  
   socket.on('clear', (data) => {
     salons[data].annotations[salons[data].pageProf - 1] = [];
     io.to(data).emit('clear');
   })
 
   socket.on('QuestionItems', (data) =>{
-    //let salon = getSalon(socket.id);
-    //console.log("Question bien envoyée à "+salon+" !");
     io.to(data.Salon).emit('QuestionItems',data);
-    console.log("Nom de la question : "+data.leNom+"\nItems : ");
-    data.lesItems.forEach(props => {
+    salons[data.Salon].addQuestion(data.objectQuestion);
+    console.log("Nom de la question : "+data.objectQuestion.nom+"\nItems : ");
+    data.objectQuestion.props.forEach(props => {
         console.log(props.intitule);
     });
-    console.log("Bonne réponse : "+data.lesItems[data.bonneRep].intitule);
+    console.log("Bonne réponse : "+data.objectQuestion.props[data.objectQuestion.rep_vraie].intitule);
+  })
+
+  socket.on('getQuestions', (data) =>{
+    io.to(data).emit('questions', {objectQuestions: salons[data].questions});
   })
 
   socket.on('QuestionsAEnvoyer', (data) => {
@@ -108,6 +115,7 @@ io.on('connection', function(socket){
     console.log("Decconexion du salon: "+ salon);
     if (salon != 0){
       salons[salon].rmMembre(socket.id);
+      io.to(salon).emit('membres', {pres: salons[salon].presentateurPseudo, membres: salons[salon].membres});
       if (salons[salon].estVide() && salon != "1234"){
         console.log("Supprime salon");
         //suprime pdf

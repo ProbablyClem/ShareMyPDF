@@ -8,6 +8,7 @@ class Salon{
         this.pdf = pdf;
         this.pageProf = 1;
         this.annotations = [];
+        this.questions = [];
     }
 
     addMembre(pseudo, id){
@@ -17,6 +18,7 @@ class Salon{
         else{
             this.membres[pseudo] = id;
         }
+        
     }
 
     setPage(page){
@@ -48,7 +50,18 @@ class Salon{
     }
     getKeyByValue(value) {
         return Object.keys(this.membres).find(key => this.membres[key] === value);
-      }
+    }
+
+    addQuestion(q){
+        this.questions.push(q);
+        console.log("Question ajoutée : "+q.nom);
+        console.log("=============================");
+        console.log("Liste des questions à jour :")
+        this.questions.forEach(quest => {
+            console.log(quest.nom);
+        });
+        console.log("=============================");
+    }
 }
 
 module.exports = Salon;
