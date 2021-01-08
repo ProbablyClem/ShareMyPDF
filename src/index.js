@@ -85,14 +85,17 @@ io.on('connection', function(socket){
   })
 
   socket.on('QuestionItems', (data) =>{
-    //let salon = getSalon(socket.id);
-    //console.log("Question bien envoyée à "+salon+" !");
     io.to(data.Salon).emit('QuestionItems',data);
-    console.log("Nom de la question : "+data.leNom+"\nItems : ");
-    data.lesItems.forEach(props => {
+    salons[data.Salon].addQuestion(data.objectQuestion);
+    console.log("Nom de la question : "+data.objectQuestion.nom+"\nItems : ");
+    data.objectQuestion.props.forEach(props => {
         console.log(props.intitule);
     });
-    console.log("Bonne réponse : "+data.lesItems[data.bonneRep].intitule);
+    console.log("Bonne réponse : "+data.objectQuestion.props[data.objectQuestion.rep_vraie].intitule);
+  })
+
+  socket.on('getQuestions', (data) =>{
+    io.to(data).emit('questions', {objectQuestions: salons[data].questions});
   })
 
   socket.on('QuestionsAEnvoyer', (data) => {
