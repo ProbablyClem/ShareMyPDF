@@ -18,19 +18,9 @@ function renderHtml(data){
     li.appendChild(span2);
     listeQuestions.insertBefore(li, listeQuestions.firstChild);
 
-    /*
-    if (document.getElementById('listeQuestions').childElementCount == 3) {
-        listeQuestions.removeChild(listeQuestions.lastChild); La partie suppréssion marche
-    }
-
-    if (listeQuestions.childElementCount == 3) {
+    console.log(listeQuestions.childElementCount);
+    if(listeQuestions.childElementCount > 15){
         listeQuestions.removeChild(listeQuestions.lastChild);
     }
-
-    if (listeQuestions.size() == 3) {
-        listeQuestions.removeChild(listeQuestions.lastChild);
-    }
-    -------- J'ai testé tous ça -------------
-    */ 
     
 }
