@@ -8,7 +8,8 @@ import {
     addPoint,
     addLine,
     setAnnot,
-    clearPage
+    clearPage,
+    pos
 } from './annot.js'
 
 import { socket } from './socket.js';
@@ -16,33 +17,50 @@ let room = document.getElementById("room").innerHTML;
 
 let pressed = false;
 
-canvas.addEventListener('mousedown', (e) => {
+window.onmouseup = (e) => {
+    pressed = false;
+}
+window.onmousedown = (e) => {
     pressed = true;
-    annotPoint(e.pageX, e.pageY);
-    addPoint(e.pageX, e.pageY);
-    socket.emit('annotPoint', { room: room, data: {'x' : e.pageX, 'y' : e.pageY}});
+}
+
+canvas.addEventListener('mousedown', (e) => {
+    const x = e.pageX - pos.left;
+    const y = e.pageY - pos.top;
+    annotPoint(x, y);
+    addPoint(x, y);
+    socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y}});
 });
 
 canvas.addEventListener('mouseup', (e) => {
-    if (pressed) {
-        pressed = false;
-        socket.emit('annot', {room: room, data : annotations[pageNumber-1][annotations[pageNumber-1].length - 1]});
-    }
+    socket.emit('annot', {room: room, data : annotations[pageNumber-1][annotations[pageNumber-1].length - 1]});
 });
 
 canvas.addEventListener('mousemove', (e) => {
     if (pressed) {
-        annotLine(e.pageX, e.pageY);
-        addLine(e.pageX, e.pageY)
-        socket.emit('annotLine', {room: room, data: { 'x' : e.pageX, 'y' : e.pageY}});
+        const x = e.pageX - pos.left;
+        const y = e.pageY - pos.top;
+        annotLine(x, y);
+        addLine(x, y)
+        socket.emit('annotLine', {room: room, data: { 'x' : x, 'y' : y}});
+    }
+});
+
+canvas.addEventListener('mouseenter', (e) => {
+    if (pressed) {
+        const x = e.pageX - pos.left;
+        const y = e.pageY - pos.top;
+        annotPoint(x, y);
+        addPoint(x, y);
+        socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y}});
     }
 });
 
 canvas.addEventListener('mouseleave', (e) => {
     if (pressed) {
-        pressed = false;
+        socket.emit('annot', {room: room, data : annotations[pageNumber-1][annotations[pageNumber-1].length - 1]});
     }
-})
+});
 
 document.getElementById("clear").addEventListener('click', () => {
     clearPage();
