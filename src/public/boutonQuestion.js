@@ -14,7 +14,7 @@ submit.addEventListener("click", (event)=>{
 
     console.log(sujet);
     console.log(contenu);
-    socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu });
+    socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu, pseudo : username});
 });
 
 

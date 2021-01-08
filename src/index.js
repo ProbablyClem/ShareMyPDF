@@ -112,6 +112,7 @@ io.on('connection', function(socket){
     console.log("Decconexion du salon: "+ salon);
     if (salon != 0){
       salons[salon].rmMembre(socket.id);
+      io.to(salon).emit('membres', {pres: salons[salon].presentateurPseudo, membres: salons[salon].membres});
       if (salons[salon].estVide() && salon != "1234"){
         console.log("Supprime salon");
         //suprime pdf

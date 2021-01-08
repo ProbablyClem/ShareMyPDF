@@ -17,6 +17,7 @@ class Salon{
         else{
             this.membres[pseudo] = id;
         }
+        
     }
 
     setPage(page){
