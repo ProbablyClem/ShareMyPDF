@@ -6,6 +6,15 @@
     <title>Salon Lecteur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="lecteur.css">
+    
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div id="username" hidden="true"> <%= username %></div>
@@ -18,22 +27,64 @@
     <button id="follow">Suivre</button>
     <p id="room"><%= salon%></p>
     <p id="username"><%= username%></p>
+    <button id="savePDF">save pdf (WIP)</button>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
-    <canvas id="viewer" style='border : 1px solid #000'></canvas>
-        <!-----Partie poser questions----->
-        <div id="zoneQuestion">
-            </br>
-        <form action="#" id="myForm">
-            <input type="text" id="sujet" name="sujet" placeholder="Sujet..." required>
-            <textarea id="contenuQuestion" name="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
-            <button id="envoyer">Envoyer</button>
-        </form>
-        </div>
-    <!------Partie affichage des questions------>
-        <ul id="listeQuestions">
-            
+    <!-----Panel retractable----->
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Liste des participants</h3>
+            </div>
+        <ul class="list-unstyled components">
+            <p>Présentateur</p>
+            <li id="presentateur">
+            </li>
         </ul>
+        <ul class="list-unstyled components" >
+            <div class="overflow-auto" id="listeLecteurs">
+                <p>Lecteur</p>
+                <li id="lecteur">
+                </li>
+            </div>
+        </nav>
+        <div id="content">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <canvas id="viewer" style='border : 1px solid #000'></canvas>
+        <div id="content">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <nav id="sidebar">
+             <!-----Partie poser questions----->
+             <div id="questions" class="overflow-auto" > <!---Au bout d'un certain point la barre se casse et s'agrandit que ce soit avec bootstrap ou avec css -->
+                <ul id="listeQuestions">
+                </ul>
+             </div>           
+                <div id="zoneQuestion">
+                </br>
+                <form action="#" id="myForm">
+                <input type="text" id="sujet" name="sujet" placeholder="Sujet..." required>
+                <textarea id="contenuQuestion" name="contenuQuestion" cols="30" rows="5" placeholder="Entrez votre question..." required></textarea>
+                <button id="envoyer">Envoyer</button>
+                </form>
+                </div>
+            </div>
+        </div>
+        </nav>
+    </div>
+    
+    <!-----panel retractable----->
+    <!------Partie affichage des questions------>
+        
     
     <%- include('./quizzEleve.ejs'); %>
         
@@ -42,5 +93,7 @@
     <script type="module" src="renderLect.js"></script>
     <script type="module" src="annotLect.js"></script>
     <script type="module" src="./quizzEleve.js"></script>
+    <script type="module" src="affichageMembres.js"></script>
+    <script type="module" src="savePDF.js"></script>
 </body>
 </html>

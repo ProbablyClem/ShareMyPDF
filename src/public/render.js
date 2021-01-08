@@ -3,8 +3,10 @@ import { socket } from './socket.js';
 export var pageNumber = 1;
 export var rendering = false;
 var toRender = 0;
-var max = 1;
+export var max = 1;
 var pageIpt = document.getElementById("pageInput");
+export let sizeX = 0;
+export let sizeY = 0;
 
 var doc = 'uploads/'+document.getElementById("pdf").getAttribute('value');
 console.log(doc);
@@ -26,7 +28,9 @@ function draw() {
             var vp = page.getViewport({scale: scale});
 
             canvas.height = vp.height;
+            sizeY = canvas.height
             canvas.width = vp.width;
+            sizeX = canvas.width;
 
             var renderCtx = {
                 canvasContext: ctx,
@@ -42,6 +46,7 @@ function draw() {
                     toRender = 0;
                     drawPage(temp);
                 }
+                console.log('fin de render :', pageNumber);
             })
         });
     }, function (reason) {

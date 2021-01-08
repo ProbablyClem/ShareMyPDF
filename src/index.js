@@ -16,6 +16,7 @@ app = express();
 const morgan = require('morgan');
 ////////////////////////////////////////
 const fileUpload = require('express-fileupload');
+const { cpuUsage } = require('process');
 
 
 ////////////////////////////////////////
@@ -98,9 +99,16 @@ io.on('connection', function(socket){
   })
 
   socket.on('QuestionsAEnvoyer', (data) => {
-    console.log("Test Recevoir question");
-    io.sockets.emit('messages',data);
-    console.log("Sujet: "+data.leSujet+" Contenu: "+data.leContenu);
+    io.to(data.room).emit('questionEleve',data);
+    salons[data.room].addQuestionEleve(data);
+  })
+
+  socket.on('getAllQuestionsEleve', (data) => {
+    salons[data].questionsEleve.forEach(question => {
+      socket.emit("questionEleve", question);
+      console.log("question envoyé a " + data);
+      console.log(question);
+    });
   })
 
   socket.on('ReponseChoisie', (data) => {

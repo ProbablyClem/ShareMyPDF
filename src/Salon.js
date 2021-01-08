@@ -9,6 +9,7 @@ class Salon{
         this.pageProf = 1;
         this.annotations = [];
         this.questions = [];
+        this.questionsEleve = [];
     }
 
     addMembre(pseudo, id){
@@ -61,6 +62,10 @@ class Salon{
             console.log(quest.nom);
         });
         console.log("=============================");
+      }
+    
+    addQuestionEleve(value){
+        this.questionsEleve.push({leSujet: value.leSujet, leContenu: value.leContenu, pseudo : value.pseudo})
     }
 }
 

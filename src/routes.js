@@ -22,7 +22,8 @@ app.post('/setPseudo',(req,res)=>{
   //console.log("Pseudo :"+req.body.pseudo)
   const pseudo = req.body.pseudo;
   if(req.body.join==null){
-    res.render("vues/createRoom", {username : pseudo});
+    const code =genCode();
+    res.render("vues/createRoom", {salon: code, username : pseudo});
   }else{
     res.render('vues/joinRoom', {username : pseudo});
   }
@@ -105,14 +106,22 @@ app.post('/setPdf', function (req, res) {
   });
   const pdf = req.files.f.name;
   const pseudo = req.body.pseudo;
+  const code = req.body.code;
   let avatar = req.files.f;
   avatar.mv('public/uploads/' + avatar.name);
-  let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
-  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+  res.redirect(307, '/setting')
   res.end(); 
 });
+
+app.post('/setting', (req, res) => {
+  const code = req.body.code;
+  const pseudo = req.body.pseudo;
+  const pdf  = req.files.f.name;
+  console.log(code , pseudo, pdf);
+  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+})
 
 ////////////////////////////////////////////////////////////////////////////////
 
