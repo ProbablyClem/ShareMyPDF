@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="lecteur.css">
     
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div id="username" hidden="true"> <%= username %></div>
@@ -26,6 +27,7 @@
     <button id="follow">Suivre</button>
     <p id="room"><%= salon%></p>
     <p id="username"><%= username%></p>
+    <button id="savePDF">save pdf (WIP)</button>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
     <!-----Panel retractable----->
@@ -92,5 +94,6 @@
     <script type="module" src="annotLect.js"></script>
     <script type="module" src="./quizzEleve.js"></script>
     <script type="module" src="affichageMembres.js"></script>
+    <script type="module" src="savePDF.js"></script>
 </body>
 </html>

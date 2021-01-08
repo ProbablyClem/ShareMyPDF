@@ -37,7 +37,7 @@ socket.on('clear', () => {
 socket.on('allAnnot', (data) => {
     //console.log("Taille du paquet : " + sizeof(data));
     console.log("Annot : " +data);
-    setAnnot(data);
+    setAnnot(data); 
     restoreAnnot();
 })
 
