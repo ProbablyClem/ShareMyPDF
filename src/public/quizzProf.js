@@ -1,5 +1,5 @@
 import { socket } from "./socket.js"
-
+// test nouveau git
 let room = document.getElementById("room").innerHTML;
 
 var balise_questions = document.getElementById('questions');
