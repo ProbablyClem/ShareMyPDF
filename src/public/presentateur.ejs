@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="lecteur.css">
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <button id="prev" class="moveBtn">Previous</button>
@@ -24,6 +25,8 @@
     <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Questions</button>
     <p id="room"><%= salon%></p>
     
+    <p id="username"><%= username%></p>
+    <button id="savePDF">save pdf (WIP)</button>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
     <br>
 
@@ -72,14 +75,15 @@
         </nav>
     </div>
     
-
-
     <!------Partie affichage des questions-->
+    </ul>
+    <script type="module" src="socket.js"></script>
     <script type="module" src="renderHtml.js"></script>
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
     <script src="openPopup.js"></script>
     <script type="module" src="affichageMembres.js"></script>
     <iframe id="iframe" src="/quizzProf?room=<%= salon%>" style="display: none;"></iframe>
+    <script type="module" src="savePDF.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ export {
 let room = document.getElementById("room").innerHTML;
 
 let lastX, lastY;
-export const pos = canvas.getBoundingClientRect();
+
 const DEF_WIDTH = 10;
 const DEF_COLOR = "#ff0000"
 
@@ -35,7 +35,7 @@ export function annotObj(obj) {
 
 export function annotPoint(x, y) {
     ctx.beginPath();
-    ctx.arc(x - pos.left, y - pos.top, DEF_WIDTH / 2, 0, 2 * Math.PI, false);
+    ctx.arc(x, y, DEF_WIDTH / 2, 0, 2 * Math.PI, false);
     ctx.fillStyle = DEF_COLOR;
     ctx.fill();
     ctx.closePath();
@@ -48,8 +48,8 @@ export function annotLine(x, y) {
     ctx.beginPath();
     ctx.lineWidth = DEF_WIDTH;
     ctx.strokeStyle = DEF_COLOR;
-    ctx.moveTo(lastX - pos.left, lastY - pos.top);
-    ctx.lineTo(x - pos.left, y - pos.top);
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(x, y);
     ctx.stroke();
     ctx.closePath();
 

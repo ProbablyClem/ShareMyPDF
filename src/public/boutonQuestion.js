@@ -1,7 +1,8 @@
 import { socket } from "./socket.js";
 
 var submit = document.getElementById("envoyer");
-
+let username = document.getElementById("username").innerHTML;
+let room = document.getElementById("room").innerHTML;
 
 submit.addEventListener("click", (event)=>{
     event.preventDefault();
@@ -14,7 +15,7 @@ submit.addEventListener("click", (event)=>{
 
     console.log(sujet);
     console.log(contenu);
-    socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu, pseudo : username});
+    socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu, pseudo : username, room : room});
 });
 
 

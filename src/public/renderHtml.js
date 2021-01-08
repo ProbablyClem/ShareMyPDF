@@ -1,6 +1,7 @@
 import { socket } from "./socket.js";
 
-socket.on('messages',function(data){
+socket.on('questionEleve',function(data){
+    console.log("question recu");
     console.log(data);
     renderHtml(data);
 });
@@ -22,5 +23,6 @@ function renderHtml(data){
     if(listeQuestions.childElementCount > 15){
         listeQuestions.removeChild(listeQuestions.lastChild);
     }
-    
 }
+
+socket.emit("getAllQuestionsEleve", document.getElementById("room").innerHTML);
