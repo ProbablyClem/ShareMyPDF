@@ -2,7 +2,7 @@ import { socket } from "./socket.js"
 
 let room = document.getElementById("room").innerHTML;
 
-var balise_questions = document.getElementById('questions');
+var balise_questions = document.getElementById('questionsQuizz');
 var balise_choix = document.getElementById('choix');
 
 var bouton_add = document.getElementById("add");
