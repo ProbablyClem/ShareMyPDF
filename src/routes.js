@@ -18,19 +18,19 @@ function routesSetup(app){
 app.get('/', (req, res) => res.sendFile(__dirname + "/public/vues/accueil.html"));
 
 //setPseudo
-app.post('/setPseudo',(req,res)=>{
+app.post('/login',(req,res)=>{
   //console.log("Pseudo :"+req.body.pseudo)
   const pseudo = req.body.pseudo;
   if(req.body.join==null){
-    res.render("vues/createRoom", {username : pseudo});
+    const code =genCode();
+    res.render("vues/createRoom", {salon: code, username : pseudo});
   }else{
     res.render('vues/joinRoom', {username : pseudo});
   }
   res.end()
 });
 
-//getCode
-app.post('/getCode',(req,res)=>{
+app.post('/lecteur',(req,res)=>{
   //console.log("Code :"+req.body.code)
   const code = req.body.code;
   const pseudo = req.body.pseudo;
@@ -43,7 +43,14 @@ app.post('/getCode',(req,res)=>{
   
   res.end()
 });
-
+/*
+app.post('/param',(req,res)=>{
+  const pseudo = req.body.pseudo;
+  const code = req.body.code;
+  res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf });
+  res.end();
+})
+*/
 //getParametre
 app.get('/room/:room',(req,res)=>{
   const code = req.params.room;
@@ -55,7 +62,10 @@ app.get('/room/:room',(req,res)=>{
     res.send("Le salon "+code+" n'existe pas!");
   }
   res.render("vues/param", {code : code});
+  res.end();
 });
+
+
 
 //getQuizzProf
 app.get('/quizzProf',(req,res)=>{
@@ -63,37 +73,6 @@ app.get('/quizzProf',(req,res)=>{
   res.render("quizzProf.ejs", {salon : room});
 });
 
-//setPseudo2
-app.post('/param',(req,res)=>{
-  //console.log("Pseudo :"+req.body.pseudo);
-  const pseudo = req.body.pseudo;
-  const code = req.body.code;
-  res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf });
-  res.end()
-})
-
-////////////////////////////////////////////////////////////////////////////////
-//Upload
-/*
-app.post('/setPDF', (req, res) => {
-  console.log(req.files);
-  console.log(req.file);
-  if(!req.files.f){
-    res.send(400);
-  }
-  console.log(req.files.f);
-  fName = req.files.f.name;
-  const pseudo = req.body.pseudo;
-  let avatar = req.files.f;
-  const pdf = req.files.f.name;
-  avatar.mv('public/uploads/' + avatar.name);
-  let code = genCode();
-  let salon = new Salon(pdf, code, req.ip, pseudo);
-  salons[code] = salon;
-  console.log(salons);
-  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
-  res.end();
-});*/
 
 app.post('/setPdf', function (req, res) {
   var busboy = new Busboy({ headers: req.headers });
@@ -105,23 +84,31 @@ app.post('/setPdf', function (req, res) {
   });
   const pdf = req.files.f.name;
   const pseudo = req.body.pseudo;
+  const code = req.body.code;
   let avatar = req.files.f;
   avatar.mv('public/uploads/' + avatar.name);
-  let code = genCode();
   let salon = new Salon(pdf, code, req.ip, pseudo);
   salons[code] = salon;
-  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+  res.redirect(307, '/presentateur')
   res.end(); 
 });
+
+app.post('/presentateur', (req, res) => {
+  const code = req.body.code;
+  const pseudo = req.body.pseudo;
+  const pdf  = req.files.f.name;
+  console.log(code , pseudo, pdf);
+  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
+})
 
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests
-app.get("/lecteur", (req,res) =>{
+app.get("/lec", (req,res) =>{
   res.render("lecteur", {salon: 1234, username: "lecteur", pdf: "example.pdf"});
 })
 
-app.get("/presentateur", (req,res) =>{
+app.get("/pres", (req,res) =>{
   let pdf = "example.pdf";
   let code = 1234;
   let pseudo = "clement";

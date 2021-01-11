@@ -73,7 +73,7 @@ envoyer.addEventListener("click", envoyerReponse);
 socket.on('QuestionItems', (data) =>{
     console.log(data);
     idQuestionEnCours = data.idQuestion;
-    afficheQuestion(data.leNom, data.lesItems);
+    afficheQuestion(data.objectQuestion.nom, data.objectQuestion.props);
 });
 
 

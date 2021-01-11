@@ -1,8 +1,8 @@
 import { socket } from "./socket.js"
-// test nouveau git
+
 let room = document.getElementById("room").innerHTML;
 
-var balise_questions = document.getElementById('questions');
+var balise_questions = document.getElementById('questionsQuizz');
 var balise_choix = document.getElementById('choix');
 
 var bouton_add = document.getElementById("add");
@@ -97,6 +97,22 @@ class Quest_Quizz {
         var q = new Quest_Quizz(this.nom, [...this.props]);
         return q;
     }
+
+    getAllResults(){
+        var allResults = [];
+        this.props.forEach(element => {
+            allResults.push(element.compteur);
+        });
+        return allResults;
+    }
+
+    getAllPropsName(){
+        var allName = [];
+        this.props.forEach(element => {
+            allName.push(element.intitule);
+        });
+        return allName;
+    }
 }
 
 var allQuestions = [new Quest_Quizz("La question s'affiche-t-elle ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")]), 
@@ -129,7 +145,7 @@ function afficherQuestion(q, index){
     
     var bouton2 = document.createElement("button");
     bouton2.title = "Voir résultats";
-    bouton2.onclick = () => console.log("voir marche");
+    bouton2.onclick = () => voirResultat(index);
     bouton2.innerText = String.fromCodePoint(0x1F50D);
     liste.appendChild(bouton2);
 
@@ -172,10 +188,7 @@ function launchQuestion(i){
     console.log(socket.id);
     var id = i-1;
     var toutes_ques = getAllQuestions();
-    var nom_question = toutes_ques[id].nom;
-    var items = toutes_ques[id].getProps();
-    var bon_item = toutes_ques[id].rep_vraie;
-    socket.emit('QuestionItems', {leNom: nom_question, lesItems: items, bonneRep: bon_item, Salon: room, idQuestion: id});
+    socket.emit('QuestionItems', {objectQuestion: toutes_ques[id], Salon: room, idQuestion: id});
     console.log("Question "+i+" lancée");
 }
 
@@ -183,8 +196,36 @@ function voirResultat(i){
     var id = i-1;
     var toutes_ques = getAllQuestions();
     var nom_question = toutes_ques[id].nom;
-    var items = toutes_ques[id].props;
+    var res = document.getElementById('resultats');
+    res.style = "display: block;";
+    var quitter = document.createElement('button');
+    quitter.innerText = "Fermer";
+    quitter.onclick = () => res.style = "display: none;";
+    if(res.childElementCount > 1){
+        res.removeChild(res.lastChild);
+    }
+    var chartData = {
+        type: 'bar',
+        title: {
+            text: nom_question
+        },
+        series: [
+        { values: toutes_ques[id].getAllResults() }
+        ],
+        "scale-x": {
+            values: toutes_ques[id].getAllPropsName()
+        }
+    };
+    zingchart.render({
+        id: 'resultats',
+        data: chartData,
+        height: 400,
+        width: 600
+    });
 
+    if(res.childElementCount < 2){
+        res.appendChild(quitter);
+    }
 }
 
 socket.on('ReponseChoisie', (data) =>{

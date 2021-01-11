@@ -6,6 +6,7 @@
     <title>Salon Presentateur</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -48,23 +49,8 @@
                 <li id="lecteur">
                 </li>
             </div>
-
         </nav>
-        <div id="content">
-            <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
-                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
         <canvas id="viewer" style='border : 1px solid #000'></canvas>
-        <div id="content">
-            <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class ="btn btn-dark rounded-3 border-light">
-                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
         <nav id="sidebar">
              <!-----Partie poser questions----->
              <div id="questions" class="overflow-auto" >
@@ -83,8 +69,13 @@
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
     <script src="openPopup.js"></script>
+    <div id="iframe" style = "display: none;">
+        <%- include('./quizzProf.ejs'); %>
+    </div>
+    <div id="resultats">
+        
+    </div>
     <script type="module" src="affichageMembres.js"></script>
-    <iframe id="iframe" src="/quizzProf?room=<%= salon%>" style="display: none;"></iframe>
     <script type="module" src="savePDF.js"></script>
 </body>
 </html>
