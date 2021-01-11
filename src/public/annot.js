@@ -16,7 +16,7 @@ let room = document.getElementById("room").innerHTML;
 
 let lastX, lastY;
 
-const DEF_WIDTH = 10;
+export const DEF_WIDTH = 10;
 export const DEF_COLOR = "#ff0000"
 
 export let annotations = [];
@@ -25,17 +25,17 @@ export function annotObj(obj) {
     const data = obj[pageNumber-1];
     
     data.forEach(trait => {
-        annotPoint(trait[0].x, trait[0].y, trait[0].color);
+        annotPoint(trait[0].x, trait[0].y, trait[0].color, trait[0].width);
 
         for (let i = 1; i < trait.length; i++) {
-            annotLine(trait[i].x, trait[i].y, trait[i].color);
+            annotLine(trait[i].x, trait[i].y, trait[i].color, trait[i].width);
         }
     });
 }
 
-export function annotPoint(x, y, color) {
+export function annotPoint(x, y, color = DEF_COLOR, width = DEF_WIDTH) {
     ctx.beginPath();
-    ctx.arc(x, y, DEF_WIDTH / 2, 0, 2 * Math.PI, false);
+    ctx.arc(x, y, width / 2, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
     ctx.fill();
     ctx.closePath();
@@ -44,16 +44,16 @@ export function annotPoint(x, y, color) {
     lastY = y;
 }
 
-export function annotLine(x, y, color) {
+export function annotLine(x, y, color = DEF_COLOR, width = DEF_WIDTH) {
     ctx.beginPath();
-    ctx.lineWidth = DEF_WIDTH;
+    ctx.lineWidth = width;
     ctx.strokeStyle = color;
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.closePath();
 
-    annotPoint(x, y, color);
+    annotPoint(x, y, color, width);
 
     lastX = x;
     lastY = y;
@@ -77,16 +77,16 @@ export function setAnnot(obj) {
     annotations = obj;
 }
 
-export function addPoint(x, y, color, page = pageNumber) {
+export function addPoint(x, y, color = DEF_COLOR, width = DEF_WIDTH, page = pageNumber) {
     if (annotations[page-1] === undefined) {
         annotations[page-1] = [];
     }
     annotations[page-1][annotations[page-1].length] = [];
-    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color });
+    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color, 'width': width });
 }
 
-export function addLine(x, y, color, page = pageNumber) {
-    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color  });
+export function addLine(x, y, color = DEF_COLOR, width = DEF_WIDTH, page = pageNumber) {
+    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color, 'width': width  });
 }
 
 export function clearPage(page = pageNumber) {

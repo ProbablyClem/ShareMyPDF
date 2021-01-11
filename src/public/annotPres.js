@@ -9,7 +9,8 @@ import {
     addLine,
     setAnnot,
     clearPage,
-    DEF_COLOR
+    DEF_COLOR,
+    DEF_WIDTH
 } from './annot.js'
 
 import { socket } from './socket.js';
@@ -29,13 +30,17 @@ function getColor() {
     return document.getElementById('color').value;
 }
 
+function getWidth() {
+    return document.getElementById('width').value;
+}
+
 canvas.addEventListener('mousedown', (e) => {
     const pos = canvas.getBoundingClientRect();
     const x = e.pageX - (pos.left + window.scrollX);
     const y = e.pageY - (pos.top + window.scrollY);
-    annotPoint(x, y, getColor());
-    addPoint(x, y, getColor());
-    socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor()}});
+    annotPoint(x, y, getColor(), getWidth());
+    addPoint(x, y, getColor(), getWidth());
+    socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor(), 'width' : getWidth()}});
 });
 
 canvas.addEventListener('mouseup', (e) => {
@@ -47,9 +52,9 @@ canvas.addEventListener('mousemove', (e) => {
         const pos = canvas.getBoundingClientRect();
         const x = e.pageX - (pos.left + window.scrollX);
         const y = e.pageY - (pos.top + window.scrollY);
-        annotLine(x, y, getColor());
-        addLine(x, y, getColor())
-        socket.emit('annotLine', {room: room, data: { 'x' : x, 'y' : y, 'color' : getColor()}});
+        annotLine(x, y, getColor(), getWidth());
+        addLine(x, y, getColor(), getWidth());
+        socket.emit('annotLine', {room: room, data: { 'x' : x, 'y' : y, 'color' : getColor(), 'width' : getWidth()}});
     }
 });
 
@@ -58,9 +63,9 @@ canvas.addEventListener('mouseenter', (e) => {
         const pos = canvas.getBoundingClientRect();
         const x = e.pageX - (pos.left + window.scrollX);
         const y = e.pageY - (pos.top + window.scrollY);
-        annotPoint(x, y, getColor());
-        addPoint(x, y, getColor());
-        socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor()}});
+        annotPoint(x, y, getColor(), getWidth());
+        addPoint(x, y, getColor(), getWidth());
+        socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor(), 'width' : getWidth()}});
     }
 });
 

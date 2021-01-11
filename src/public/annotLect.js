@@ -17,16 +17,16 @@ import { pageProf } from './renderLect.js';
 
 socket.on('annotPoint', (data) => {
     if (pageNumber == pageProf) {
-        annotPoint(data.x, data.y, data.color);
+        annotPoint(data.x, data.y, data.color, data.width);
     }
-    addPoint(data.x, data.y, data.color, pageProf);
+    addPoint(data.x, data.y, data.color, data.width, pageProf);
 });
 
 socket.on('annotLine', (data) => {
     if (pageNumber == pageProf) {
-        annotLine(data.x, data.y, data.color);
+        annotLine(data.x, data.y, data.color, data.width);
     }
-    addLine(data.x, data.y, data.color, pageProf);
+    addLine(data.x, data.y, data.color, data.width, pageProf);
 })
 
 socket.on('clear', () => {
