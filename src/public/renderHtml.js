@@ -20,7 +20,7 @@ function renderHtml(data){
     li.appendChild(boutonQuitter);
     li.appendChild(span2);
     boutonQuitter.addEventListener("click", ()=>{
-        li.remove();
+        listeQuestions.removeChild(li);
     })
     listeQuestions.insertBefore(li, listeQuestions.firstChild);
 
