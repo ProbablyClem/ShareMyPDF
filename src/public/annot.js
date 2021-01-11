@@ -17,7 +17,7 @@ let room = document.getElementById("room").innerHTML;
 let lastX, lastY;
 
 const DEF_WIDTH = 10;
-const DEF_COLOR = "#ff0000"
+export const DEF_COLOR = "#ff0000"
 
 export let annotations = [];
 
@@ -25,18 +25,18 @@ export function annotObj(obj) {
     const data = obj[pageNumber-1];
     
     data.forEach(trait => {
-        annotPoint(trait[0].x, trait[0].y);
+        annotPoint(trait[0].x, trait[0].y, trait[0].color);
 
         for (let i = 1; i < trait.length; i++) {
-            annotLine(trait[i].x, trait[i].y);
+            annotLine(trait[i].x, trait[i].y, trait[i].color);
         }
     });
 }
 
-export function annotPoint(x, y) {
+export function annotPoint(x, y, color) {
     ctx.beginPath();
     ctx.arc(x, y, DEF_WIDTH / 2, 0, 2 * Math.PI, false);
-    ctx.fillStyle = DEF_COLOR;
+    ctx.fillStyle = color;
     ctx.fill();
     ctx.closePath();
 
@@ -44,16 +44,16 @@ export function annotPoint(x, y) {
     lastY = y;
 }
 
-export function annotLine(x, y) {
+export function annotLine(x, y, color) {
     ctx.beginPath();
     ctx.lineWidth = DEF_WIDTH;
-    ctx.strokeStyle = DEF_COLOR;
+    ctx.strokeStyle = color;
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.closePath();
 
-    annotPoint(x, y);
+    annotPoint(x, y, color);
 
     lastX = x;
     lastY = y;
@@ -77,16 +77,16 @@ export function setAnnot(obj) {
     annotations = obj;
 }
 
-export function addPoint(x, y, page = pageNumber) {
+export function addPoint(x, y, color, page = pageNumber) {
     if (annotations[page-1] === undefined) {
         annotations[page-1] = [];
     }
     annotations[page-1][annotations[page-1].length] = [];
-    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y });
+    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color });
 }
 
-export function addLine(x, y, page = pageNumber) {
-    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y });
+export function addLine(x, y, color, page = pageNumber) {
+    annotations[page-1][annotations[page-1].length-1].push({ 'x' : x, 'y' : y, 'color': color  });
 }
 
 export function clearPage(page = pageNumber) {

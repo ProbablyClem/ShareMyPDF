@@ -8,7 +8,8 @@ import {
     addPoint,
     addLine,
     setAnnot,
-    clearPage
+    clearPage,
+    DEF_COLOR
 } from './annot.js'
 
 import { socket } from './socket.js';
@@ -21,15 +22,20 @@ window.onmouseup = (e) => {
 }
 window.onmousedown = (e) => {
     pressed = true;
+    console.log(e.pageY, canvas.getBoundingClientRect().top, window.scrollY);
+}
+
+function getColor() {
+    return document.getElementById('color').value;
 }
 
 canvas.addEventListener('mousedown', (e) => {
     const pos = canvas.getBoundingClientRect();
-    const x = e.pageX - pos.left;
-    const y = e.pageY - pos.top;
-    annotPoint(x, y);
-    addPoint(x, y);
-    socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y}});
+    const x = e.pageX - (pos.left + window.scrollX);
+    const y = e.pageY - (pos.top + window.scrollY);
+    annotPoint(x, y, getColor());
+    addPoint(x, y, getColor());
+    socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor()}});
 });
 
 canvas.addEventListener('mouseup', (e) => {
@@ -39,22 +45,22 @@ canvas.addEventListener('mouseup', (e) => {
 canvas.addEventListener('mousemove', (e) => {
     if (pressed) {
         const pos = canvas.getBoundingClientRect();
-        const x = e.pageX - pos.left;
-        const y = e.pageY - pos.top;
-        annotLine(x, y);
-        addLine(x, y)
-        socket.emit('annotLine', {room: room, data: { 'x' : x, 'y' : y}});
+        const x = e.pageX - (pos.left + window.scrollX);
+        const y = e.pageY - (pos.top + window.scrollY);
+        annotLine(x, y, getColor());
+        addLine(x, y, getColor())
+        socket.emit('annotLine', {room: room, data: { 'x' : x, 'y' : y, 'color' : getColor()}});
     }
 });
 
 canvas.addEventListener('mouseenter', (e) => {
     if (pressed) {
         const pos = canvas.getBoundingClientRect();
-        const x = e.pageX - pos.left;
-        const y = e.pageY - pos.top;
-        annotPoint(x, y);
-        addPoint(x, y);
-        socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y}});
+        const x = e.pageX - (pos.left + window.scrollX);
+        const y = e.pageY - (pos.top + window.scrollY);
+        annotPoint(x, y, getColor());
+        addPoint(x, y, getColor());
+        socket.emit('annotPoint', { room: room, data: {'x' : x, 'y' : y, 'color' : getColor()}});
     }
 });
 
