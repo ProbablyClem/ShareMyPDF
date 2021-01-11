@@ -37,7 +37,7 @@ a[data-toggle="collapse"] {
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #fafafa;
+    background: #212529;
 }
 
 p {
@@ -45,7 +45,7 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
+    color: white;
 }
 
 a, a:hover, a:focus {
@@ -70,12 +70,12 @@ a, a:hover, a:focus {
 }
 
 #sidebar ul p {
-    color: #000000;
+    color: aliceblue;
     padding: 10px;
 }
 
 #sidebar li p {
-    color: rgb(124, 124, 124);
+    color: lightsteelblue;
 }
 
 #viewer {
@@ -100,4 +100,32 @@ a, a:hover, a:focus {
 #listeLecteurs {
     height: 800px;
     /* la taille marche pas en pourcentage à reprendre*/
+}
+
+button{
+    border-radius: 5px;
+    background-color: #212529;
+    color: white;
+    border-color: white;
+}
+
+#sujet{
+    background-color:#212529 ;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    border-color: white;
+}
+
+#contenuQuestion{
+    background-color: #212529;
+    border-radius: 5px;
+    border-color: white;
+}
+
+#contenuQuestion::placeholder{
+    color: white;
+}
+
+#sujet::placeholder{
+    color: white;
 }
