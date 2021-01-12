@@ -24,7 +24,7 @@
     <button id="go" class="moveBtn">Accéder</button>
     <button id="clear">Effacer les annotations</button>
     <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Quizz</button>
-    <p id="room"><%= salon%></p>
+    <button id="room" title="Invitez d'autres utilisateurs"><%= salon%></button>
     
     <p id="username"><%= username%></p>
     <button id="savePDF">Enregistrer le PDF</button>
@@ -78,5 +78,6 @@
     </div>
     <script type="module" src="affichageMembres.js"></script>
     <script type="module" src="savePDF.js"></script>
+    <script type="module" src="copyRoomLink.js"></script>
 </body>
 </html>

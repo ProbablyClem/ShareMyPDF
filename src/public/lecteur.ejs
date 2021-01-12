@@ -25,7 +25,7 @@
     <button id="go" class="moveBtn">Accéder</button>
     <button id="join" class="moveBtn">Rejoindre</button>
     <button id="follow">Suivre</button>
-    <p id="room"><%= salon%></p>
+    <button id="room" title="Invitez d'autres utilisateurs'" ><%= salon%></button>
     <p id="username"><%= username%></p>
     <button id="savePDF">Enregister le PDF</button>
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
@@ -81,5 +81,6 @@
     <script type="module" src="./quizzEleve.js"></script>
     <script type="module" src="affichageMembres.js"></script>
     <script type="module" src="savePDF.js"></script>
+    <script type="module" src="copyRoomLink.js"></script>
 </body>
 </html>
