@@ -50,11 +50,23 @@
 }
 
 #iframe div > button:last-of-type{
-    background-color: red;
+    background-color: rgb(255, 143, 143);
 }
 
 #iframe div > button{
     padding: 10px;
     border: solid 2px black;
     margin: 3px;
+}
+
+#iframe button{
+    color : black;
+}
+
+#questionsQuizz {
+    color : white;
+}
+
+#questionsQuizz button{
+    color : white;
 }
