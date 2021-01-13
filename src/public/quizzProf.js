@@ -85,7 +85,7 @@ class Quest_Quizz {
         }
 
         this.props.forEach(choix => {
-            if(choix == ""){
+            if(choix.intitule == ""){
                 possible = false;
             }
         });

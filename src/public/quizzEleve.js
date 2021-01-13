@@ -33,6 +33,7 @@ for(var i = 0; i < 4; i++){
 }
 
 function afficheQuestion(nomQuestion, items){
+    document.getElementById("reponses").style = "display: block";
     question.innerText = "Question : "+nomQuestion;
     titre_question.appendChild(question);
     let i = 0;
@@ -63,7 +64,8 @@ function envoyerReponse(){
     }
     else{
         socket.emit('ReponseChoisie', {leNom: question.innerText, idRepChoisie: i, Salon: room, idQuestion: idQuestionEnCours});
-        console.log("Réponse "+input[i].value+" envoyée au salon : "+room);
+        alert("Réponse \""+label[i].innerText+"\" envoyée");
+        document.getElementById("reponses").style = "display: none";
     }
 }
 
