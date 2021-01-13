@@ -17,17 +17,17 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <button id="prev" class="moveBtn">Previous</button>
-    <button id="next" class="moveBtn">Next</button>
+    <button id="prev" class="moveBtn">Précédant</button>
+    <button id="next" class="moveBtn">Suivant</button>
 
     <input id="pageInput" type="number">
-    <button id="go" class="moveBtn">Go</button>
-    <button id="clear">clear</button>
-    <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Questions</button>
-    <p id="room"><%= salon%></p>
+    <button id="go" class="moveBtn">Accéder</button>
+    <button id="clear">Effacer les annotations</button>
+    <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Quizz</button>
+    <button id="room" title="Invitez d'autres utilisateurs"><%= salon%></button>
     
     <p id="username"><%= username%></p>
-    <button id="savePDF">save pdf (WIP)</button>
+    <button id="savePDF">Enregistrer le PDF</button>
     <input type="color" value="#ff0000" id="color">
     <input type="range" min="5" max="20" value="10" id="width">
     <div id="pdf" hidden="true" value="<%= pdf%>"></div>
@@ -78,5 +78,6 @@
     </div>
     <script type="module" src="affichageMembres.js"></script>
     <script type="module" src="savePDF.js"></script>
+    <script type="module" src="copyRoomLink.js"></script>
 </body>
 </html>

@@ -34,6 +34,15 @@ app.post('/lecteur',(req,res)=>{
   //console.log("Code :"+req.body.code)
   const code = req.body.code;
   const pseudo = req.body.pseudo;
+  if(salons[code] != undefined && salons[code].presentateurPseudo == pseudo){
+    if(salons[code].presentateurIp == req.ip){
+      res.redirect(307, "/presentateur2");
+     // res.render("presentateur", {salon : code, username: pseudo, pdf : salons[code].pdf});
+    }
+    else{
+      res.send("Le pseudo "+pseudo+" est deja pris pour le salon " + code + "!");
+    }
+  }
   if(salons[code] != undefined){
     res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf});
   }
@@ -43,6 +52,12 @@ app.post('/lecteur',(req,res)=>{
   
   res.end()
 });
+
+app.post("/presentateur2", (req, res) => {
+  const code = req.body.code;
+  const pseudo = req.body.pseudo;
+  res.render("presentateur", {salon : code, username : pseudo, pdf : salons[code].pdf});
+})
 /*
 app.post('/param',(req,res)=>{
   const pseudo = req.body.pseudo;
