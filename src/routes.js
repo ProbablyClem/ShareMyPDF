@@ -46,9 +46,8 @@ app.post('/lecteur',(req,res)=>{
     res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf});
   }
   else{
-    res.send("Le salon "+code+" n'existe pas!");
+    res.render("vues/retour", {salon : code});
   }
-  
   res.end()
 });
 
@@ -56,6 +55,11 @@ app.post("/presentateur", (req, res) => {
   const code = req.body.code;
   const pseudo = req.body.pseudo;
   res.render("presentateur", {salon : code, username : pseudo, pdf : salons[code].pdf});
+})
+
+
+app.post("/retour", (req, res) => {
+  res.redirect('/');
 })
 
 //getParametre
