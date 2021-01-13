@@ -31,6 +31,7 @@
 }
 
 #iframe ol{
+    color: white;
     counter-reset: list;
     padding-left: 10px;
 }
