@@ -2,8 +2,8 @@ import { socket } from './socket.js';
 
 
 
-var presentateur = "Le boss";
-var eleve = ['eleve 1', 'eleve 2', 'eleve 3', 'eleve 4', 'eleve 5'];
+var presentateur = "";
+var eleve = [];
 
 socket.on("membres", (data) =>{
     console.log(data);
@@ -29,6 +29,8 @@ socket.on("membres", (data) =>{
         lectBalise.innerHTML = item;
         lectDiv.appendChild(lectBalise);
     });
+
+    document.getElementById("nombreLecteurs").innerHTML = "(" + lectDiv.childElementCount  + ")";
 })
 console.log(presentateur);
 console.log(eleve);
