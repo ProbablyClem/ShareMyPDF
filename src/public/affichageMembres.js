@@ -23,11 +23,20 @@ socket.on("membres", (data) =>{
     
     let lectDiv = document.getElementById("lecteur");
     lectDiv.innerHTML = "";
-    
+
     eleve.forEach(function (item, index, array) {
-        let lectBalise = document.createElement("p");
-        lectBalise.innerHTML = item;
-        lectDiv.appendChild(lectBalise);
+        if(item == document.getElementById("username").innerHTML){
+            let lectBalise = document.createElement("p");
+            let uBalise = document.createElement("u");
+            uBalise.innerHTML = item; 
+            lectBalise.appendChild(uBalise);
+            lectDiv.appendChild(lectBalise);
+        }
+        else{
+            let lectBalise = document.createElement("p");
+            lectBalise.innerHTML = item;
+            lectDiv.appendChild(lectBalise);
+        }
     });
 
     document.getElementById("nombreLecteurs").innerHTML = "(" + lectDiv.childElementCount  + ")";
