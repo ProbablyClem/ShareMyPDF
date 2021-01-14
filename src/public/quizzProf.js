@@ -20,6 +20,10 @@ class ItemsDeReponse{
     addCompteur(){
         this.compteur++;
     }
+
+    resetCompteur(){
+        this.compteur = 0;
+    }
 }
 
 class Quest_Quizz {
@@ -159,6 +163,10 @@ function afficherQuestion(q, index){
 }
 
 function delQuest(i){
+    var toutes_ques = getAllQuestions();
+    toutes_ques[i-1].getProps().forEach(choix => {
+        choix.resetCompteur();
+    });
     allQuestions.splice(i-1, 1);
     console.log(allQuestions);
     displayQuestions();
@@ -166,7 +174,7 @@ function delQuest(i){
 
 function creerQuestion(){
     if(q_temp.isValid()){
-        allQuestions.push(q_temp.copy());
+        allQuestions.push(new Quest_Quizz(q_temp.nom, q_temp.props.map(reponse => new ItemsDeReponse(reponse.intitule, reponse.compteur)), q_temp.rep_vraie));
         displayQuestions();
     }
     else{
@@ -235,5 +243,7 @@ socket.on('ReponseChoisie', (data) =>{
 
 bouton_add.addEventListener("click",ajouterReponse);
 bouton_creer.addEventListener("click", creerQuestion);
+document.getElementById("add").addEventListener("click", ajouterReponse);
+document.getElementById("creer").addEventListener("click", creerQuestion);
 
 window.addEventListener("load",displayQuestions);
