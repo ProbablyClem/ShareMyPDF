@@ -17,7 +17,11 @@ var loading = pdfjsLib.getDocument(doc);
 export var canvas = document.getElementById('viewer');
 export var ctx = canvas.getContext('2d');
 
-function draw() {
+export async function draw(x = 0) {
+    if (x != 0) {
+        pageNumber = x;
+    }
+    console.log('début de render :', pageNumber);
     rendering = true;
     pageIpt.value = pageNumber;
     loading.promise.then(function(pdf) {
@@ -38,7 +42,7 @@ function draw() {
             }
 
             var render = page.render(renderCtx);
-            render.promise.then(function() {
+            return render.promise.then(function() {
                 rendering = false;
                 
                 if (toRender != 0) {

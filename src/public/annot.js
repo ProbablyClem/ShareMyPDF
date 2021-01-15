@@ -16,12 +16,15 @@ let room = document.getElementById("room").innerHTML;
 
 let lastX, lastY;
 
+export let annotState = false;
+
 export const DEF_WIDTH = 10;
 export const DEF_COLOR = "#ff0000"
 
 export let annotations = [];
 
 export function annotObj(obj) {
+    annotState = true;
     const data = obj[pageNumber-1];
     
     data.forEach(trait => {
@@ -31,6 +34,8 @@ export function annotObj(obj) {
             annotLine(trait[i].x, trait[i].y, trait[i].color, trait[i].width);
         }
     });
+
+    annotState = false;
 }
 
 export function annotPoint(x, y, color = DEF_COLOR, width = DEF_WIDTH) {
@@ -59,15 +64,16 @@ export function annotLine(x, y, color = DEF_COLOR, width = DEF_WIDTH) {
     lastY = y;
 }
 
-export function restoreAnnot() {
+export async function restoreAnnot() {
+    console.log('check annotations ', pageNumber);
     if (annotations[pageNumber-1] !== undefined) {
         // on attend ici le render
         var timerRender = setInterval(() => {
             if (!rendering) {
                 if (annotations[pageNumber-1] !== undefined) {
                     annotObj(annotations);
-                    clearInterval(timerRender);
                 }
+                clearInterval(timerRender);
             }
         }, 1);
     }
