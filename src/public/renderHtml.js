@@ -13,7 +13,7 @@ function renderHtml(data){
     var span2 = document.createElement("span");
     var boutonQuitter = document.createElement("button");
 
-    span1.innerHTML = data.pseudo +": ";
+    span1.innerHTML = data.pseudo +" : ";
     span1.innerHTML += data.leSujet;
     span2.innerHTML = '</br>' + data.leContenu;
     boutonQuitter.innerHTML = "x";

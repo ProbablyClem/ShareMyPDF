@@ -209,13 +209,17 @@ function voirResultat(i){
     var quitter = document.createElement('button');
     quitter.innerText = "Fermer";
     quitter.onclick = () => res.style = "display: none;";
+    var nb_total_votes = 0;
+    toutes_ques[id].getAllResults().forEach(rep => {
+        nb_total_votes += rep;
+    });
     if(res.childElementCount > 1){
         res.removeChild(res.lastChild);
     }
     var chartData = {
         type: 'bar',
         title: {
-            text: nom_question
+            text: nom_question+" (Nombre de votes : "+nb_total_votes+")"
         },
         series: [
         { values: toutes_ques[id].getAllResults() }
