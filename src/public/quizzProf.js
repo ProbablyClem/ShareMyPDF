@@ -144,8 +144,7 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [new Quest_Quizz("La question s'affiche-t-elle ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")]), 
-                                            new Quest_Quizz("Et celle-ci ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")])];
+var allQuestions = [];
 
 function getAllQuestions(){
     return allQuestions;
