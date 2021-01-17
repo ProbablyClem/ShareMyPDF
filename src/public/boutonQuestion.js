@@ -15,7 +15,14 @@ submit.addEventListener("click", (event)=>{
 
     console.log(sujet);
     console.log(contenu);
-    socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu, pseudo : username, room : room});
+    if(document.getElementById('sujet').value == "" || document.getElementById('contenuQuestion').value == ""){
+        alert("Veuillez remplir tout les champs");
+    }
+    else{
+        document.getElementById('sujet').value = "";
+        document.getElementById('contenuQuestion').value = "";
+        socket.emit('QuestionsAEnvoyer', {leSujet: sujet , leContenu: contenu, pseudo : username, room : room});
+    }
 });
 
 

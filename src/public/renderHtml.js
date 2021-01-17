@@ -53,8 +53,8 @@ function renderHtml(data){
     listeQuestions.appendChild(card);
 
     console.log(listeQuestions.childElementCount);
-    if(listeQuestions.childElementCount > 6){
-        listeQuestions.removeChild(listeQuestions.lastChild);
+    if(listeQuestions.childElementCount > 4){
+        listeQuestions.removeChild(listeQuestions.firstChild);
     }
 }
 
