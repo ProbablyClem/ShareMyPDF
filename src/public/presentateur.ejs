@@ -17,10 +17,11 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-dark">
+    <div id="username" value="<%= username%>"><%= username%></div>
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="container-fluid">
             <form action="/login" method="POST">
-                <input id="username" name="pseudo" type="hidden" value="<%= username%>">
+                <input name="pseudo" type="hidden" value="<%= username%>">
                 <a href="/" class="navbar-brand align-middle">ShareMyPDF</a>
                 <input class="btn btn-success" type="submit" name="create" value ="Creer un salon">
                 <input class="btn btn-primary" type="submit" name="join" value="Rejoindre un salon">

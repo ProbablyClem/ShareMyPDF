@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body class="bg-dark">
-    <div id="username" hidden="true"> <%= username %></div>
+    <div id="username" hidden="true"><%= username %></div>
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="container-fluid">
             <form action="/login" method="POST">
@@ -91,7 +91,7 @@
         <div class="card-body">
             <form action="#" id="myForm">
                 <input class="form-control mb-2" type="text" id="sujet" name="sujet" placeholder="Sujet..." required>
-                <textarea class="form-control mb-2" id="contenuQuestion" name="contenuQuestion" cols="45" rows="5" placeholder="Entrez votre question..." required></textarea>
+                <textarea class="form-control mb-2" id="contenuQuestion" name="contenuQuestion" cols="30" rows="3" placeholder="Entrez votre question..." required></textarea>
                 <button class="btn btn-primary" id="envoyer">Envoyer</button>
             </form>
         </div>

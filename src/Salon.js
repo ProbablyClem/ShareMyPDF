@@ -17,6 +17,7 @@ class Salon{
             this.presentateurId = id;
         }
         else{
+            console.log('addMembre', pseudo, this.presentateurPseudo);
             this.membres[pseudo] = id;
         }
     }
