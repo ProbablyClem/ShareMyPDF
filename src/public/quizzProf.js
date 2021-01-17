@@ -144,7 +144,9 @@ class Quest_Quizz {
     }
 }
 
-var allQuestions = [];
+var allQuestions = [new Quest_Quizz("Appréciez-vous la présentation pour l'instant ?", [new ItemsDeReponse("oui"), new ItemsDeReponse("non")]), 
+                                            new Quest_Quizz("Que pensez-vous de l'interface", [new ItemsDeReponse("Incroyable !"), new ItemsDeReponse("Joli mais sans plus"),
+                                        new ItemsDeReponse("Peut mieux faire"), new ItemsDeReponse("Affreuse")])];
 
 function getAllQuestions(){
     return allQuestions;
