@@ -25,6 +25,18 @@ submit.addEventListener("click", (event)=>{
     }
 });
 
+const card = document.getElementById('questionCard');
+const toggle = document.getElementById('questionToggle');
 
+function showQuestion() {
+    card.style.display = 'block';
+    toggle.style.display = 'none';
+}
 
+function hideQuestion() {
+    card.style.display = 'none';
+    toggle.style.display = 'block';
+}
 
+toggle.addEventListener('click', showQuestion);
+document.getElementById('closeQuestion').addEventListener('click', hideQuestion);
