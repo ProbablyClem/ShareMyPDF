@@ -35,12 +35,9 @@ class Salon{
             delete this.membres[this.getKeyByValue(id)];
             console.log(this.membres);
         }
-        //console.log(this.estVide());
     }
 
-    estVide(){
-        //console.log("presentateur= " + this.presentateurId +" membres size: " + Object.keys(this.membres).length);
-        
+    estVide(){        
         if(Object.keys(this.membres).length == 0 && this.presentateurId == ""){
             return true;
         }
