@@ -20,7 +20,7 @@
     <div id="username" hidden="true"><%= username %></div>
     <nav class="navbar navbar-expand navbar-light bg-light">
         <div class="container-fluid">
-            <form action="/login" method="POST">
+            <form action="/login" method="POST" enctype="multipart/form-data">
                 <input name="pseudo" type="hidden" value="<%= username%>">
                 <a href="/" class="navbar-brand align-middle">ShareMyPDF</a>
                 <input class="btn btn-success" type="submit" name="create" value ="Creer un salon">

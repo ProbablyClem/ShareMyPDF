@@ -54,7 +54,7 @@ function renderHtml(data){
 
     console.log(listeQuestions.childElementCount);
     if(listeQuestions.childElementCount > 6){
-        listeQuestions.removeChild(listeQuestions.lastChild);
+        listeQuestions.removeChild(listeQuestions.firstChild);
     }
 }
 
