@@ -13,70 +13,101 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="lecteur.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
-<body>
-    <button id="prev" class="moveBtn">Précédant</button>
-    <button id="next" class="moveBtn">Suivant</button>
-
-    <input id="pageInput" type="number">
-    <button id="go" class="moveBtn">Accéder</button>
-    <button id="clear">Effacer les annotations</button>
-    <button id="quizz" onclick="createIFrame('<%= salon%>')">Voir Quizz</button>
-    <button id="room" title="Invitez d'autres utilisateurs"><%= salon%></button>
-    
-    <p id="username" hidden><%= username%></p>
-    <button id="savePDF">Enregistrer le PDF</button>
-    <div id="cont"></div>
-    <input type="color" value="#ff0000" id="color">
-    <input type="range" min="5" max="20" value="10" id="width">
-    <div id="pdf" hidden="true" value="<%= pdf%>"></div>
-    <br>
-
-    <div class="wrapper">
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Liste des participants</h3>
-            </div>
-        <ul class="list-unstyled components">
-            <p>Présentateur</p>
-            <li>
-                <p id="username"><%= username%></p>
-            </li>
-        </ul>
-        <ul class="list-unstyled components">
-            <p>Lecteurs <span id="nombreLecteurs"></span></p>
-            <div class="overflow-auto" id="listeLecteurs">
-                <li id="lecteur">
-                </li>
-            </div>
-        </nav>
-        <canvas id="viewer" style='border : 1px solid #000' title="Cliquez pour ajouter une annotation"></canvas>
-        <nav id="sidebar">
-             <!-----Partie poser questions----->
-             <div id="questions" class="overflow-auto" >
-                <ul id="listeQuestions">
-                </ul>
-             </div>           
+<body class="bg-dark">
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="container-fluid">
+            <form action="/login" method="POST">
+                <input id="username" name="pseudo" type="hidden" value="<%= username%>">
+                <a href="/" class="navbar-brand align-middle">ShareMyPDF</a>
+                <input class="btn btn-success" type="submit" name="create" value ="Creer un salon">
+                <input class="btn btn-primary" type="submit" name="join" value="Rejoindre un salon">
+            </form>
+            <div class="d-flex">
+                <div id="room" hidden="true"><%= salon%></div>
+                <span class="navbar-brand align-middle"><%= username%></span>
+                <button id="invite" title="Copier le lien d'invitation" class="btn btn-success">Inviter</button>
             </div>
         </div>
-        </nav>
+    </nav>
+
+    <button id="quizzToggle" onclick="showQuizz()" class="btn btn-info btn-lg position-fixed m-2 start-0 bottom-0">Voir Quizz</button>
+    
+    <div id="pdf" hidden="true" value="<%= pdf%>"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-light col-12 col-lg-12 col-xl-2">
+                <h4 class="display-4 pb-3 mb-3 border-bottom">Liste des participants</h4>
+
+                <div class="card text-dark mb-3">
+                    <strong class="h2 card-header">Présentateur</strong>
+                    <div class="h3 card-body"><%= username%></div>
+                </div>
+
+                <div class="card text-dark">
+                    <strong class="h2 card-header">Lecteurs <span id="nombreLecteurs"></span></strong>
+                    <ul id="lecteurs" class="list-group list-group-flush">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container col-12 col-lg-9 col-xl-8 d-flex flex-column">
+                <nav class="navbar navbar-expand navbar-light bg-dark">
+                    <div class="container d-flex justify-content-between px-2">
+                        <div class="d-flex justify-content-between">
+                            <div class="input-group w-auto d-inline-flex flex-start me-1">
+                                <button id="prev" title="Retourner à la page précédente" class="moveBtn btn btn-primary"><</button>
+                                <select id="pageIpt" class="form-select" style="min-width: 60px; flex: 0;">
+            
+                                </select>
+                                <button id="next" title="Aller à la page suivante" class="moveBtn btn btn-primary">></button>
+                            </div>
+                            <button id="savePDF" title="Enregister le PDF avec les annotations" class="btn btn-primary">Enregistrer le PDF</button>
+                        </div>
+                        <div>
+                            <input id="width" class="align-middle" title="Changer l'épaisseur du trait" type="range" min="5" max="20" value="10">
+                            <input id="color" class="align-middle form-control-color" title="Changer la couleur du trait" type="color" value="#ff0000">
+                            <button id="clear" title="Supprimer les annotations de la page" class="btn btn-danger">Effacer la page</button>
+                        </div>
+                    </div>
+                </nav>
+                <canvas id="viewer" class="border-light" title="Cliquez pour ajouter une annotation" style="cursor: crosshair;"></canvas>
+            </div>
+
+            <div class="text-light col-12 col-lg-3 col-xl-2">
+                <h4 class="display-4 pb-3 mb-3 border-bottom">Questions</h4>
+
+                <div id="listeQuestions" class="text-dark">
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!--filter: blur(10px);-->
     
     <!------Partie affichage des questions-->
-    </ul>
+    <div id="quizz" style="display: none;">
+        <div class="start-0 top-0 w-100 h-100 position-fixed d-flex justify-content-center align-items-center" style="background: #000000c0; z-index: 39;">
+            <%- include('./quizzProf.ejs'); %>
+            <div id="resDiv" class="card text-center" style="display: none;">
+                <div class="card-header">
+                    Résultats
+                </div>
+                <div id="resultats" class="card-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="socket.js"></script>
     <script type="module" src="renderHtml.js"></script>
     <script type="module" src="renderPres.js"></script>
     <script type="module" src="annotPres.js"></script>
-    <script src="openPopup.js"></script>
-    <div id="iframe" style = "display: none;">
-        <%- include('./quizzProf.ejs'); %>
-    </div>
-    <div id="resultats">
-        
-    </div>
+    <script src="quizzDisplay.js"></script>
     <script type="module" src="affichageMembres.js"></script>
     <script type="module" src="savePDF.js"></script>
     <script type="module" src="copyRoomLink.js"></script>

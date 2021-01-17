@@ -6,10 +6,17 @@
     <title>Question posée</title>
 </head>
 <body>
-    <p id="room" hidden><%= salon%></p>
-    <div id="IntituleQuestion">
-    </div>
-    <div id="elementsreponses">
+    <div class="card text-center start-50 top-50 translate-middle position-absolute">
+        <p id="room" hidden><%= salon%></p>
+        <div class="card-header">
+            Question
+        </div>
+        <div class="card-body">
+            <div id="IntituleQuestion" class="mb-3">
+            </div>
+            <div id="elementsreponses">
+            </div>
+        </div>
     </div>
     <script type="module" src="quizzEleve.js"></script>
 </body>

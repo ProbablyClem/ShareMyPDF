@@ -30,9 +30,7 @@ function changePage(fn) {
 
 document.getElementById("prev").addEventListener("click", () => changePage('prev'));
 document.getElementById("next").addEventListener("click", () => changePage('next'));
-document.getElementById("go").addEventListener("click", () => changePage('go'));
+document.getElementById("pageIpt").addEventListener("change", () => changePage('go'));
 
 drawPage(pageNumber);
-console.log(room);
 socket.emit("page", {room: room, page: pageNumber});
-console.log(socket);

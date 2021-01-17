@@ -22,15 +22,21 @@ function rejoindre(){
 }
 
 function suivre(){
+    var btn = document.getElementById("follow");
     if(!etatSuivi){
         etatSuivi = true;
-        document.getElementById("follow").innerHTML = "Arreter de suivre";
+        btn.innerHTML = "Arreter de suivre";
+        btn.classList.add('btn-danger');
+        btn.classList.remove('btn-success');
+
         drawPage(pageProf);
         restoreAnnot();
     }
     else{
         etatSuivi = false;
-        document.getElementById("follow").innerHTML = "Suivre";
+        btn.innerHTML = "Suivre";
+        btn.classList.add('btn-success');
+        btn.classList.remove('btn-danger');
     }
 }
 
@@ -45,7 +51,7 @@ socket.on('page', function(data){
 
 document.getElementById("prev").addEventListener("click", prevPage);
 document.getElementById("next").addEventListener("click", nextPage);
-document.getElementById("go").addEventListener("click", goTo);
+document.getElementById("pageIpt").addEventListener("change", () => goTo());
 document.getElementById("join").addEventListener("click", rejoindre);
 document.getElementById("follow").addEventListener("click", suivre);
 

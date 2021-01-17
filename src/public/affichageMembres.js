@@ -12,34 +12,27 @@ socket.on("membres", (data) =>{
     try{
 
         let presDiv = document.getElementById("presentateur");
-        presDiv.innerHTML = "";
-        let presBalise = document.createElement("p");
-        presBalise.innerHTML = presentateur;
-        presDiv.appendChild(presBalise);
+        presDiv.innerHTML = presentateur;
     
     }
     catch(e){  
     }
     
-    let lectDiv = document.getElementById("lecteur");
-    lectDiv.innerHTML = "";
+    let lectList = document.getElementById("lecteurs");
+    lectList.innerHTML = "";
 
     eleve.forEach(function (item, index, array) {
+        let lectBalise = document.createElement("li");
+        lectBalise.classList.add('list-group-item', 'h3', 'm-0');
+        
+        lectBalise.innerHTML = item;
         if(item == document.getElementById("username").innerHTML){
-            let lectBalise = document.createElement("p");
-            let uBalise = document.createElement("u");
-            uBalise.innerHTML = item; 
-            lectBalise.appendChild(uBalise);
-            lectDiv.appendChild(lectBalise);
+            lectBalise.classList.add('disabled');
         }
-        else{
-            let lectBalise = document.createElement("p");
-            lectBalise.innerHTML = item;
-            lectDiv.appendChild(lectBalise);
-        }
+        lectList.appendChild(lectBalise);
     });
 
-    document.getElementById("nombreLecteurs").innerHTML = "(" + lectDiv.childElementCount  + ")";
+    document.getElementById("nombreLecteurs").innerHTML = "(" + lectList.childElementCount  + ")";
 })
 console.log(presentateur);
 console.log(eleve);

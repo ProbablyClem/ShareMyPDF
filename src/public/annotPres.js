@@ -23,7 +23,6 @@ window.onmouseup = (e) => {
 }
 window.onmousedown = (e) => {
     pressed = true;
-    console.log(e.pageY, canvas.getBoundingClientRect().top, window.scrollY);
 }
 
 function getColor() {

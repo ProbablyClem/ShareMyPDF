@@ -53,7 +53,7 @@ class Quest_Quizz {
             this.display();
         }
         if(this.props.length < MAX_PROP){
-            document.getElementById("add").style.display = "block";
+            document.getElementById("add").style.display = "inline";
         }
     }
 
@@ -64,17 +64,42 @@ class Quest_Quizz {
         
         balise_choix.innerHTML = "";
         this.props.forEach((choix, index) => {
-            var proposition = document.createElement("li");
+            var proposition = document.createElement("div");
+            proposition.classList.add('input-group', 'my-1');
             var input = document.createElement("input");
+            input.classList.add('form-control');
             input.id = "rep_"+(index+1);
             input.type = "text";
             input.value = choix.intitule;
             input.addEventListener("change", () => {this.props[index].intitule = input.value});
+
+            var indexField = document.createElement('span');
+            indexField.style.fontFamily = 'monospace';
+            switch (index + 1) {
+                case 1:
+                    indexField.innerText = 'A';
+                    break;
+                case 2:
+                    indexField.innerText = 'B';
+                    break;
+                case 3:
+                    indexField.innerText = 'C';
+                    break;
+                case 4:
+                    indexField.innerText = 'D';
+                    break;
+                default:
+                    
+            }
+            indexField.classList.add('input-group-text');
+            proposition.appendChild(indexField);
+
             proposition.appendChild(input);
             balise_choix.appendChild(proposition);
             if(index === this.props.length-1 && this.props.length > MIN_PROP){
                 var annuler = document.createElement("button");
-                annuler.innerText = "X";
+                annuler.classList.add('btn', 'btn-danger');
+                annuler.innerHTML = "✕";
                 annuler.onclick = () => {q_temp.delRep()};
                 proposition.appendChild(annuler);
             }
@@ -134,29 +159,35 @@ function ajouterReponse(){
 }
 
 function afficherQuestion(q, index){
-    var liste = document.createElement("li");
+    var liste = document.createElement("div");
+    liste.classList.add('input-group', 'my-2');
     liste.id = "Q"+index;
 
     var texte = document.createElement("span");
-    texte.innerText = "Question " + index + " : " + q.nom;
+    texte.classList.add('input-group-text', 'form-control');
+    texte.innerText = q.nom;
     
     var bouton1 = document.createElement("button");
+    bouton1.classList.add('btn', 'btn-success');
     bouton1.title = "Lancer question";
     bouton1.onclick = () => launchQuestion(index);
-    bouton1.innerText = "→";
+    bouton1.innerText = "➤";
     liste.appendChild(texte);
     liste.appendChild(bouton1);
     
     var bouton2 = document.createElement("button");
+    bouton2.classList.add('btn', 'btn-dark');
     bouton2.title = "Voir résultats";
     bouton2.onclick = () => voirResultat(index);
-    bouton2.innerText = String.fromCodePoint(0x1F50D);
+    //bouton2.innerText = String.fromCodePoint(0x1F50D);
+    bouton2.innerText = "%";
     liste.appendChild(bouton2);
 
     var bouton3 = document.createElement("button");
+    bouton3.classList.add('btn', 'btn-danger');
     bouton3.title = "Supprimer question";
     bouton3.onclick = () => delQuest(index);
-    bouton3.innerText = "X";
+    bouton3.innerText = "✕";
     liste.appendChild(bouton3);
 
     balise_questions.appendChild(liste);
@@ -201,6 +232,8 @@ function launchQuestion(i){
 }
 
 function voirResultat(i){
+    var resDiv = document.getElementById('resDiv');
+    resDiv.style.display = 'block';
     var id = i-1;
     var toutes_ques = getAllQuestions();
     var nom_question = toutes_ques[id].nom;
@@ -208,7 +241,8 @@ function voirResultat(i){
     res.style = "display: block;";
     var quitter = document.createElement('button');
     quitter.innerText = "Fermer";
-    quitter.onclick = () => res.style = "display: none;";
+    quitter.classList.add('btn', 'btn-danger');
+    quitter.onclick = () => resDiv.style = "display: none;";
     var nb_total_votes = 0;
     toutes_ques[id].getAllResults().forEach(rep => {
         nb_total_votes += rep;

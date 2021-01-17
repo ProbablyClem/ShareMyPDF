@@ -65,7 +65,6 @@ export function annotLine(x, y, color = DEF_COLOR, width = DEF_WIDTH) {
 }
 
 export async function restoreAnnot() {
-    console.log('check annotations ', pageNumber);
     if (annotations[pageNumber-1] !== undefined) {
         // on attend ici le render
         var timerRender = setInterval(() => {

@@ -11,4 +11,4 @@ function copyRoomLink(){
     window.alert("URL de la page copiée dans le presse-papier");
 }
 
-document.getElementById("room").addEventListener("click", copyRoomLink);
+document.getElementById("invite").addEventListener("click", copyRoomLink);

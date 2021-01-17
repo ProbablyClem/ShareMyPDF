@@ -3,29 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="quizzProf.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <title>Quizz - Enseignant</title>
 </head>
 <body>
-    <section>
-        <p id="room" hidden><%= salon%></p>
-        <div>
-            <p>Questions prêtes : </p>
-            <ul id="questionsQuizz">
+    <div class="card me-4" style="z-index: 45;">
+        <div class="card-header text-center">
+            Quizz
+            <button class="btn-close position-absolute end-0 mx-2" onclick="hideQuizz()"></button>
+        </div>
+        <div class="list-group list-group-flush">
+            <div class="list-group-item">
+                <p id="room" hidden><%= salon%></p>
+                <span class="h2 mb-3">Questions prêtes</span>
+                <div id="questionsQuizz" class="my-3">
+                    <!-- auto generation -->
+                </div>
+            </div>
+            <div class="list-group-item">
+                <span class="h2 mb-3">Nouvelle question</span>
+                <div class="input-group my-3">
+                    <span class="input-group-text">Intitulé</span>
+                    <input type="text" id="nom_question" required class="form-control">
+                </div>
+                <div id="choix" class="my-3">
+                    <!-- auto generation -->
+                </div>
+                <button id="creer"  class="btn btn-success">Créer la question</button>
+                <button id="add" class="btn btn-primary">Ajouter une proposition</button>
+            </div>
                 
-            </ul>
         </div>
-        <div>
-            <p>Nouvelle question :</p>
-            <p>Intitulé : <input type="text" id="nom_question" required></p>
-            <ol id="choix">
-            </ol>
-            <button id="add">Ajouter proposition</button>
-            <button id="creer">Créer nouvelle question</button>
-        </div>
-    </section>
+    </div>
     <script type="module" src="quizzProf.js"></script>
 </body>
 </html>
