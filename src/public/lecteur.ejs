@@ -26,10 +26,11 @@
                 <input class="btn btn-success" type="submit" name="create" value ="Creer un salon">
                 <input class="btn btn-primary" type="submit" name="join" value="Rejoindre un salon">
             </form>
-            <div class="d-flex">
+            <div class="d-flex justify-content-center align-items-center">
                 <div id="room" hidden="true"><%= salon%></div>
-                <span class="navbar-brand align-middle"><%= username%></span>
-                <button id="invite" title="Copier le lien d'invitation" class="btn btn-success">Inviter</button>
+                <span class="navbar-brand m-0"><%= username%></span>
+                <button id="invite" title="Copier le lien d'invitation" class="btn btn-success mx-3">Inviter</button>
+                <button id="copyRoomCode" title="Copier le code d'invitation" class="btn btn-outline-success"><%= salon%></button>
             </div>
         </div>
     </nav>
