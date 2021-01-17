@@ -1,6 +1,8 @@
 var multer = require('multer');
 var upload = multer({dest:'uploads/'});
 const Salon = require('./Salon');
+var fs = require('fs');
+
 
 function genCode(){
   let length = 6;
@@ -31,7 +33,6 @@ app.post('/login',(req,res)=>{
 });
 
 app.post('/lecteur',(req,res)=>{
-  //console.log("Code :"+req.body.code)
   const code = req.body.code;
   const pseudo = req.body.pseudo;
   if(salons[code] != undefined && salons[code].presentateurPseudo == pseudo){
@@ -54,9 +55,14 @@ app.post('/lecteur',(req,res)=>{
 app.post("/presentateur", (req, res) => {
   const code = req.body.code;
   const pseudo = req.body.pseudo;
+  var path = ('public/uploads/'+salons[code].pdf);
+  try {
+    fs.accessSync(path);
+  } catch (e) {
+    res.render("vues/retour", {salon : code});
+  }
   res.render("presentateur", {salon : code, username : pseudo, pdf : salons[code].pdf});
 })
-
 
 app.post("/retour", (req, res) => {
   res.redirect('/');
@@ -70,7 +76,7 @@ app.get('/room/:room',(req,res)=>{
     res.render("vues/param", {code : code});
   }
   else{
-    res.send("Le salon "+code+" n'existe pas!");
+    res.render("vues/retour", {salon : code});
   }
   res.render("vues/param", {code : code});
   res.end();
@@ -103,14 +109,6 @@ app.post('/setPdf', function (req, res) {
   res.redirect(307, '/presentateur')
   res.end(); 
 });
-
-app.post('/presentateur', (req, res) => {
-  const code = req.body.code;
-  const pseudo = req.body.pseudo;
-  const pdf  = req.files.f.name;
-  console.log(code , pseudo, pdf);
-  res.render("presentateur", {salon : code, username: pseudo, pdf : pdf});
-})
 
 ////////////////////////////////////////////////////////////////////////////////
 
