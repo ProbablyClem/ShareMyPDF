@@ -85,9 +85,12 @@
         </div>
     </div>
 
-    <div class="card position-fixed end-0 bottom-0 m-2 text-center">
+    <button id="questionToggle" class="btn btn-info end-0 bottom-0 m-2 position-fixed" style="display: block;">Poser une question</button>
+
+    <div id="questionCard" class="card position-fixed end-0 bottom-0 m-2 text-center" style="display: none;">
         <div class="card-header">
             Envoyer une Question
+            <button id="closeQuestion" class="btn btn-close position-absolute end-0 mx-2"></button>
         </div>
         <div class="card-body">
             <form action="#" id="myForm">
