@@ -64,7 +64,7 @@ function afficheQuestion(nomQuestion, items){
 
 function envoyerReponse(){
     i = 0;
-    while(!input[i].checked && i < input[i].length){
+    while(input[i].checked == false && i < input.length){
         i++;
     }
     if(i == input.length){
