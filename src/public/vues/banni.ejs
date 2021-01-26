@@ -1,1 +1,25 @@
-Impossible de rejoindre ce salon car vous avez été banni.
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Rejoindre un salon</title>
+  </head>
+  <body class="p-3 mb-2 bg-dark">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <form action="/retour" method="POST" class="position-absolute top-50 start-50 translate-middle card" enctype="multipart/form-data">
+      <div class="card text-center">
+        <div class="card-header">
+          Erreur
+        </div>
+        <div class="card-body">
+          <span class="d-block">Vous avez été banni du salon de code <strong><%= salon %></strong></span>
+          <br>
+          <input class="btn btn-primary" type="submit" value= "Retour à la page d'accueil">
+        </div>
+        <div class="card-footer">
+          ShareMyPDF
+        </div>
+    </form>
+  </body>
+</html>

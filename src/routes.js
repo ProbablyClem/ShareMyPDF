@@ -38,7 +38,7 @@ app.post('/lecteur',(req,res)=>{
   const pseudo = req.body.pseudo;
   console.log("Banni" + salons[code].estBanni(req.ip));
   if(salons[code].estBanni(req.ip)){
-    res.render("vues/banni");
+    res.render("vues/banni", {salon : code});
   }
   {
     if(salons[code] != undefined && salons[code].presentateurPseudo == pseudo){
