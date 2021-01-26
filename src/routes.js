@@ -118,6 +118,11 @@ app.post('/setPdf', function (req, res) {
   res.end(); 
 });
 
+app.get('/ban/:room', (req, res) => {
+  const code = req.params.room;
+  res.render("vues/banni", {salon  : code});
+})
+
 ////////////////////////////////////////////////////////////////////////////////
 
 //tests
