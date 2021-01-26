@@ -5,7 +5,6 @@ import {
     rendering,
     drawPage
 } from './render.js'
-import { socket } from './socket.js';
 
 export {
     canvas,
