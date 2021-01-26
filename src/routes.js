@@ -2,6 +2,7 @@ var multer = require('multer');
 var upload = multer({dest:'uploads/'});
 const Salon = require('./Salon');
 var fs = require('fs');
+const { Console } = require('console');
 
 
 function genCode(){
@@ -35,20 +36,27 @@ app.post('/login',(req,res)=>{
 app.post('/lecteur',(req,res)=>{
   const code = req.body.code;
   const pseudo = req.body.pseudo;
-  if(salons[code] != undefined && salons[code].presentateurPseudo == pseudo){
-    if(salons[code].presentateurIp == req.ip){
-      res.redirect(307, "/presentateur");
+  console.log("Banni" + salons[code].estBanni(req.ip));
+  if(salons[code].estBanni(req.ip)){
+    res.render("vues/banni");
+  }
+  {
+    if(salons[code] != undefined && salons[code].presentateurPseudo == pseudo){
+      if(salons[code].presentateurIp == req.ip){
+        res.redirect(307, "/presentateur");
+      }
+      else{
+        res.send("Le pseudo "+pseudo+" est deja pris pour le salon " + code + "!");
+      }
+    }
+    if(salons[code] != undefined){
+      res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf});
     }
     else{
-      res.send("Le pseudo "+pseudo+" est deja pris pour le salon " + code + "!");
+      res.render("vues/retour", {salon : code});
     }
   }
-  if(salons[code] != undefined){
-    res.render("lecteur", {salon: code, username: pseudo, pdf: salons[code].pdf});
-  }
-  else{
-    res.render("vues/retour", {salon : code});
-  }
+  
   res.end()
 });
 

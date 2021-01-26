@@ -43,7 +43,7 @@ global.io = socket(server, {cookie: false});
 io.on('connection', function(socket){
 
   socket.on('login', (data)=>{
-    salons[data.room].addMembre(data.pseudo, socket.id);
+    salons[data.room].addMembre(data.pseudo, socket.id, socket.handshake.address);
     socket.join(data.room);
   });
 
@@ -116,6 +116,11 @@ io.on('connection', function(socket){
     io.to(data.Salon).emit('ReponseChoisie',data);
     console.log("Réponse "+data.idRepChoisie+" envoyée !");
     console.log(data);
+  })
+
+  socket.on('ban', (data) => {
+    salons[data.room].addBanni(data.membre);
+    io.to(data.room).emit('ban',data.membre);
   })
 
   socket.on('disconnect', () =>{

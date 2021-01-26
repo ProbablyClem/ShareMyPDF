@@ -1,6 +1,7 @@
 class Salon{
     constructor(pdf, code, presentateurIp, presentateurPseudo){
         this.membres = {};
+        this.ips = [];
         this.presentateurIp = presentateurIp;
         this.presentateurPseudo = presentateurPseudo;
         this.presentateurId = "";
@@ -10,15 +11,16 @@ class Salon{
         this.annotations = [];
         this.questions = [];
         this.questionsEleve = [];
+        this.bannis= [];
     }
 
-    addMembre(pseudo, id){
+    addMembre(pseudo, id, ip){
         if(pseudo == this.presentateurPseudo){
             this.presentateurId = id;
         }
         else{
-            console.log('addMembre', pseudo, this.presentateurPseudo);
             this.membres[pseudo] = id;
+            this.ips[pseudo] = ip;
         }
     }
 
@@ -38,6 +40,14 @@ class Salon{
         }
     }
 
+    addBanni(pseudo){
+        this.bannis.push(this.ips[pseudo]);
+    }
+
+    estBanni(ip){
+        console.log(this.bannis);
+        return this.bannis.includes(ip);
+    }
     estVide(){        
         if(Object.keys(this.membres).length == 0 && this.presentateurId == ""){
             return true;

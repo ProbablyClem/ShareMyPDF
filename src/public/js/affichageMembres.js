@@ -4,7 +4,8 @@ import { socket } from './socket.js';
 
 var presentateur = "";
 var eleve = [];
-
+let username = document.getElementById("username").innerHTML;
+let salon = document.getElementById("room").innerHTML;
 socket.on("membres", (data) =>{
     console.log(data);
     presentateur = data.pres;
@@ -26,9 +27,19 @@ socket.on("membres", (data) =>{
         lectBalise.classList.add('list-group-item', 'h3', 'm-0');
         
         lectBalise.innerHTML = item;
-        if(item == document.getElementById("username").innerHTML){
-            lectBalise.classList.add('disabled');
+        if(username == presentateur){
+            var closeBtn = document.createElement('button');
+                closeBtn.classList.add('btn-close');
+                closeBtn.addEventListener("click", ()=>{
+                    socket.emit("ban", {room: salon, membre: item});
+                })
+                lectBalise.appendChild(closeBtn);
+        }else{
+            if(item == username){
+                lectBalise.classList.add('disabled');
+            }
         }
+        
         lectList.appendChild(lectBalise);
     });
 
