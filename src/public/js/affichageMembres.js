@@ -31,7 +31,9 @@ socket.on("membres", (data) =>{
             var closeBtn = document.createElement('button');
                 closeBtn.classList.add('btn-close');
                 closeBtn.addEventListener("click", ()=>{
-                    socket.emit("ban", {room: salon, membre: item});
+                    if (window.confirm("Voulez vous vraiment banir " + item + " de ce Salon ?")) {
+                        socket.emit("ban", {room: salon, membre: item});
+                    }
                 })
                 lectBalise.appendChild(closeBtn);
         }else{
