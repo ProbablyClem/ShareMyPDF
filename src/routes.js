@@ -1,5 +1,5 @@
 var multer = require('multer');
-var upload = multer({dest:'uploads/'});
+var upload = multer({dest:'public/uploads/'});
 const Salon = require('./Salon');
 var fs = require('fs');
 const { Console } = require('console');
@@ -103,7 +103,7 @@ app.post('/setPdf', function (req, res) {
   var busboy = new Busboy({ headers: req.headers });
   busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
 
-    var saveTo = path.join(__dirname, 'uploads/' + filename);
+    var saveTo = path.join(__dirname, 'public/uploads/' + filename);
     file.pipe(fs.createWriteStream(saveTo));
     
   });
