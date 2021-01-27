@@ -1,6 +1,6 @@
 function copyRoomLink(){    
     const el = document.createElement('textarea');
-    el.value = window.location.host +"/room/"+document.getElementById("room").innerHTML;
+    el.value = window.location.origin +"/room/"+document.getElementById("room").innerHTML;
     el.setAttribute('readonly', '');
     el.style.position = 'absolute';
     el.style.left = '-9999px';
