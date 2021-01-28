@@ -35,8 +35,14 @@ app.post('/login',(req,res)=>{
 
 app.post('/lecteur',(req,res)=>{
   const code = req.body.code;
-  const pseudo = req.body.pseudo;
-  console.log("Banni" + salons[code].estBanni(req.ip));
+  let pseudo = req.body.pseudo;
+  const salon = salons[code];
+  if(salon.hasMembre(pseudo)){
+    console.log(pseudo);
+    console.log("membresCpt: " + salon.membresCpt[pseudo]);
+    salon.membresCpt[pseudo]++;
+    pseudo = pseudo + " (" + salon.membresCpt[pseudo] + ")";
+  }
   if(salons[code].estBanni(req.ip)){
     res.render("vues/banni", {salon : code});
   }

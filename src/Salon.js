@@ -1,6 +1,7 @@
 class Salon{
     constructor(pdf, code, presentateurIp, presentateurPseudo){
         this.membres = {};
+        this.membresCpt = {};
         this.ips = [];
         this.presentateurIp = presentateurIp;
         this.presentateurPseudo = presentateurPseudo;
@@ -19,8 +20,10 @@ class Salon{
             this.presentateurId = id;
         }
         else{
+            console.log(pseudo);
             this.membres[pseudo] = id;
             this.ips[pseudo] = ip;
+            this.membresCpt[pseudo] = 0;
         }
     }
 
@@ -35,9 +38,13 @@ class Salon{
             this.presentateurId = ""
         }
         else{
-            delete this.membres[this.getKeyByValue(id)];
-            console.log(this.membres);
+            let pseudo = this.getKeyByValue(id);
+            delete this.membres[pseudo];
         }
+    }
+
+    hasMembre(pseudo){
+        return this.membres.hasOwnProperty(pseudo);
     }
 
     addBanni(pseudo){
